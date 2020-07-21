@@ -39,3 +39,29 @@ CREATE TABLE Sensor(
 		REFERENCES Cultivo(id_cultivo)
 );
 
+CREATE TABLE registro_temperatura(
+	id_reg_temp serial PRIMARY KEY,
+	fecha_hora TIMESTAMP,
+	valor FLOAT,
+	id_sensor INT NOT NULL,
+	FOREIGN KEY(id_sensor)
+		REFERENCES Sensor(id_sensor)
+);
+
+CREATE TABLE registro_humedad(
+	id_reg_humedad serial PRIMARY KEY,
+	fecha_hora TIMESTAMP,
+	valor FLOAT,
+	id_sensor INT NOT NULL,
+	FOREIGN KEY(id_sensor)
+		REFERENCES Sensor(id_sensor)
+);
+
+CREATE TABLE registro_radiacion(
+	id_reg_radiacion serial PRIMARY KEY,
+	fecha_hora TIMESTAMP,
+	valor FLOAT,
+	id_sensor INT NOT NULL,
+	FOREIGN KEY(id_sensor)
+		REFERENCES Sensor(id_sensor)
+);
