@@ -12,6 +12,7 @@ CREATE TABLE Cultivo(
 	id_cultivo serial PRIMARY KEY,
 	nombre VARCHAR(50),
 	descripcion VARCHAR(250),
+	nodo VARCHAR(50) NOT NULL,
 	id_umbrales INT NOT NULL,
 	FOREIGN KEY(id_umbrales)
 		REFERENCES Umbrales_Cultivo(id_umbrales)

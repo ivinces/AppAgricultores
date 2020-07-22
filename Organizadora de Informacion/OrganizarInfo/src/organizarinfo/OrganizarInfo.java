@@ -5,9 +5,6 @@
  */
 package organizarinfo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 /**
  *
  * @author isabe
@@ -18,17 +15,7 @@ public class OrganizarInfo {
          * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Connection c = null;
-      try {
-         c = DriverManager
-            .getConnection("jdbc:postgresql://localhost:5432/SensoresDB",
-            "agricultor", "appagricultor");
-      } catch (Exception e) {
-         e.printStackTrace();
-         System.err.println(e.getClass().getName()+": "+e.getMessage());
-         System.exit(0);
-      }
-      System.out.println("Opened database successfully");
+        
     }
     
 }
