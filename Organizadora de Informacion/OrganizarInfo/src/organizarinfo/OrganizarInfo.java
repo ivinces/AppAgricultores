@@ -5,17 +5,21 @@
  */
 package organizarinfo;
 
+import java.io.File;
 /**
  *
  * @author isabe
  */
 public class OrganizarInfo {
-
-    /**
-         * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
+    
+    
+    public static void main(String[] args){
+        String sCarpAct = "";
+        File carpeta = new File(sCarpAct);
+        System.out.println(carpeta.getName());
+        JsonData.getJsonData("data.json");
     }
+    
+    
     
 }
