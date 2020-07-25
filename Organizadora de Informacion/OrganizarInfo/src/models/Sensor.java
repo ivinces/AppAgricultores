@@ -16,16 +16,16 @@ public class Sensor {
     float latitud;
     float longitud;
     String cod_sensor;
-    Sensor sensor;
+    Cultivo cultivo;
 
-    public Sensor(boolean temperatura, boolean humedad, boolean radiacion, float latitud, float longitud, String cod_sensor, Sensor sensor) {
-        this.temperatura = temperatura;
-        this.humedad = humedad;
-        this.radiacion = radiacion;
+    public Sensor(float latitud, float longitud, String cod_sensor, Cultivo cultivo) {
+        this.temperatura = false;
+        this.humedad = false;
+        this.radiacion = false;
         this.latitud = latitud;
         this.longitud = longitud;
         this.cod_sensor = cod_sensor;
-        this.sensor = sensor;
+        this.cultivo = cultivo;
     }
 
     public boolean isTemperatura() {
@@ -76,13 +76,12 @@ public class Sensor {
         this.cod_sensor = cod_sensor;
     }
 
-    public Sensor getSensor() {
-        return sensor;
+    public Cultivo getCultivo() {
+        return cultivo;
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
-    }
-    
+    public void setCultivo(Cultivo cultivo) {
+        this.cultivo = cultivo;
+    } 
     
 }
