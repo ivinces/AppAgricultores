@@ -36,7 +36,7 @@ public class JsonData {
             JSONArray data = (JSONArray) jo.get("data");
             System.out.println(data);
             
-            data.forEach(sensor->parseSensorObject( (JSONObject) sensor ) );  
+            data.forEach(sensor->parseSensorObject( (JSONObject) sensor, nodo) );  
 
        
            
@@ -49,9 +49,9 @@ public class JsonData {
         }
     }
     
-    private static void parseSensorObject(JSONObject sensor) 
+    private static void parseSensorObject(JSONObject sensor, String nodo) 
     {
-         
+         System.out.println("NODO: "+nodo);
         //Get employee first name
         String sensor_id = (String) sensor.get("sensor_id");    
         System.out.println("Sensor: "+sensor_id);

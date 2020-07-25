@@ -16,13 +16,15 @@ public class EstadoSensor {
     Date fecha_hora;
     float valor;
     String categoria;
+    Sensor sensor;
 
-    public EstadoSensor(Date fecha_hora, float valor, String categoria) {
+    public EstadoSensor(Date fecha_hora, float valor, String categoria, Sensor sensor) {
         this.fecha_hora = fecha_hora;
         this.valor = valor;
         this.categoria = categoria;
+        this.sensor = sensor;
     }
-
+    
     public Date getFecha_hora() {
         return fecha_hora;
     }
@@ -46,6 +48,12 @@ public class EstadoSensor {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    
-    
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
 }

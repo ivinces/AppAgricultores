@@ -12,12 +12,14 @@ package models;
 public class Cultivo {
     String nombre;
     String descripcion;
+    String nodo;
     Umbrales umbrales;
 
-    public Cultivo(String nombre, String descripcion, Umbrales umbrales) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.umbrales = umbrales;
+    public Cultivo(String nodo) {
+        this.nombre = "Cultivo";
+        this.descripcion = "Nuevo Cultivo";
+        this.nodo = nodo;
+        this.umbrales = null;
     }
 
     public String getNombre() {
@@ -43,6 +45,15 @@ public class Cultivo {
     public void setUmbrales(Umbrales umbrales) {
         this.umbrales = umbrales;
     }
+
+    public String getNodo() {
+        return nodo;
+    }
+
+    public void setNodo(String nodo) {
+        this.nodo = nodo;
+    }
+    
     
     
 }

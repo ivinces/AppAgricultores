@@ -12,19 +12,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import Constants.ConstantsDB;
+import models.Cultivo;
 /**
  *
  * @author isabe
  */
 public class PostgreSQLJDBC {
     
-    public Connection conexion(){
+    public static Connection conexion(){
         Connection c = null;
       try {
          c = DriverManager
-            .getConnection("jdbc:postgresql://localhost:5432/SensoresDB",
-            "agricultor", "appagricultor");
+            .getConnection(ConstantsDB.DB,ConstantsDB.usuario, ConstantsDB.clave);
       } catch (SQLException e) {
          System.err.println(e.getClass().getName()+": "+e.getMessage());
          System.exit(0);
@@ -34,13 +34,13 @@ public class PostgreSQLJDBC {
       return c;
     }
     
-    public void insertcultivo(Connection c){
+    public void insertcultivo(Connection c, Cultivo cultivo){
         Statement stmt = null;
         try {
             stmt = c.createStatement();
             String sql = "INSERT INTO cultivo("+
-            "nombre, descripcion)" +
-            "VALUES ('Cultivo', 'Nuevo Cultivo');";
+            "nombre, descripcion, nodo)" +
+            "VALUES ('"+cultivo.getNombre()+"', '"+cultivo.getDescripcion()+"', '"+cultivo.getNodo()+"');";
 
             stmt.executeUpdate(sql);
             stmt.close();
