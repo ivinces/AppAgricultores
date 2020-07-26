@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Cultivo;
@@ -33,11 +34,16 @@ public class OrganizarInfo {
         String sCarpAct = ConstantsArchivo.path_nuevo;
         File carpeta = new File(sCarpAct);
         File[] archivos= carpeta.listFiles();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(OrganizarInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for(File arch:archivos){
             String data=ConstantsArchivo.path_nuevo+"\\"+arch.getName();
             JsonData.getJsonData(data);
             Date fecha=new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd hhmmss");
+            SimpleDateFormat dt = new SimpleDateFormat("yyyyy-MM-dd hhmmss");
             String nuevo=ConstantsArchivo.path_procesado+"\\"+dt.format(fecha)+".json";
             try { 
                 Files.move(Paths.get(data),Paths.get(nuevo));

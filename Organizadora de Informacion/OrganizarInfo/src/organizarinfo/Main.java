@@ -12,6 +12,9 @@ package organizarinfo;
 public class Main {
     
     public static void main(String[] args){
-        OrganizarInfo.organizarinfo();
+        while(true){
+            OrganizarInfo.organizarinfo();
+        }
+        
     }
 }
