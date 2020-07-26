@@ -5,7 +5,8 @@
  */
 package models;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  *
@@ -14,14 +15,13 @@ import java.sql.Date;
 public class EstadoSensor {
     
     Date fecha_hora;
-    float valor;
+    int bateria;
     String categoria;
     Sensor sensor;
 
-    public EstadoSensor(Date fecha_hora, float valor, String categoria, Sensor sensor) {
+    public EstadoSensor(Date fecha_hora, int bateria,Sensor sensor) {
         this.fecha_hora = fecha_hora;
-        this.valor = valor;
-        this.categoria = categoria;
+        this.bateria = bateria;
         this.sensor = sensor;
     }
     
@@ -33,14 +33,14 @@ public class EstadoSensor {
         this.fecha_hora = fecha_hora;
     }
 
-    public float getValor() {
-        return valor;
+    public int getBateria() {
+        return bateria;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+    public void setBateria(int bateria) {
+        this.bateria = bateria;
     }
-
+    
     public String getCategoria() {
         return categoria;
     }

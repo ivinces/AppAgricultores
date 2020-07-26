@@ -31,12 +31,10 @@ public class JsonData {
             JSONObject jo = (JSONObject) obj; 
             
             String nodo = (String) jo.get("id_nodo"); 
-            System.out.println(nodo);
             
             JSONArray data = (JSONArray) jo.get("data");
-            System.out.println(data);
             
-            data.forEach(sensor->parseSensorObject( (JSONObject) sensor, nodo) );  
+            data.forEach(sensor->OrganizarInfo.parseSensorObject( (JSONObject) sensor, nodo) );  
 
        
            
@@ -49,27 +47,6 @@ public class JsonData {
         }
     }
     
-    private static void parseSensorObject(JSONObject sensor, String nodo) 
-    {
-         System.out.println("NODO: "+nodo);
-        //Get employee first name
-        String sensor_id = (String) sensor.get("sensor_id");    
-        System.out.println("Sensor: "+sensor_id);
-        String datetime = (String) sensor.get("datetime");    
-        System.out.println("Fecha: "+datetime);
-        Double latitud = (Double) sensor.get("latitude");    
-        System.out.println("Latitud: "+latitud);
-        Double longitude = (Double) sensor.get("longitude");    
-        System.out.println("Longitud: "+longitude);
-        String battery = (String) sensor.get("battery");    
-        System.out.println("Bateria: "+battery);
-        String humidity = (String) sensor.get("Humidity");    
-        System.out.println("Humedad: "+humidity);
-        String radiation = (String) sensor.get("radiation");    
-        System.out.println("Radiación: "+radiation);
-        String temperature = (String) sensor.get("temperature");    
-        System.out.println("Temperatura: "+temperature);
-        
-    }
+    
     
 }
