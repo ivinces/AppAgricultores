@@ -13,12 +13,12 @@ public class Sensor {
     boolean temperatura;
     boolean humedad;
     boolean radiacion;
-    float latitud;
-    float longitud;
+    double latitud;
+    double longitud;
     String cod_sensor;
     Cultivo cultivo;
 
-    public Sensor(float latitud, float longitud, String cod_sensor, Cultivo cultivo) {
+    public Sensor(double latitud, double longitud, String cod_sensor, Cultivo cultivo) {
         this.temperatura = false;
         this.humedad = false;
         this.radiacion = false;
@@ -52,7 +52,7 @@ public class Sensor {
         this.radiacion = radiacion;
     }
 
-    public float getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
@@ -60,7 +60,7 @@ public class Sensor {
         this.latitud = latitud;
     }
 
-    public float getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
