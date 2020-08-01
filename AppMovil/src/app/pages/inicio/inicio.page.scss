@@ -1,0 +1,46 @@
+ion-menu-button {
+    color: white;
+}
+
+ion-icon{
+    color: #4f9a94;
+    font-size: 100px;
+    
+}
+
+ion-col#box-variable{
+    background-color: transparentize($color: white, $amount: 0.15);
+    align-content: center;
+    align-items: center;
+    text-align:center;
+    
+}
+
+div#box{
+    align-items: center;
+}
+
+ion-toolbar{
+    background-color: #00838f;
+    
+}
+
+ion-toolbar ion-title{
+    color: white;
+    font-family: 'Rowdies', cursive;
+    font-size: x-large;
+}
+
+ion-content.bg-image{
+    --background: url('src/assets/img/161.jpg') 0 0/100% 100% no-repeat;
+}
+
+
+label#dato{
+    font-family: 'Rowdies', cursive;
+    font-size: xxx-large;
+}
+label#variable{
+    font-family: 'Open Sans', sans-serif;
+    font-size: x-large;
+}
