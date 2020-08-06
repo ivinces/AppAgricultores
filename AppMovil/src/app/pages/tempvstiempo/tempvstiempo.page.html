@@ -3,21 +3,21 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ variable }}</ion-title>
+    <ion-title>Temperatura</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ variable }}</ion-title>
+      <ion-title size="large">Temperatura</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
     <ion-row>
       <ion-col class="ion-justify-content-center">
-        <ion-icon #icono></ion-icon>
+        <ion-icon name="thermometer"></ion-icon>
       </ion-col>
       <ion-col class="ion-justify-content-center">
         <ion-row>
@@ -25,7 +25,7 @@
         </ion-row>
         <br>
         <ion-row>
-          <label id="variable">{{ variable }}</label>
+          <label id="variable">Temperatura</label>
         </ion-row>
       </ion-col>
     </ion-row>
@@ -48,8 +48,8 @@
 
     <ion-card class="welcome-card">
       <ion-card-header>
-        <ion-card-subtitle>Number of Viewers per season for</ion-card-subtitle>
-        <ion-card-title>Game of Thrones</ion-card-title>
+        <ion-card-subtitle>Información recogida del cultiva variable</ion-card-subtitle>
+        <ion-card-title>Temperatura</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <canvas #barChart></canvas>

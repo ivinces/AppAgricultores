@@ -1,23 +1,24 @@
-import { Component, OnInit, ViewChild, SystemJsNgModuleLoader } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-variabletiempo',
-  templateUrl: './variabletiempo.page.html',
-  styleUrls: ['./variabletiempo.page.scss'],
+  selector: 'app-tempvstiempo',
+  templateUrl: './tempvstiempo.page.html',
+  styleUrls: ['./tempvstiempo.page.scss'],
 })
-export class VariabletiempoPage implements OnInit {
+export class TempvstiempoPage implements OnInit {
   @ViewChild('barChart') barChart;
   @ViewChild('icono') icono;
   public variable: string;
   line: any;
   colorArray: any;
-  constructor(private activatedRoute: ActivatedRoute) { }
+
+
+  constructor() { }
 
   ngOnInit() {
-    this.variable= this.activatedRoute.snapshot.paramMap.get('id');
   }
+
   ionViewDidEnter() {
     this.createLineDayChart();
   }
@@ -129,5 +130,7 @@ export class VariabletiempoPage implements OnInit {
       }
     });
   }
+
+
 
 }

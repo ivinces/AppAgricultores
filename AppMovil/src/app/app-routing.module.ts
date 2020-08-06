@@ -26,7 +26,19 @@ const routes: Routes = [
   {
     path: 'inicio',
     loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
+  },  {
+    path: 'tempvstiempo',
+    loadChildren: () => import('./pages/tempvstiempo/tempvstiempo.module').then( m => m.TempvstiempoPageModule)
+  },
+  {
+    path: 'radvstiempo',
+    loadChildren: () => import('./pages/radvstiempo/radvstiempo.module').then( m => m.RadvstiempoPageModule)
+  },
+  {
+    path: 'humivstiempo',
+    loadChildren: () => import('./pages/humivstiempo/humivstiempo.module').then( m => m.HumivstiempoPageModule)
   }
+
 ];
 
 @NgModule({

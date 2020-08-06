@@ -24,17 +24,17 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Temperatura vs Tiempo',
-      url: '/variabletiempo/Temperatura',
+      url: 'tempvstiempo',
       icon: 'thermometer'
     },
     {
       title: 'Humedad vs Tiempo',
-      url: '/variabletiempo/Humedad',
+      url: 'humivstiempo',
       icon: 'water'
     },
     {
       title: 'Radiación vs Tiempo',
-      url: '/variabletiempo/Radiación',
+      url: 'radvstiempo',
       icon: 'sunny'
     },
     {
