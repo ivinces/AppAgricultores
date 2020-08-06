@@ -34,7 +34,7 @@ export class HumivstiempoPage implements OnInit {
   getData(){
     for(let data of this.humd) {
       console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
-      this.array.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(data.valor)});
+      this.array.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
     }
     return this.array;
   }
