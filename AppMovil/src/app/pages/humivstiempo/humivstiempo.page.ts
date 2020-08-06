@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { Chart } from 'chart.js';
+import { Humedad } from 'src/app/interface/humedad';
+import { TmpService } from '../../service/tmp.service';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-humivstiempo',
@@ -12,24 +16,42 @@ export class HumivstiempoPage implements OnInit {
   line: any;
   colorArray: any;
 
-  constructor() { }
+  humd: Humedad[] = [];
+  array: {}[] = [];
+
+  constructor(
+    private tmpService: TmpService
+  ) { }
 
   ngOnInit() {
+    this.tmpService.getAllHumedad()
+    .subscribe(humd => {
+      this.humd = humd;
+      
+    })
+  }
+
+  getData(){
+    for(let data of this.humd) {
+      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
+      this.array.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(data.valor)});
+    }
+    return this.array;
   }
 
   ionViewDidEnter() {
     this.createLineDayChart();
   }
-
+ 
 
   createLineDayChart() {
     this.line = new Chart(this.barChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+        //labels: this.arrayOfData,
         datasets: [{
           label: 'Valores en el día',
-          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+          data: this.getData(),
           //backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
           backgroundColor: 'rgb(0,0,0,0)',
           borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
@@ -38,6 +60,12 @@ export class HumivstiempoPage implements OnInit {
       },
       options: {
         scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+                unit: 'day'
+            }
+          }],
           yAxes: [{
             ticks: {
               beginAtZero: true
@@ -55,10 +83,10 @@ export class HumivstiempoPage implements OnInit {
     this.line = new Chart(this.barChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+        //labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
         datasets: [{
           label: 'Valores en la Semana',
-          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+          data: this.getData(),
           //backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
           backgroundColor: 'rgb(0,0,0,0)',
           borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
@@ -67,6 +95,12 @@ export class HumivstiempoPage implements OnInit {
       },
       options: {
         scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+                unit: 'week'
+            }
+          }],
           yAxes: [{
             ticks: {
               beginAtZero: true
@@ -81,10 +115,10 @@ export class HumivstiempoPage implements OnInit {
     this.line = new Chart(this.barChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+        //labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
         datasets: [{
           label: 'Valores del Mes',
-          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+          data: this.getData(),
           //backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
           backgroundColor: 'rgb(0,0,0,0)',
           borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
@@ -93,6 +127,12 @@ export class HumivstiempoPage implements OnInit {
       },
       options: {
         scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+                unit: 'month'
+            }
+          }],
           yAxes: [{
             ticks: {
               beginAtZero: true
@@ -107,10 +147,10 @@ export class HumivstiempoPage implements OnInit {
     this.line = new Chart(this.barChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+        //labels: this.arrayOfDate,
         datasets: [{
           label: 'Valores del Año',
-          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+          data: this.getData(),
           //backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
           backgroundColor: 'rgb(0,0,0,0)',
           borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
@@ -119,6 +159,12 @@ export class HumivstiempoPage implements OnInit {
       },
       options: {
         scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+                unit: 'year'
+            }
+          }],
           yAxes: [{
             ticks: {
               beginAtZero: true
