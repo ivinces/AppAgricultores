@@ -14,14 +14,18 @@ public class Cultivo {
     String descripcion;
     String nodo;
     Umbrales umbrales;
+    boolean activo;
 
     public Cultivo(String nodo) {
         this.nombre = "Cultivo";
         this.descripcion = "Nuevo Cultivo";
         this.nodo = nodo;
         this.umbrales = null;
+        this.activo=true;
     }
 
+    
+    
     public String getNombre() {
         return nombre;
     }
@@ -53,7 +57,13 @@ public class Cultivo {
     public void setNodo(String nodo) {
         this.nodo = nodo;
     }
-    
-    
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
     
 }

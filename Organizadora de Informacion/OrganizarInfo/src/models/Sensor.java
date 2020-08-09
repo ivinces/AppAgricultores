@@ -17,6 +17,7 @@ public class Sensor {
     double longitud;
     String cod_sensor;
     Cultivo cultivo;
+    boolean activo;
 
     public Sensor(double latitud, double longitud, String cod_sensor, Cultivo cultivo) {
         this.temperatura = false;
@@ -26,6 +27,7 @@ public class Sensor {
         this.longitud = longitud;
         this.cod_sensor = cod_sensor;
         this.cultivo = cultivo;
+        this.activo=true;
     }
 
     public boolean isTemperatura() {
@@ -83,5 +85,14 @@ public class Sensor {
     public void setCultivo(Cultivo cultivo) {
         this.cultivo = cultivo;
     } 
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
     
 }

@@ -2,7 +2,8 @@
 	id_cultivo serial PRIMARY KEY,
 	nombre VARCHAR(50),
 	descripcion VARCHAR(250),
-	nodo VARCHAR(50) NOT NULL
+	nodo VARCHAR(50) NOT NULL,
+	activo BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE Umbrales_Cultivo(
@@ -26,6 +27,7 @@ CREATE TABLE Sensor(
 	radiacion BOOLEAN DEFAULT FALSE,
 	latitud FLOAT,
 	longitud FLOAT,
+	activo BOOLEAN DEFAULT TRUE,
 	id_cultivo INT NOT NULL,
 	FOREIGN KEY(id_cultivo)
 		REFERENCES Cultivo(id_cultivo)

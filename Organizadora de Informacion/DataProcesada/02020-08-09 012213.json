@@ -1,0 +1,36 @@
+{
+"id_nodo": "NO-05",
+ "data": [
+      {
+        "sensor_id":"SE-02-01" ,
+        "latitude": -2.146307,
+        "longitude": -79.963206,
+   	   "battery":"85",
+	   "temperature":"20.90",
+	   "radiation":"",
+	   "Humidity":"",
+	   "datetime":"2020/07/24 16:35:55",
+      },
+      {
+        "sensor_id": "SE-02-02" ,
+        "latitude": -2.146331,
+        "longitude": -79.963197,
+   	   "battery":"40",
+	   "temperature":"",
+	   "radiation":"",
+	   "Humidity":"0.5891"
+	   "datetime":"2020/07/24 16:35:55",
+
+      },
+      {
+        "sensor_id": "SE-02-03",
+        "latitude": -2.146319,
+        "longitude": -79.963217,
+   	   "battery":"50",
+	   "temperature":"",
+	   "radiation":"0.3",
+	   "Humidity":""
+	   "datetime":"2020/07/24 16:35:55",
+      }
+    ]
+}

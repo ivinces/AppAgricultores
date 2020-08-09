@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import Constants.ConstantsDB;
 import Constants.EnumCategoriaEstado;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import models.Cultivo;
@@ -119,7 +120,7 @@ public class PostgreSQLJDBC {
     public static int getidcultivo(Connection c, Cultivo cultivo){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("SELECT * FROM cultivo WHERE nodo='"+cultivo.getNodo()+"'");
+            st = c.prepareStatement("SELECT * FROM cultivo WHERE nodo='"+cultivo.getNodo()+"' AND activo=TRUE");
             ResultSet rs = st.executeQuery();
             
             if(rs.next()){
@@ -140,7 +141,7 @@ public class PostgreSQLJDBC {
     public static int getidsensor(Connection c, Sensor sensor){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("SELECT * FROM sensor WHERE cod_sensor='"+sensor.getCod_sensor()+"'");
+            st = c.prepareStatement("SELECT * FROM sensor WHERE cod_sensor='"+sensor.getCod_sensor()+"' AND activo=TRUE");
             ResultSet rs = st.executeQuery();
             
             if(rs.next()){
@@ -161,7 +162,7 @@ public class PostgreSQLJDBC {
     public static boolean sensorExist(Connection c,Sensor sensor){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("SELECT * FROM sensor WHERE cod_sensor='"+sensor.getCod_sensor()+"'");
+            st = c.prepareStatement("SELECT * FROM sensor WHERE cod_sensor='"+sensor.getCod_sensor()+"' AND activo=TRUE");
             ResultSet rs = st.executeQuery();
             
             if(rs.next()){
@@ -185,14 +186,19 @@ public class PostgreSQLJDBC {
     public static boolean cultivoExist(Connection c,Cultivo cultivo){
         
         String sql="SELECT * FROM cultivo WHERE nodo='"+cultivo.getNodo()+"'";
-        PreparedStatement st;
+        Statement st;
         try {
-            st = c.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
+            st = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
+                rs.last();
+                boolean activo=rs.getBoolean("activo");
+                if(activo){
+                    return true;
+                }
                 rs.close();
                 st.close();
-                return true;
+                return false;
             }
             else{
                 rs.close();

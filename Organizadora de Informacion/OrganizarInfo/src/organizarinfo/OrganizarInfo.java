@@ -99,8 +99,6 @@ public class OrganizarInfo {
         Connection c =PostgreSQLJDBC.conexion();
         
         try {
-            
-            
             if(!PostgreSQLJDBC.cultivoExist(c, cultivo)){
                 PostgreSQLJDBC.insertcultivo(c, cultivo);
             }
