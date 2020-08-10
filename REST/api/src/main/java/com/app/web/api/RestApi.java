@@ -34,7 +34,8 @@ public class RestApi {
         	str+="\n   { \n     \"id_cultivo\":\""+ li.get(num).get(0)+
         	 		"\", \n     \"nombre\":\""+li.get(num).get(1)+
         	 		"\", \n     \"descripcion\":\""+li.get(num).get(2)+
-        	 		"\", \n     \"nodo\":\""+li.get(num).get(3)+"\" \n   },";
+        	 		"\", \n     \"nodo\":\""+li.get(num).get(3)+
+        	 		"\", \n     \"activo\":\""+li.get(num).get(4)+"\" \n   },";
         	num++;
         }
         str = str.substring(0, str.length() - 1);
@@ -52,7 +53,8 @@ public class RestApi {
     	str+="{ \n     \"id_cultivo\":\""+ li.get(id-1).get(0)+
     	 		"\", \n     \"nombre\":\""+li.get(id-1).get(1)+
     	 		"\", \n     \"descripcion\":\""+li.get(id-1).get(2)+
-    	 		"\", \n     \"nodo\":\""+li.get(id-1).get(3)+"\" \n}";
+    	 		"\", \n     \"nodo\":\""+li.get(id-1).get(3)+
+    	 		"\", \n     \"activo\":\""+li.get(id-1).get(4)+"\" \n}";
     	return str;
     }
     
@@ -114,7 +116,8 @@ public class RestApi {
          	 		"\", \n     \"radiacion\":\""+li.get(num).get(3)+
          	 		"\", \n     \"latitud\":\""+li.get(num).get(4)+
          	 		"\", \n     \"longitud\":\""+li.get(num).get(5)+
-         	 		"\", \n     \"id_cultivo\":\""+li.get(num).get(6)+"\" \n   },";
+         	 		"\", \n     \"id_cultivo\":\""+li.get(num).get(6)+
+         	 		"\", \n     \"activo\":\""+li.get(num).get(7)+"\" \n   },";
         	num++;
         }
         str = str.substring(0, str.length() - 1);
@@ -136,7 +139,8 @@ public class RestApi {
          	 		"\", \n     \"radiacion\":\""+li.get(id-1).get(3)+
          	 		"\", \n     \"latitud\":\""+li.get(id-1).get(5)+
          	 		"\", \n     \"longitud\":\""+li.get(id-1).get(5)+
-         	 		"\", \n     \"id_cultivo\":\""+li.get(id-1).get(6)+"\" \n}";
+         	 		"\", \n     \"id_cultivo\":\""+li.get(id-1).get(6)+
+         	 		"\", \n     \"activo\":\""+li.get(id-1).get(6)+"\" \n}";
     		return str;
     		}
     	return null;

@@ -13,8 +13,8 @@ import { HumivstiempoPage } from './humivstiempo.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HumivstiempoPageRoutingModule
+    HumivstiempoPageRoutingModule,
   ],
-  declarations: [HumivstiempoPage]
+  declarations: [HumivstiempoPage],
 })
 export class HumivstiempoPageModule {}

@@ -51,3 +51,26 @@ button#btntiempo{
   font-family: 'Rowdies', cursive;
   font-size: medium;
 }
+/* tabla inicio */
+tr #fecha {
+  text-align: left;
+}
+table {
+  width: 85%;
+  margin: 0 auto; /* same as margin: 0 25%;  */
+}
+
+th {
+  height: 50px;
+}
+
+th, td {
+  padding: 10px;
+}
+tr:nth-child(odd) {background-color: #4f9a94;color: white;}
+tr:hover {background-color: #FAFAD2;color: black;}
+th {
+  background-color: #00838f;
+  color: white;
+}
+/* tabla fin */

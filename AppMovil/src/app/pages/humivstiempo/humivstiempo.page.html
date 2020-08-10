@@ -55,6 +55,28 @@
         <canvas #barChart></canvas>
       </ion-card-content>
     </ion-card>
+    
+    <br>
+    
+    <!-- Tabla inicio -->
+    <table>
+      <tr>
+        <th>Fecha</th>
+        <th>Humedad</th>
+        <th>Dentro del umbral</th>
+      </tr>
+      <tr *ngFor="let task of array">
+        <td id="fecha">{{ task.x }}</td>
+        <td>{{ task.y }}</td>
+        <td> </td>
+      </tr>
+    </table>
+
+    <!-- Tabla fin -->
+    <br>
+
   </div>
+
+  
 </ion-content>
 
