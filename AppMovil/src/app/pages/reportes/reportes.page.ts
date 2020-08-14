@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { Temperatura } from '../../interface/temperatura';
+import { Humedad } from '../../interface/humedad';
+import { Radiacion } from '../../interface/radiacion';
+import { TmpService } from '../../service/tmp.service';
+
 import * as moment from 'moment';
 
 @Component({
@@ -17,22 +22,67 @@ export class ReportesPage implements OnInit {
   humedad:boolean;
   radiacion:boolean;
   temperatura:boolean;
-  year:boolean;
-  mes:boolean;
-  dia:boolean;
-  semana:boolean;
 
   datasets: any;
   array: {}[] = [];
   time: {}[] = [];
 
-  constructor() { }
+  temp: Temperatura[] = [];
+  array2: {}[] = [];
+  hum: Humedad[] = [];
+  array3: {}[] = [];
+  rad: Radiacion[] = [];
+  array4: {}[] = [];
+  unit: String = 'day';
+
+  constructor(
+    private tmpService: TmpService
+  ) { }
 
   ngOnInit() {
     this.humedad=false;
     this.radiacion=false;
     this.temperatura=true;
-    this.dia=true;
+
+    this.tmpService.getAllTemperatura()
+    .subscribe(temp => {
+      this.temp = temp;
+      
+    })
+    this.tmpService.getAllHumedad()
+    .subscribe(hum => {
+      this.hum = hum;
+      
+    })
+    this.tmpService.getAllRadiacion()
+    .subscribe(rad => {
+      this.rad = rad;
+      
+    })
+  }
+
+  getDataTemp(){
+    for(let data of this.temp) {
+      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
+      this.array2.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
+    }
+    return this.array2;
+  }
+
+  getDataHum(){
+    for(let data of this.hum) {
+      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
+      this.array3.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
+    }
+    return this.array3;
+  }
+
+  getDataRad(){
+    for(let data of this.rad) {
+      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
+      this.array4.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
+    }
+    return this.array4;
   }
 
   ionViewDidEnter() {
@@ -46,9 +96,9 @@ export class ReportesPage implements OnInit {
       this.array.push({
         label: 'Humedad',
         yAxesID: 'y0',
-        data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
-        backgroundColor: '#ddee44',
-        borderColor: '#ddee44',
+        data: this.getDataHum(),
+        backgroundColor: '#228B22',
+        borderColor: '#228B22',
         borderWidth: 1,
         fill: false
 
@@ -57,7 +107,7 @@ export class ReportesPage implements OnInit {
     if(this.radiacion){
       this.array.push({
         label: 'Radiacion',
-        data: [0.5, 0.8, 0.1, 0.9, 0.9, 0.5, 0.7, 0.12],
+        data: this.getDataRad(),
         backgroundColor: '#dd1144', 
         borderColor: '#dd1144',
         borderWidth: 1,
@@ -71,7 +121,7 @@ export class ReportesPage implements OnInit {
       this.array.push({
         label: 'Temperatura',
         yAxesID: 'y0',
-        data: [17, 18, 20, 20, 19, 20, 20, 17],
+        data: this.getDataTemp(),
         backgroundColor: '#ddee44',
         borderColor: '#ddee44',
         borderWidth: 1,
@@ -82,71 +132,23 @@ export class ReportesPage implements OnInit {
 
   }
 
-  settimeAxesX(){
-    if(this.semana){
-      this.time=[{     
-        type: 'time',
-        time: {
-            unit: 'week'
-        }
-      }]
-    }
-    if(this.dia){
-      this.time=[{     
-        type: 'time',
-        time: {
-            unit: 'day'
-        }
-      }]
-    }
-    if(this.mes){
-      this.time=[{     
-        type: 'time',
-        time: {
-            unit: 'month'
-        }
-      }]
-    }
-    if(this.year){
-      this.time=[{     
-        type: 'time',
-        time: {
-            unit: 'year'
-        }
-      }]
-    }
-
-  }
-
   clickDay(event){
-    this.dia=true;
-    this.semana=false;
-    this.mes=false;
-    this.year=false;
+    this.unit='day';
     this.createLineChart();
   }
 
   clickMonth(event){
-    this.dia=false;
-    this.semana=false;
-    this.mes=true;
-    this.year=false;
+    this.unit='month';
     this.createLineChart();
   }
 
   clickWeek(event){
-    this.dia=false;
-    this.semana=true;
-    this.mes=false;
-    this.year=false;
+    this.unit='week';
     this.createLineChart();
   }
 
   clickYear(event){
-    this.dia=false;
-    this.semana=false;
-    this.mes=false;
-    this.year=true;
+    this.unit='year';
     this.createLineChart();
   }
 
@@ -170,27 +172,25 @@ export class ReportesPage implements OnInit {
   }
 
   createLineChart(){
-    this.setdataset();
-    this.settimeAxesX();
     this.clearcanvas();
+    this.setdataset();
 
     this.line = new Chart(this.barChart.nativeElement, {
       type: 'line',
       data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
-        datasets: this.array,
+        datasets: this.array
       },
       options: {
         scales: {
-          xAxes: [/*{
+          xAxes: [{
             type: 'time',
             time: {
-                unit: 'week'
+                unit: this.unit
             }
-          }*/],
+          }],
           yAxes: [
             {
-              id: 'y',
+              id: 'y0',
               type: 'linear',
               position: 'left',
               scaleLabel: {

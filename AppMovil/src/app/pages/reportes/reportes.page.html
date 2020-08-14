@@ -68,5 +68,38 @@
     
     <br>
 
+    <br>
+    
+    <!-- Tabla inicio -->
+    <table>
+      <tr>
+        <th>Fecha</th>
+        <th>Temperatura</th>
+        <th>Humedad</th>
+        <th>Radiación</th>
+      </tr>
+      <tr *ngFor="let task of array2">
+        <td id="fecha">{{ task.x }}</td>
+        <td>{{ task.y }}</td>
+        <td> </td>
+        <td> </td>
+      </tr>
+      <tr *ngFor="let task of array3">
+        <td id="fecha">{{ task.x }}</td>
+        <td> </td>
+        <td>{{ task.y }}</td>
+        <td> </td>
+      </tr>
+      <tr *ngFor="let task of array4">
+        <td id="fecha">{{ task.x }}</td>
+        <td> </td>
+        <td> </td>
+        <td>{{ task.y }}</td>
+      </tr>
+    </table>
+
+    <!-- Tabla fin -->
+    <br>
+
   </div>
 </ion-content>

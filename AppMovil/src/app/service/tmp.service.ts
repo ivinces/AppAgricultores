@@ -8,7 +8,7 @@ import { Radiacion } from '../interface/radiacion';
 })
 export class TmpService {
 
-  private api='http://192.168.0.7:8081/api'
+  private api='http://192.168.0.8:8081/api'
 
   constructor(private http: HttpClient) { }
 
