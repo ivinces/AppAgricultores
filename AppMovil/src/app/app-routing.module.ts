@@ -37,6 +37,18 @@ const routes: Routes = [
   {
     path: 'humivstiempo',
     loadChildren: () => import('./pages/humivstiempo/humivstiempo.module').then( m => m.HumivstiempoPageModule)
+  },
+  {
+    path: 'pagetabs',
+    loadChildren: () => import('./pages/pagetabs/pagetabs.module').then( m => m.PagetabsPageModule)
+  },
+  {
+    path: 'mapa',
+    loadChildren: () => import('./pages/mapa/mapa.module').then( m => m.MapaPageModule)
+  },
+  {
+    path: 'umbrales',
+    loadChildren: () => import('./pages/umbrales/umbrales.module').then( m => m.UmbralesPageModule)
   }
 
 ];
