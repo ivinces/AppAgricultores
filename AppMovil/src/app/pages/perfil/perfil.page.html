@@ -40,7 +40,19 @@
     </ion-row>
     <br>
     <ion-row>
-      
+      <table>
+        <tr>
+          <th>Código</th>
+          <th>Humedad</th>
+          <th>Temperatura</th>
+          <th>Temperatura</th>
+        </tr>
+        <tr *ngFor="let task of array">
+          <td id="fecha">{{ task.x }}</td>
+          <td>{{ task.y }}</td>
+          <td> </td>
+        </tr>
+      </table>
     </ion-row>
 
   </ion-grid>
