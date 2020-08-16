@@ -1,0 +1,38 @@
+ion-content{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+ion-input,ion-textarea {
+  border: 1px solid #00838f;
+  border-radius: 0.5rem;
+}
+
+#text{
+  font-family: 'Rowdies', cursive;
+  font-size: large;
+  font-weight: bold;
+}
+
+#minimos{
+  font-family: 'Open Sans', sans-serif;
+  font-size: large;
+}
+
+#textarea{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#btnact{
+  color: white;
+  background-color:#4f9a94;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Rowdies', cursive;
+  font-size: medium;
+
+}

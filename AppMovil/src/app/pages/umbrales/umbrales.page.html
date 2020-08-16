@@ -7,8 +7,76 @@
   </ion-header>
 
   <div id="container">
-    <strong class="capitalize">Umbrales</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-grid>
+      <br>
+      <br>
+      <ion-row>
+        <form onsubmit="actualizarForm(event)">
+          <ion-list lines="none" class="ion-no-margin ion-no-padding">
+            <ion-row>
+              <ion-col>
+                <ion-label id="text" position="fixed">Temperatura</ion-label>
+                <br>
+                <br>
+                <ion-row>
+                  <ion-col>
+                    <ion-label id="minimos" position="fixed">Min.</ion-label>
+                    <ion-input type="text" ></ion-input>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label id="minimos" position="fixed">Max.</ion-label>
+                    <ion-input type="text" ></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <br>
+            <ion-row>
+              <ion-col>
+                <ion-label id="text" position="fixed">Humedad</ion-label>
+                <br>
+                <br>
+                <ion-row>
+                  <ion-col>
+                    <ion-label id="minimos" position="fixed">Min.</ion-label>
+                    <ion-input type="text" ></ion-input>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label id="minimos" position="fixed">Max.</ion-label>
+                    <ion-input type="text" ></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <br>
+            <ion-row>
+              <ion-col>
+                <ion-label id="text" position="fixed">Radiación</ion-label>
+                <br>
+                <br>
+                <ion-row>
+                  <ion-col>
+                    <ion-label id="minimos" position="fixed">Min.</ion-label>
+                    <ion-input type="text" ></ion-input>
+                  </ion-col>
+                  <ion-col>
+                    <ion-label id="minimos" position="fixed">Max.</ion-label>
+                    <ion-input type="text" ></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+          <br>
+          <button ion-button type="submit" block id="btnact">Actualizar</button>
+        </form>
+      </ion-row>
+      <br>
+      <ion-row>
+        
+      </ion-row>
+  
+    </ion-grid>
   </div>
 
 </ion-content>
