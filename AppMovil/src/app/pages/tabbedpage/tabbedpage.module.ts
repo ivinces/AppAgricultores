@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { TabbedpagePageRoutingModule } from './tabbedpage-routing.module';
 
 import { TabbedpagePage } from './tabbedpage.page';
-import { Routes } from '@angular/router';
 
 @NgModule({
   imports: [
