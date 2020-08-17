@@ -49,6 +49,10 @@ const routes: Routes = [
   {
     path: 'umbrales',
     loadChildren: () => import('./pages/umbrales/umbrales.module').then( m => m.UmbralesPageModule)
+  },
+  {
+    path: 'tabbedpage',
+    loadChildren: () => import('./pages/tabbedpage/tabbedpage.module').then( m => m.TabbedpagePageModule)
   }
 
 ];

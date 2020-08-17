@@ -7,7 +7,7 @@ import { Router, RouterEvent } from '@angular/router';
   styleUrls: ['./pagetabs.page.scss'],
 })
 export class PagetabsPage implements OnInit {
-  selectedPath = 'pagetabs/tab1';
+  selectedPath = './pagetabs/tab1';
 
   constructor(private router:Router) { 
     this.router.events.subscribe((event: RouterEvent) => {

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Perfil Cultivo',
-      url: 'pagetabs',
+      url: 'tabbedpage/perfil',
       icon: 'flower'
     },
     {

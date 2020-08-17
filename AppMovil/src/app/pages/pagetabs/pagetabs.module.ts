@@ -21,6 +21,7 @@ import { UmbralesPage } from '../umbrales/umbrales.page';
   ],
   declarations: [PagetabsPage]
 })
+
 export class PagetabsPageModule {
   tab1 = PerfilPage;
   tab2 = UmbralesPage;
