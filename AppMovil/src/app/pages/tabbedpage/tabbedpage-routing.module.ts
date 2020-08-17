@@ -10,22 +10,22 @@ const routes: Routes = [
     children: [
       {
         path: 'perfil',
-        loadChildren: '../perfil/perfil.module#PerfilPageModule'
+        loadChildren: () => import('../perfil/perfil.module').then( m => m.PerfilPageModule)
     
       },
       {
         path: 'umbrales',
-        loadChildren: '../umbrales/umbrales.module#UmbralesPageModule'
+        loadChildren: () => import('../umbrales/umbrales.module').then( m => m.UmbralesPageModule)
     
       },
       {
         path: 'map',
-        loadChildren: '../mapa/mapa.module#MapaPageModule'
+        loadChildren: () => import('../mapa/mapa.module').then( m => m.MapaPageModule)
     
       },
       {
         path: '',
-        redirectTo: '/tabbedpage/maps',
+        redirectTo: '/tabbedpage/perfil',
         pathMatch: 'full'
       }
     ]
