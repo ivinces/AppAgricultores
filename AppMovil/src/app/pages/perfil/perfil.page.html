@@ -9,18 +9,18 @@
     <br>
     <br>
     <ion-row>
-      <form onsubmit="actualizarForm(event)">
+      <form (ngSubmit)="actualizarForm()">
         <ion-list lines="none" class="ion-no-margin ion-no-padding">
           <ion-row>
             <ion-label id="text" position="fixed">Nombre</ion-label>
-            <ion-input type="text" ></ion-input>
+            <ion-input id="nombre_cul" type="text" value={{nombre_cultivo}}> </ion-input>
           </ion-row>
           <br>
           <ion-row>
             <ion-label id="text">Descripción</ion-label>
           </ion-row>
           <ion-row>
-            <ion-textarea rows="6" cols="20" id="textarea"></ion-textarea>
+            <ion-textarea rows="6" cols="20" id="textarea" value={{descripcion}}></ion-textarea>
           </ion-row>
         </ion-list>
         <br>
@@ -30,8 +30,8 @@
     <br>
     <br>
     <ion-row>
-      <ion-label position="fixed" id="text">Nodo:</ion-label>
-      <ion-label position="fixed">{{variable}} VALOR</ion-label>
+      <ion-label position="fixed" id="text">Nodo: </ion-label>
+      <ion-label position="fixed">{{nodo}}</ion-label>
     </ion-row>
     <br>
     <br>
@@ -43,17 +43,18 @@
       <table>
         <tr>
           <th>Código</th>
-          <th>Humedad</th>
-          <th>Temperatura</th>
-          <th>Temperatura</th>
+          <th>Sensor</th>
+          <th>Activo</th>
         </tr>
         <tr *ngFor="let task of array">
-          <td id="fecha">{{ task.x }}</td>
+          <td >{{ task.x }}</td>
           <td>{{ task.y }}</td>
-          <td> </td>
+          <td>{{ task.z }}</td>
         </tr>
       </table>
     </ion-row>
+    <br>
+    <br>
 
   </ion-grid>
 

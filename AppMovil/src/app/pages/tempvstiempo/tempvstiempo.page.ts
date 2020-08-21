@@ -3,6 +3,8 @@ import { Chart } from 'chart.js';
 import { Temperatura } from '../../interface/temperatura'
 import { TmpService } from '../../service/tmp.service'
 import * as moment from 'moment';
+import { Sensor } from 'src/app/interface/sensor';
+import { Cultivo } from 'src/app/interface/cultivo';
 
 @Component({
   selector: 'app-tempvstiempo',
@@ -19,16 +21,43 @@ export class TempvstiempoPage implements OnInit {
 
   temp: Temperatura[] = [];
   array: {}[] = [];
+  cultivo: Cultivo[] = [];
+  sensor: Sensor[] = [];
+  id_sensor : string;
+  nombre_cultivo : string;
+  id_cultivo : string;
+  indice = 0;
 
   constructor(
     private tmpService: TmpService
   ) { }
 
   ngOnInit() {
+    this.tmpService.getAllCultivo()
+    .subscribe(cultivo => {
+      this.cultivo = cultivo;
+      this.nombre_cultivo=cultivo[this.indice].nombre;
+      this.id_cultivo=cultivo[this.indice].id_cultivo;
+    })
+
+    this.tmpService.getAllSensor()
+    .subscribe(sensor => {
+      for(let data of sensor) {
+        if(data.id_cultivo==this.id_cultivo){
+          this.sensor.push(data);
+        }
+      }
+    })
+
     this.tmpService.getAllTemperatura()
     .subscribe(temp => {
-      this.temp = temp;
-      
+      for(let data of temp) {
+        for(let data1 of this.sensor) {
+          if(data.id_sensor==data1.id_sensor){
+            this.temp.push(data);
+          }
+        }
+      }
     })
   }
 
