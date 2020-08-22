@@ -39,6 +39,11 @@ export class AppComponent implements OnInit {
       icon: 'sunny'
     },
     {
+      title: 'Ubicación de Sensores',
+      url: 'mapatab',
+      icon: 'map'
+    },
+    {
       title: 'Reportes Personalizados',
       url: 'reportes',
       icon: 'podium'

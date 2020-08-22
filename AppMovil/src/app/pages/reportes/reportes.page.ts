@@ -19,6 +19,14 @@ export class ReportesPage implements OnInit {
   line: any;
   colorArray: any;
 
+  buttonColorrad: string = '#4f9a94';
+  buttonColorhum: string = '#4f9a94';
+  buttonColortemp: string = '#345465';
+  buttonColoryear: string = '#4f9a94';
+  buttonColormonth: string = '#4f9a94';
+  buttonColorday: string = '#345465';
+  buttonColorweek: string = '#4f9a94';
+
   humedad:boolean;
   radiacion:boolean;
   temperatura:boolean;
@@ -97,8 +105,8 @@ export class ReportesPage implements OnInit {
         label: 'Humedad',
         yAxesID: 'y0',
         data: this.getDataHum(),
-        backgroundColor: '#228B22',
-        borderColor: '#228B22',
+        backgroundColor: '#0000FF',
+        borderColor: '#0000FF',
         borderWidth: 1,
         fill: false
 
@@ -108,8 +116,8 @@ export class ReportesPage implements OnInit {
       this.array.push({
         label: 'Radiacion',
         data: this.getDataRad(),
-        backgroundColor: '#dd1144', 
-        borderColor: '#dd1144',
+        backgroundColor: '#ddee44', 
+        borderColor: '#ddee44',
         borderWidth: 1,
         fill: false,
         yAxisID: 'y1'
@@ -122,8 +130,8 @@ export class ReportesPage implements OnInit {
         label: 'Temperatura',
         yAxesID: 'y0',
         data: this.getDataTemp(),
-        backgroundColor: '#ddee44',
-        borderColor: '#ddee44',
+        backgroundColor: '#FF0000',
+        borderColor: '#FF0000',
         borderWidth: 1,
         fill: false
 
@@ -135,36 +143,71 @@ export class ReportesPage implements OnInit {
   clickDay(event){
     this.unit='day';
     this.createLineChart();
+    this.buttonColorday='#345465';
+    this.buttonColormonth='#4f9a94';
+    this.buttonColorweek='#4f9a94';
+    this.buttonColoryear='#4f9a94';
   }
 
   clickMonth(event){
     this.unit='month';
     this.createLineChart();
+    this.buttonColorday='#4f9a94';
+    this.buttonColormonth='#345465';
+    this.buttonColorweek='#4f9a94';
+    this.buttonColoryear='#4f9a94';
   }
 
   clickWeek(event){
     this.unit='week';
     this.createLineChart();
+    this.buttonColorday='#4f9a94';
+    this.buttonColormonth='#4f9a94';
+    this.buttonColorweek='#345465';
+    this.buttonColoryear='#4f9a94';
   }
 
   clickYear(event){
     this.unit='year';
     this.createLineChart();
+    this.buttonColorday='#4f9a94';
+    this.buttonColormonth='#4f9a94';
+    this.buttonColorweek='#4f9a94';
+    this.buttonColoryear='#345465';
+    
   }
 
   clickTemp(event){
     this.temperatura=!this.temperatura;
     this.createLineChart();
+    if(this.temperatura){
+      this.buttonColortemp = '#345465'
+    }
+    else{
+      this.buttonColortemp = '#4f9a94'
+    }
   }
 
   clickRad(event){
     this.radiacion=!this.radiacion;
     this.createLineChart();
+    if(this.radiacion){
+      this.buttonColorrad = '#345465'
+    }
+    else{
+      this.buttonColorrad = '#4f9a94'
+    }
   }
 
   clickHumidity(event){
     this.humedad=!this.humedad;
     this.createLineChart();
+    if(this.humedad){
+      this.buttonColorhum = '#345465'
+    }
+    else{
+      this.buttonColorhum = '#4f9a94'
+    }
   }
 
   clearcanvas(){

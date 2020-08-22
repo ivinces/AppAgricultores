@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TmpService } from '../../service/tmp.service'
 import { Cultivo } from 'src/app/interface/cultivo';
 import { Sensor } from 'src/app/interface/sensor';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -23,9 +24,13 @@ export class PerfilPage implements OnInit {
   indice=0;
   array: {}[] = [];
 
+  nomcultivo:"CULTIVO MAIZ";
+  
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private tmpService: TmpService
+    private tmpService: TmpService,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -79,6 +84,17 @@ export class PerfilPage implements OnInit {
     
     console.log("PUT");
 
+  }
+
+ async cosechado(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¿El cultivo '+this.nomcultivo+' fue cosechado?',
+      message: 'Si usted coloca Aceptar el asume que el cultivo a sido cosechado y NO se mostrará nueva información del mismo',
+      buttons: ['Rechazar', 'Aceptar']
+    });
+    
+    await alert.present();
   }
 
 }
