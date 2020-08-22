@@ -19,10 +19,9 @@ public class EstadoNodo {
     String categoria;
     Nodo nodo;
 
-    public EstadoNodo(Date fecha_hora, int bateria, String categoria, Nodo nodo) {
+    public EstadoNodo(Date fecha_hora, int bateria, Nodo nodo) {
         this.fecha_hora = fecha_hora;
         this.bateria = bateria;
-        this.categoria = categoria;
         this.nodo = nodo;
     }
 

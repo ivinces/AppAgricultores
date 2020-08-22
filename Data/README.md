@@ -1,8 +1,8 @@
 Estructura JSON ACEPTADO
 
-> id_nodo: Cada nodo central debe tener un código para identificar el cultivo
+> nodo_central: Cada nodo central debe tener un código para identificar el cultivo
 
-> sensor_id: Cada sensor debe tener un código identificador.
+> nodo_id: Cada nodo donde estan los sensores debe tener un código identificador.
 
 > latitude: La latitud de la ubicación GPS del sensor.
 
@@ -10,39 +10,39 @@ Estructura JSON ACEPTADO
 
 > battery: Se envía el numero de batería del sensor. 
 
-> temperature: El numero de la temperatura o puede quedar en blanco si el sensor no tiene esa información.
+> temperature: El valor de la temperatura recogida por el sensor.
 
-> radiation: El numero de la radiacion o puede quedar en blanco si el sensor no tiene esa información.
+> radiation: El valor de la radiación recogida por el sensor.
 
-> Humidity: El numero de la humedad o puede quedar en blanco si el sensor no tiene esa información.
+> humidity: El valor de la humedad recogida por el sensor.
 
 > datetime: Fecha y hora de la recolección de datos. Formato yyyy/MM/dd hh:mm:ss
 
 
 {
-"id_nodo": "",
+"nodo_central": "",
 
  "data": [
  
       {      
-        "sensor_id":"" ,
+        "nodo_id":"" ,
         "latitude": ,
         "longitude": ,
-   	   "battery":"",
-	   "temperature":"",
-	   "radiation":"",
-	   "Humidity":"",
-	   "datetime":"",
+   	"battery":"",
+	"temperature":"",
+	"radiation":"",
+	"humidity":"",
+	"datetime":"",
       },
       {
-        "sensor_id":"" ,
+        "nodo_id":"" ,
         "latitude": ,
         "longitude": ,
-   	   "battery":"",
-	   "temperature":"",
-	   "radiation":"",
-	   "Humidity":"",
-	   "datetime":"",
+   	"battery":"",
+	"temperature":"",
+	"radiation":"",
+	"humidity":"",
+	"datetime":"",
       }
     ]
 }

@@ -8,8 +8,8 @@
    	   "battery":"85",
 	   "temperature":"21",
 	   "radiation":"0.4",
-	   "Humidity":"30",
-	   "datetime":"2020/07/24 16:35:55",
+	   "humidity":"30",
+	   "datetime":"2020/08/20 16:35:55",
       },
       {
         "nodo_id": "NO-01-02" ,
@@ -18,19 +18,19 @@
    	   "battery":"40",
 	   "temperature":"20",
 	   "radiation":"0.3",
-	   "Humidity":"32"
-	   "datetime":"2020/07/24 16:35:55",
+	   "humidity":"32"
+	   "datetime":"2020/08/20 16:35:55",
 
       },
       {
-        "nodo_id": "NO-01-03",
-        "latitude": -2.149282,
-        "longitude": -79.957890,
+        "nodo_id": "NO-01-04",
+        "latitude": -2.149292,
+        "longitude": -79.957887,
    	   "battery":"50",
 	   "temperature":"19",
 	   "radiation":"0.3",
-	   "Humidity":"30"
-	   "datetime":"2020/07/24 16:35:55",
+	   "humidity":"30"
+	   "datetime":"2020/08/20 16:35:55",
       }
     ]
 }

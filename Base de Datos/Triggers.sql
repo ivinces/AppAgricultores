@@ -17,3 +17,22 @@ CREATE TRIGGER tg_crear_umbrales
   EXECUTE PROCEDURE fn_crear_umbrales();
 
 
+
+CREATE OR REPLACE FUNCTION fn_desactivar_cultivo()
+  RETURNS TRIGGER AS $$
+BEGIN
+	UPDATE nodo
+	SET activo=false
+	WHERE (id_cultivo=NEW.id_cultivo);
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tg_desactivar_cultivo
+  AFTER UPDATE
+  ON cultivo
+  FOR EACH ROW
+  WHEN (NEW.activo=false)
+  EXECUTE PROCEDURE fn_desactivar_cultivo();
+
+

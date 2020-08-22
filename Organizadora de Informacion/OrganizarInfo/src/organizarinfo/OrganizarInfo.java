@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import models.Cultivo;
 import models.EstadoNodo;
 import models.Registros;
-import models.Sensor;
+import models.Nodo;
 import org.json.simple.JSONObject;
 
 /**
@@ -39,12 +39,14 @@ public class OrganizarInfo {
         } catch (InterruptedException ex) {
             Logger.getLogger(OrganizarInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        int cod=1;
         for(File arch:archivos){
             String data=ConstantsArchivo.path_nuevo+"\\"+arch.getName();
             JsonData.getJsonData(data);
             Date fecha=new Date();
             SimpleDateFormat dt = new SimpleDateFormat("yyyyy-MM-dd hhmmss");
-            String nuevo=ConstantsArchivo.path_procesado+"\\"+dt.format(fecha)+".json";
+            String nuevo=ConstantsArchivo.path_procesado+"\\"+dt.format(fecha)+"C"+cod+".json";
+            cod++;
             try { 
                 Files.move(Paths.get(data),Paths.get(nuevo));
             } catch (IOException ex) {
@@ -53,14 +55,14 @@ public class OrganizarInfo {
         }  
     }
     
-    public static void parseSensorObject(JSONObject sensor, String nodo) 
+    public static void parseSensorObject(JSONObject sensor, String nodo_central) 
     {
-        String sensor_id = (String) sensor.get("sensor_id");  
+        String nodo_id = (String) sensor.get("nodo_id");  
         String datetime = (String) sensor.get("datetime");    
         Double latitud = (Double) sensor.get("latitude"); 
         Double longitude = (Double) sensor.get("longitude");
         String battery = (String) sensor.get("battery");
-        String humidity = (String) sensor.get("Humidity");
+        String humidity = (String) sensor.get("humidity");
         String radiation = (String) sensor.get("radiation");
         String temperature = (String) sensor.get("temperature");
         
@@ -72,29 +74,22 @@ public class OrganizarInfo {
         }
        
         
-        Cultivo cultivo=new Cultivo(nodo);
-        Sensor sensorobj= new Sensor(latitud,longitude,sensor_id, cultivo);
-        float valor=0;
-        if(!humidity.equals("")){
-            sensorobj.setHumedad(true);
-            valor=Float.parseFloat(humidity);
-        }
-        if(!radiation.equals("")){
-            sensorobj.setRadiacion(true);
-            valor=Float.parseFloat(radiation);
-        }
-        if(!temperature.equals("")){
-            sensorobj.setTemperatura(true);
-            valor=Float.parseFloat(temperature);
-        }
-        EstadoNodo estado=new EstadoNodo(date1, Integer.parseInt(battery),sensorobj);
+        Cultivo cultivo=new Cultivo(nodo_central);
+        Nodo nodoobj=new Nodo(nodo_id, true, latitud, longitude, cultivo);
+        //Sensor sensorobj= new Sensor(latitud,longitude,sensor_id, cultivo);
+        float humedad=Float.parseFloat(humidity);
+        float temperatura=Float.parseFloat(temperature);
+        float radiacion=Float.parseFloat(radiation);
         
-        Registros registro=new Registros(date1,valor, sensorobj);
+        EstadoNodo estado=new EstadoNodo(date1, Integer.parseInt(battery), nodoobj);
         
-        insertarbase(cultivo, sensorobj,registro,estado);
+        Registros registro= new Registros(date1, temperatura, radiacion, humedad, nodoobj);
+        
+        
+        insertarbase(cultivo, nodoobj,registro,estado);
     }
     
-    public static void insertarbase(Cultivo cultivo, Sensor sensor, Registros registro, EstadoNodo estado){
+    public static void insertarbase(Cultivo cultivo, Nodo nodo, Registros registro, EstadoNodo estado){
         
         Connection c =PostgreSQLJDBC.conexion();
         
@@ -103,19 +98,12 @@ public class OrganizarInfo {
                 PostgreSQLJDBC.insertcultivo(c, cultivo);
             }
             
-            if(!PostgreSQLJDBC.sensorExist(c, sensor)){
-                PostgreSQLJDBC.insertsensor(c, sensor);
+            if(!PostgreSQLJDBC.nodoExist(c, nodo)){
+                PostgreSQLJDBC.insertnodo(c, nodo);
             }
             PostgreSQLJDBC.insertestado(c, estado);
-            if(sensor.isHumedad()){
-                PostgreSQLJDBC.insertregistro(c, registro, "registro_humedad");
-            }
-            if(sensor.isRadiacion()){
-                PostgreSQLJDBC.insertregistro(c, registro, "registro_radiacion");
-            }
-            if(sensor.isTemperatura()){
-                PostgreSQLJDBC.insertregistro(c, registro, "registro_temperatura");
-            }
+            PostgreSQLJDBC.insertregistro(c, registro);
+            
             c.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrganizarInfo.class.getName()).log(Level.SEVERE, null, ex);

@@ -30,7 +30,7 @@ public class JsonData {
             Object obj = jsonParser.parse(reader);
             JSONObject jo = (JSONObject) obj; 
             
-            String nodo = (String) jo.get("id_nodo"); 
+            String nodo = (String) jo.get("nodo_central"); 
             
             JSONArray data = (JSONArray) jo.get("data");
             

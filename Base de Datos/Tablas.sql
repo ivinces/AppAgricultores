@@ -2,7 +2,7 @@
 	id_cultivo serial PRIMARY KEY,
 	nombre VARCHAR(50),
 	descripcion VARCHAR(250),
-	nodo VARCHAR(50) NOT NULL,
+	nodo_central VARCHAR(50) NOT NULL,
 	activo BOOLEAN DEFAULT TRUE
 );
 
@@ -20,52 +20,35 @@ CREATE TABLE Umbrales_Cultivo(
 
 );
 
-CREATE TABLE Sensor(
-	id_sensor serial PRIMARY KEY,
-	temperatura BOOLEAN DEFAULT FALSE,
-	humedad BOOLEAN DEFAULT FALSE,
-	radiacion BOOLEAN DEFAULT FALSE,
+CREATE TABLE Nodo(
+	id_nodo serial PRIMARY KEY,
 	latitud FLOAT,
 	longitud FLOAT,
 	activo BOOLEAN DEFAULT TRUE,
+	cod_nodo VARCHAR(50) NOT NULL,
 	id_cultivo INT NOT NULL,
 	FOREIGN KEY(id_cultivo)
 		REFERENCES Cultivo(id_cultivo)
 );
 
-CREATE TABLE Estado_Sensor(
-	id_estado_sensor serial PRIMARY KEY,
+CREATE TABLE Estado_Nodo(
+	id_estado_nodo serial PRIMARY KEY,
 	fecha_hora TIMESTAMP,
 	bateria INT,
 	categoria VARCHAR(15),
-	id_sensor INT NOT NULL,
-	FOREIGN KEY(id_sensor)
-		REFERENCES Sensor(id_sensor)
+	id_nodo INT NOT NULL,
+	FOREIGN KEY(id_nodo)
+		REFERENCES Nodo(id_nodo)
 );
 
-CREATE TABLE registro_temperatura(
-	id_reg_temp serial PRIMARY KEY,
+CREATE TABLE Registros(
+	id_registro serial PRIMARY KEY,
 	fecha_hora TIMESTAMP,
-	valor FLOAT,
-	id_sensor INT NOT NULL,
-	FOREIGN KEY(id_sensor)
-		REFERENCES Sensor(id_sensor)
+	temperatura FLOAT,
+	humedad FLOAT,
+	radiacion FLOAT,
+	id_nodo INT NOT NULL,
+	FOREIGN KEY(id_nodo)
+		REFERENCES Nodo(id_nodo)
 );
 
-CREATE TABLE registro_humedad(
-	id_reg_humedad serial PRIMARY KEY,
-	fecha_hora TIMESTAMP,
-	valor FLOAT,
-	id_sensor INT NOT NULL,
-	FOREIGN KEY(id_sensor)
-		REFERENCES Sensor(id_sensor)
-);
-
-CREATE TABLE registro_radiacion(
-	id_reg_radiacion serial PRIMARY KEY,
-	fecha_hora TIMESTAMP,
-	valor FLOAT,
-	id_sensor INT NOT NULL,
-	FOREIGN KEY(id_sensor)
-		REFERENCES Sensor(id_sensor)
-);

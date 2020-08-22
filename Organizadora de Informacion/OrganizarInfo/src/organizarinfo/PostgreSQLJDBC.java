@@ -20,7 +20,7 @@ import java.util.Date;
 import models.Cultivo;
 import models.EstadoNodo;
 import models.Registros;
-import models.Sensor;
+import models.Nodo;
 /**
  *
  * @author isabe
@@ -43,7 +43,7 @@ public class PostgreSQLJDBC {
     public static void insertcultivo(Connection c, Cultivo cultivo){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("INSERT INTO cultivo(nombre, descripcion, nodo) VALUES ('"+cultivo.getNombre()+"', '"+cultivo.getDescripcion()+"', '"+cultivo.getNodo()+"')");
+            st = c.prepareStatement("INSERT INTO cultivo(nombre, descripcion, nodo_central) VALUES ('"+cultivo.getNombre()+"', '"+cultivo.getDescripcion()+"', '"+cultivo.getNodo()+"')");
             st.executeUpdate();
             
             
@@ -53,11 +53,11 @@ public class PostgreSQLJDBC {
         
     }
     
-    public static void insertsensor(Connection c, Sensor sensor){
-        int id_cultivo=getidcultivo(c,sensor.getCultivo());
+    public static void insertnodo(Connection c, Nodo nodo){
+        int id_cultivo=getidcultivo(c,nodo.getCultivo());
         PreparedStatement st;
-        
-        String sql="INSERT INTO sensor(temperatura, humedad, radiacion, latitud, longitud, id_cultivo, cod_sensor) VALUES ("+sensor.isTemperatura()+", "+sensor.isHumedad()+", "+sensor.isRadiacion()+", "+sensor.getLatitud()+", "+sensor.getLongitud()+", "+id_cultivo+", '"+sensor.getCod_sensor()+"')";
+               
+        String sql="INSERT INTO nodo(latitud, longitud, cod_nodo, id_cultivo) VALUES ("+nodo.getLatitud()+","+nodo.getLongitud()+", '"+nodo.getCod_nodo()+"', "+id_cultivo+")";
         
         try {
             st = c.prepareStatement(sql);
@@ -87,11 +87,12 @@ public class PostgreSQLJDBC {
         Date fecha=estado.getFecha_hora();
         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String fechastring=dt.format(fecha);
-        int id_sensor=getidsensor(c,estado.getSensor());
+        int id_nodo=getidnodo(c,estado.getNodo());
+  
         
         PreparedStatement st;
         try {
-            st = c.prepareStatement("INSERT INTO estado_sensor(fecha_hora, bateria, categoria, id_sensor) VALUES ('"+fechastring+"', "+bateria+", '"+categoria+"', "+id_sensor+")");
+            st = c.prepareStatement("INSERT INTO estado_nodo(fecha_hora, bateria, categoria, id_nodo) VALUES ('"+fechastring+"', "+bateria+", '"+categoria+"', "+id_nodo+")");
             st.executeUpdate();
             
         } catch (SQLException ex) {
@@ -100,16 +101,16 @@ public class PostgreSQLJDBC {
     
     }
     
-    public static void insertregistro(Connection c, Registros registro,String tabla){
+    public static void insertregistro(Connection c, Registros registro){
         Date fecha=registro.getFecha_hora();
         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String fechastring=dt.format(fecha);
         
-        int id_sensor=getidsensor(c,registro.getSensor());
+        int id_nodo=getidnodo(c,registro.getNodo());
         
         PreparedStatement st;
         try {
-            st = c.prepareStatement("INSERT INTO "+tabla+"(fecha_hora, valor, id_sensor) VALUES ('"+fechastring+"', "+registro.getValor()+", "+id_sensor+")");
+            st = c.prepareStatement("INSERT INTO registros(fecha_hora, temperatura, humedad, radiacion, id_nodo) VALUES ('"+fechastring+"', "+registro.getTemperatura()+", "+registro.getHumedad()+", "+registro.getRadiacion()+","+id_nodo+")");
             st.executeUpdate();
             
         } catch (SQLException ex) {
@@ -120,7 +121,7 @@ public class PostgreSQLJDBC {
     public static int getidcultivo(Connection c, Cultivo cultivo){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("SELECT * FROM cultivo WHERE nodo='"+cultivo.getNodo()+"' AND activo=TRUE");
+            st = c.prepareStatement("SELECT * FROM cultivo WHERE nodo_central='"+cultivo.getNodo()+"' AND activo=TRUE");
             ResultSet rs = st.executeQuery();
             
             if(rs.next()){
@@ -138,17 +139,17 @@ public class PostgreSQLJDBC {
         return 0;
     }
     
-    public static int getidsensor(Connection c, Sensor sensor){
+    public static int getidnodo(Connection c, Nodo nodo){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("SELECT * FROM sensor WHERE cod_sensor='"+sensor.getCod_sensor()+"' AND activo=TRUE");
+            st = c.prepareStatement("SELECT * FROM nodo WHERE cod_nodo='"+nodo.getCod_nodo()+"' AND activo=TRUE");
             ResultSet rs = st.executeQuery();
             
             if(rs.next()){
-                int id_cultivo=rs.getInt("id_sensor");
+                int id_nodo=rs.getInt("id_nodo");
                 rs.close();
                 st.close();
-                return id_cultivo;
+                return id_nodo;
             }
            
         } catch (SQLException ex) {
@@ -159,10 +160,10 @@ public class PostgreSQLJDBC {
         return 0;
     }
     
-    public static boolean sensorExist(Connection c,Sensor sensor){
+    public static boolean nodoExist(Connection c,Nodo nodo){
         PreparedStatement st;
         try {
-            st = c.prepareStatement("SELECT * FROM sensor WHERE cod_sensor='"+sensor.getCod_sensor()+"' AND activo=TRUE");
+            st = c.prepareStatement("SELECT * FROM nodo WHERE cod_nodo='"+nodo.getCod_nodo()+"' AND activo=TRUE");
             ResultSet rs = st.executeQuery();
             
             if(rs.next()){
@@ -170,46 +171,31 @@ public class PostgreSQLJDBC {
                 st.close();
                 return true;
             }
-            else{
-                rs.close();
-                st.close();
-                return false;
-            }
            
         } catch (SQLException ex) {
             Logger.getLogger(PostgreSQLJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
         return false;
     }
     
     public static boolean cultivoExist(Connection c,Cultivo cultivo){
-        
-        String sql="SELECT * FROM cultivo WHERE nodo='"+cultivo.getNodo()+"'";
-        Statement st;
+        PreparedStatement st;
         try {
-            st = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = st.executeQuery(sql);
+            st = c.prepareStatement("SELECT * FROM cultivo WHERE nodo_central='"+cultivo.getNodo()+"' AND activo=TRUE");
+            ResultSet rs = st.executeQuery();
+            
             if(rs.next()){
-                rs.last();
-                boolean activo=rs.getBoolean("activo");
-                if(activo){
-                    return true;
-                }
                 rs.close();
                 st.close();
-                return false;
-            }
-            else{
-                rs.close();
-                st.close();
-                return false;
+                return true;
             }
            
         } catch (SQLException ex) {
             Logger.getLogger(PostgreSQLJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+       
         return false;
     }
 }
