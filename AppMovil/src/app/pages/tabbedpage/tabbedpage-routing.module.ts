@@ -19,11 +19,6 @@ const routes: Routes = [
     
       },
       {
-        path: 'map',
-        loadChildren: () => import('../mapa/mapa.module').then( m => m.MapaPageModule)
-    
-      },
-      {
         path: '',
         redirectTo: '/tabbedpage/perfil',
         pathMatch: 'full'

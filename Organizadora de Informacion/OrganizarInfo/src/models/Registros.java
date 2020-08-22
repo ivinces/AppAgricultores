@@ -14,13 +14,17 @@ import java.util.Date;
  */
 public class Registros {
     Date fecha_hora;
-    float valor;
-    Sensor sensor;
+    float temperatura;
+    float radiacion;
+    float humedad;
+    Nodo nodo;
 
-    public Registros(Date fecha_hora, float valor, Sensor sensor) {
+    public Registros(Date fecha_hora, float temperatura, float radiacion, float humedad, Nodo nodo) {
         this.fecha_hora = fecha_hora;
-        this.valor = valor;
-        this.sensor = sensor;
+        this.temperatura = temperatura;
+        this.radiacion = radiacion;
+        this.humedad = humedad;
+        this.nodo = nodo;
     }
 
     public Date getFecha_hora() {
@@ -31,21 +35,39 @@ public class Registros {
         this.fecha_hora = fecha_hora;
     }
 
-    public float getValor() {
-        return valor;
+    public float getTemperatura() {
+        return temperatura;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+    public void setTemperatura(float temperatura) {
+        this.temperatura = temperatura;
     }
 
-    public Sensor getSensor() {
-        return sensor;
+    public float getRadiacion() {
+        return radiacion;
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
+    public void setRadiacion(float radiacion) {
+        this.radiacion = radiacion;
     }
+
+    public float getHumedad() {
+        return humedad;
+    }
+
+    public void setHumedad(float humedad) {
+        this.humedad = humedad;
+    }
+
+    public Nodo getNodo() {
+        return nodo;
+    }
+
+    public void setNodo(Nodo nodo) {
+        this.nodo = nodo;
+    }
+
+    
     
     
 }

@@ -18,7 +18,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import models.Cultivo;
-import models.EstadoSensor;
+import models.EstadoNodo;
 import models.Registros;
 import models.Sensor;
 /**
@@ -69,7 +69,7 @@ public class PostgreSQLJDBC {
     
     }
     
-    public static void insertestado(Connection c, EstadoSensor estado){
+    public static void insertestado(Connection c, EstadoNodo estado){
         
         int bateria=estado.getBateria();
         String categoria="";

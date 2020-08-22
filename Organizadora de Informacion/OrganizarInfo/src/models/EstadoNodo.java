@@ -12,19 +12,20 @@ import java.util.Date;
  *
  * @author isabe
  */
-public class EstadoSensor {
+public class EstadoNodo {
     
     Date fecha_hora;
     int bateria;
     String categoria;
-    Sensor sensor;
+    Nodo nodo;
 
-    public EstadoSensor(Date fecha_hora, int bateria,Sensor sensor) {
+    public EstadoNodo(Date fecha_hora, int bateria, String categoria, Nodo nodo) {
         this.fecha_hora = fecha_hora;
         this.bateria = bateria;
-        this.sensor = sensor;
+        this.categoria = categoria;
+        this.nodo = nodo;
     }
-    
+
     public Date getFecha_hora() {
         return fecha_hora;
     }
@@ -40,7 +41,7 @@ public class EstadoSensor {
     public void setBateria(int bateria) {
         this.bateria = bateria;
     }
-    
+
     public String getCategoria() {
         return categoria;
     }
@@ -49,11 +50,13 @@ public class EstadoSensor {
         this.categoria = categoria;
     }
 
-    public Sensor getSensor() {
-        return sensor;
+    public Nodo getNodo() {
+        return nodo;
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
+    public void setNodo(Nodo nodo) {
+        this.nodo = nodo;
     }
+
+    
 }

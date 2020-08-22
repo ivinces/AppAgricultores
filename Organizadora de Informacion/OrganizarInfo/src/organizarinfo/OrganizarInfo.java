@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Cultivo;
-import models.EstadoSensor;
+import models.EstadoNodo;
 import models.Registros;
 import models.Sensor;
 import org.json.simple.JSONObject;
@@ -87,14 +87,14 @@ public class OrganizarInfo {
             sensorobj.setTemperatura(true);
             valor=Float.parseFloat(temperature);
         }
-        EstadoSensor estado=new EstadoSensor(date1, Integer.parseInt(battery),sensorobj);
+        EstadoNodo estado=new EstadoNodo(date1, Integer.parseInt(battery),sensorobj);
         
         Registros registro=new Registros(date1,valor, sensorobj);
         
         insertarbase(cultivo, sensorobj,registro,estado);
     }
     
-    public static void insertarbase(Cultivo cultivo, Sensor sensor, Registros registro, EstadoSensor estado){
+    public static void insertarbase(Cultivo cultivo, Sensor sensor, Registros registro, EstadoNodo estado){
         
         Connection c =PostgreSQLJDBC.conexion();
         

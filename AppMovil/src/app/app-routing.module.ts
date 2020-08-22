@@ -28,10 +28,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
-    path: 'mapa',
-    loadChildren: () => import('./pages/mapa/mapa.module').then( m => m.MapaPageModule)
-  },
-  {
     path: 'umbrales',
     loadChildren: () => import('./pages/umbrales/umbrales.module').then( m => m.UmbralesPageModule)
   },
