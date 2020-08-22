@@ -28,18 +28,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
-    path: 'tempvstiempo',
-    loadChildren: () => import('./pages/tempvstiempo/tempvstiempo.module').then( m => m.TempvstiempoPageModule)
-  },
-  {
-    path: 'radvstiempo',
-    loadChildren: () => import('./pages/radvstiempo/radvstiempo.module').then( m => m.RadvstiempoPageModule)
-  },
-  {
-    path: 'humivstiempo',
-    loadChildren: () => import('./pages/humivstiempo/humivstiempo.module').then( m => m.HumivstiempoPageModule)
-  },
-  {
     path: 'mapa',
     loadChildren: () => import('./pages/mapa/mapa.module').then( m => m.MapaPageModule)
   },
@@ -56,10 +44,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/mapaprincipal/mapaprincipal.module').then( m => m.MapaprincipalPageModule)
   },
   {
-    path: 'mapatemp',
-    loadChildren: () => import('./pages/mapatemp/mapatemp.module').then( m => m.MapatempPageModule)
-  },
-  {
     path: 'maparad',
     loadChildren: () => import('./pages/maparad/maparad.module').then( m => m.MaparadPageModule)
   },
@@ -70,6 +54,14 @@ const routes: Routes = [
   {
     path: 'mapatab',
     loadChildren: () => import('./pages/mapatab/mapatab.module').then( m => m.MapatabPageModule)
+  },
+  {
+    path: 'personalizado',
+    loadChildren: () => import('./pages/personalizado/personalizado.module').then( m => m.PersonalizadoPageModule)
+  },
+  {
+    path: 'mapatemperatura',
+    loadChildren: () => import('./pages/mapatemperatura/mapatemperatura.module').then( m => m.MapatemperaturaPageModule)
   }
 
 ];

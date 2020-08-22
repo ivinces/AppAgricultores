@@ -24,30 +24,20 @@ export class AppComponent implements OnInit {
       icon: 'flower'
     },
     {
-      title: 'Temperatura vs Tiempo',
-      url: 'tempvstiempo',
-      icon: 'thermometer'
-    },
-    {
-      title: 'Humedad vs Tiempo',
-      url: 'humivstiempo',
-      icon: 'water'
-    },
-    {
-      title: 'Radiación vs Tiempo',
-      url: 'radvstiempo',
-      icon: 'sunny'
-    },
-    {
       title: 'Ubicación de Sensores',
       url: 'mapatab',
       icon: 'map'
     },
     {
-      title: 'Reportes Personalizados',
+      title: 'Parametros Ambientales',
       url: 'reportes',
+      icon: 'partly-sunny'
+    },
+    {
+      title: 'Reportes Personalizados',
+      url: 'personalizado',
       icon: 'podium'
-    }
+    },
   ];
 
   constructor(

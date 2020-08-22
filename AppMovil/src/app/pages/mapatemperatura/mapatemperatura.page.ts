@@ -3,11 +3,11 @@ import * as Leaflet from 'leaflet';
 import { antPath } from 'leaflet-ant-path';
 
 @Component({
-  selector: 'app-maparad',
-  templateUrl: './maparad.page.html',
-  styleUrls: ['./maparad.page.scss'],
+  selector: 'app-mapatemperatura',
+  templateUrl: './mapatemperatura.page.html',
+  styleUrls: ['./mapatemperatura.page.scss'],
 })
-export class MaparadPage implements OnInit {
+export class MapatemperaturaPage implements OnInit {
   map: Leaflet.Map;
 
   data=[
@@ -83,24 +83,25 @@ export class MaparadPage implements OnInit {
 
   ngOnInit() {
   }
+
   ionViewDidEnter() { this.leafletMap(); }
 
   myIconrad = Leaflet.icon({
-    iconUrl: '../../assets/img/rad.png',
+    iconUrl: '../../assets/img/temp.png',
     iconSize: [36, 40],
     iconAnchor: [36, 40],
     popupAnchor: [-3, -76],
   });
 
   leafletMap() {
-    this.map = Leaflet.map('mapIdrad').setView([this.data[0].lat, this.data[0].long], 18);
+    this.map = Leaflet.map('mapIdtemp').setView([this.data[0].lat, this.data[0].long], 18);
     Leaflet.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: 'edupala.com'
     }).addTo(this.map);
 
     for (const property of this.data) {
       for(const sensores of property.sensores){
-        if(sensores.variable=="radiacion"){
+        if(sensores.variable=="temperatura"){
           Leaflet.marker([property.lat, property.long], {icon: this.myIconrad}).addTo(this.map)
           .bindPopup(sensores.registro)
           .openPopup();
@@ -116,5 +117,6 @@ export class MaparadPage implements OnInit {
   ionViewWillLeave() {
     this.map.remove();
   }
+
 
 }

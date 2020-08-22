@@ -15,8 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'temp',
-        loadChildren: () => import('../mapatemp/mapatemp.module').then( m => m.MapatempPageModule)
-    
+        loadChildren: () => import('../mapatemperatura/mapatemperatura.module').then( m => m.MapatemperaturaPageModule)
       },
       {
         path: 'hum',
