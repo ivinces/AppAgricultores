@@ -25,6 +25,10 @@ export class PerfilPage implements OnInit {
   array: {}[] = [];
 
   nomcultivo:"CULTIVO MAIZ";
+
+  cosechado_cultivo:boolean;
+
+  
   
 
   constructor(
@@ -89,10 +93,29 @@ export class PerfilPage implements OnInit {
  async cosechado(){
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: '¿El cultivo '+this.nomcultivo+' fue cosechado?',
+      header: '¿El cultivo  fue cosechado?',
       message: 'Si usted coloca Aceptar el asume que el cultivo a sido cosechado y NO se mostrará nueva información del mismo',
-      buttons: ['Rechazar', 'Aceptar']
-    });
+      buttons: [
+        { 
+        text: 'Aceptar',
+        role: 'Ok', 
+        handler: () => {  
+          this.cosechado_cultivo=true;
+          //this.activo=true;
+        console.log('Confirm Ok'); 
+        } 
+        }, 
+        { 
+        text: 'Cancelar', 
+        role: 'Cancel',
+        handler: () => { 
+          this.cosechado_cultivo=false;
+          
+        console.log('Confirm Cancel.');  
+        } 
+        } 
+        ] 
+        }); 
     
     await alert.present();
   }

@@ -34,7 +34,7 @@
         <ion-label id="text">Cultivo Cosechado:</ion-label>
       </ion-col>
       <ion-col>
-        <ion-toggle name="to-cosechado" color="success" (ionChange)="cosechado($event)"></ion-toggle>
+        <ion-toggle name="to-cosechado" [(ngModel)]="cosechado_cultivo" color="success" (ngModelChange)="cosechado()" [disabled]="activo"></ion-toggle>
       </ion-col>
     </ion-row>
       
