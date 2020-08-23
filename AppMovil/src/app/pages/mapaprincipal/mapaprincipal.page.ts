@@ -95,7 +95,7 @@ myIconNodo = Leaflet.icon({
 
   leafletMap() {
     this.map = Leaflet.map('mapId').setView([this.data[0].lat, this.data[0].long], 18);
-    Leaflet.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    Leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: 'edupala.com'
     }).addTo(this.map);
 
