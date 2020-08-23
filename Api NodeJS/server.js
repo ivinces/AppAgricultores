@@ -8,7 +8,7 @@ const client = new Client({
     user: "agricultor",
     password: "appagricultor",
     host: "localhost",
-    port: "5433",
+    port: "5432",
     database: "SensoresDB"
 })
 
@@ -23,7 +23,7 @@ app.post("/cultivo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await createRegister("INSERT INTO Cultivo (nombre, descripcion, nodo, activo) VALUES ($1,$2,$3, $4)",[reqJson.nombre, reqJson.descripcion, reqJson.nodo, reqJson.activo]);
+        const rows = await createRegister("INSERT INTO Cultivo (nombre, descripcion, nodo_central, activo) VALUES ($1,$2,$3, $4)",[reqJson.nombre, reqJson.descripcion, reqJson.nodo_central, reqJson.activo]);
         result.success=true;
         }
     catch(e){
@@ -40,7 +40,7 @@ app.delete("/cultivo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM Cultivo WHERE id_cultivo = $1", reqJson.id)
+        await deleteRegister("DELETE FROM Cultivo WHERE id_cultivo = $1", reqJson.id_cultivo)
         result.success=true;
         }
     catch(e){
@@ -56,7 +56,7 @@ app.put("/cultivo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE Cultivo SET nombre = $1, descripcion = $2, nodo = $3, activo = $4 WHERE id_cultivo=$5", [reqJson.nombre, reqJson.descripcion, reqJson.nodo, reqJson.activo, reqJson.id]);
+        const rows = await updateRegister("UPDATE Cultivo SET nombre = $1, descripcion = $2, nodo_central = $3, activo = $4 WHERE id_cultivo=$5", [reqJson.nombre, reqJson.descripcion, reqJson.nodo_central, reqJson.activo, reqJson.id]);
         result.success=true;
         }
     catch(e){
@@ -98,7 +98,7 @@ app.delete("/umbrales_cultivo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM Umbrales_Cultivo WHERE id_umbrales = $1", reqJson.id)
+        await deleteRegister("DELETE FROM Umbrales_Cultivo WHERE id_umbrales = $1", reqJson.id_umbrales)
         result.success=true;
         }
     catch(e){
@@ -114,7 +114,7 @@ app.put("/umbrales_cultivo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE Umbrales_Cultivo SET temp_min = $1, temp_max = $2, humedad_min = $3, humedad_max = $4, radiacion_uv_min = $5, radiacion_uv_max = $6, id_cultivo = $7  WHERE id_umbrales=$8",[reqJson.temp_min, reqJson.temp_max, reqJson.humedad_min, reqJson.humedad_max, reqJson.radiacion_uv_min, reqJson.radiacion_uv_max, reqJson.id_cultivo, reqJson.id]);
+        const rows = await updateRegister("UPDATE Umbrales_Cultivo SET temp_min = $1, temp_max = $2, humedad_min = $3, humedad_max = $4, radiacion_uv_min = $5, radiacion_uv_max = $6, id_cultivo = $7  WHERE id_umbrales=$8",[reqJson.temp_min, reqJson.temp_max, reqJson.humedad_min, reqJson.humedad_max, reqJson.radiacion_uv_min, reqJson.radiacion_uv_max, reqJson.id_cultivo, reqJson.id_umbrales]);
         result.success=true;
         }
     catch(e){
@@ -129,17 +129,17 @@ app.put("/umbrales_cultivo", async (req,res) => {
 //fin Umbrales_Cultivo
 
 
-//inicio Sensor
-app.get("/sensor", async (req,res) => {
-    const rows = await readRegister("SELECT * FROM Sensor");
+//inicio Nodo
+app.get("/nodo", async (req,res) => {
+    const rows = await readRegister("SELECT * FROM Nodo");
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(rows));
 })
-app.post("/sensor", async (req,res) => {
+app.post("/nodo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await createRegister("INSERT INTO Sensor (temperatura, humedad, radiacion, latitud, longitud, id_cultivo) VALUES  ($1,$2,$3,$4,$5,$6)",[reqJson.temperatura, reqJson.humedad, reqJson.radiacion, reqJson.latitud, reqJson.longitud, reqJson.id_cultivo]);
+        const rows = await createRegister("INSERT INTO Nodo (latitud, longitud, activo, cod_nodo, id_cultivo) VALUES  ($1,$2,$3,$4,$5,$6)",[reqJson.latitud, reqJson.longitud, reqJson.activo, reqJson.cod_nodo, reqJson.id_cultivo]);
         result.success=true;
         }
     catch(e){
@@ -152,11 +152,11 @@ app.post("/sensor", async (req,res) => {
     
 })
 
-app.delete("/sensor", async (req,res) => {
+app.delete("/nodo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM Sensor WHERE id_sensor = $1", reqJson.id)
+        await deleteRegister("DELETE FROM Nodo WHERE id_nodo = $1", reqJson.id_nodo)
         result.success=true;
         }
     catch(e){
@@ -168,11 +168,11 @@ app.delete("/sensor", async (req,res) => {
     }
 })
 
-app.put("/sensor", async (req,res) => {
+app.put("/nodo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE Sensor SET temperatura = $1, humedad = $2, radiacion = $3, latitud = $4, longitud = $5, id_cultivo = $6  WHERE id_sensor=$7",[reqJson.temperatura, reqJson.humedad, reqJson.radiacion, reqJson.latitud, reqJson.longitud, reqJson.id_cultivo, reqJson.id]);
+        const rows = await updateRegister("UPDATE Nodo SET latitud = $1, longitud = $2, activo = $3, cod_nodo = $4, id_cultivo = $5  WHERE id_nodo=$6",[reqJson.latitud, reqJson.longitud, reqJson.activo, reqJson.cod_nodo, reqJson.id_cultivo, reqJson.id_nodo]);
         result.success=true;
         }
     catch(e){
@@ -184,20 +184,20 @@ app.put("/sensor", async (req,res) => {
     }
     
 })
-//fin Sensor
+//fin Nodo
 
 
-//inicio Estado_Sensor
-app.get("/estado_sensor", async (req,res) => {
-    const rows = await readRegister("SELECT * FROM Estado_Sensor");
+//inicio Estado_Nodo
+app.get("/estado_nodo", async (req,res) => {
+    const rows = await readRegister("SELECT * FROM Estado_Nodo");
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(rows));
 })
-app.post("/estado_sensor", async (req,res) => {
+app.post("/estado_nodo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await createRegister("INSERT INTO Estado_Sensor (fecha_hora, bateria, categoria, id_sensor) VALUES ($1,$2,$3,$4)",[reqJson.fecha_hora, reqJson.bateria, reqJson.categoria, reqJson.id_sensor]);
+        const rows = await createRegister("INSERT INTO Estado_Nodo (fecha_hora, bateria, categoria, id_nodo) VALUES ($1,$2,$3,$4)",[reqJson.fecha_hora, reqJson.bateria, reqJson.categoria, reqJson.id_nodo]);
         result.success=true;
         }
     catch(e){
@@ -210,11 +210,11 @@ app.post("/estado_sensor", async (req,res) => {
     
 })
 
-app.delete("/estado_sensor", async (req,res) => {
+app.delete("/estado_nodo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM Estado_Sensor WHERE id_estado_sensor = $1", reqJson.id)
+        await deleteRegister("DELETE FROM Estado_Nodo WHERE id_estado_nodo = $1", reqJson.id_estado_nodo)
         result.success=true;
         }
     catch(e){
@@ -226,11 +226,11 @@ app.delete("/estado_sensor", async (req,res) => {
     }
 })
 
-app.put("/estado_sensor", async (req,res) => {
+app.put("/estado_nodo", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE Estado_Sensor SET fecha_hora = $1, bateria = $2, categoria = $3, id_sensor = $4  WHERE id_estado_sensor=$5",[reqJson.fecha_hora, reqJson.bateria, reqJson.categoria, reqJson.id_sensor, reqJson.id]);
+        const rows = await updateRegister("UPDATE Estado_Nodo SET fecha_hora = $1, bateria = $2, categoria = $3, id_nodo = $4  WHERE id_estado_nodo=$5",[reqJson.fecha_hora, reqJson.bateria, reqJson.categoria, reqJson.id_nodo, reqJson.id_estado_nodo]);
         result.success=true;
         }
     catch(e){
@@ -242,20 +242,20 @@ app.put("/estado_sensor", async (req,res) => {
     }
     
 })
-//fin Estado_Sensor
+//fin Estado_Nodo
 
 
-//inicio registro_temperatura
-app.get("/registro_temperatura", async (req,res) => {
-    const rows = await readRegister("SELECT * FROM registro_temperatura");
+//inicio Registros
+app.get("/registros", async (req,res) => {
+    const rows = await readRegister("SELECT * FROM registros");
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(rows));
 })
-app.post("/registro_temperatura", async (req,res) => {
+app.post("/registros", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await createRegister("INSERT INTO registro_temperatura (fecha_hora, valor, id_sensor) VALUES ($1,$2,$3)",[reqJson.fecha_hora, reqJson.valor, reqJson.id_sensor]);
+        const rows = await createRegister("INSERT INTO Registros (fecha_hora, temperatura, humedad, radiacion, id_nodo) VALUES ($1,$2,$3,$4,$5)",[reqJson.fecha_hora, reqJson.temperatura, reqJson.humedad, reqJson.radiacion, reqJson.id_nodo]);
         result.success=true;
         }
     catch(e){
@@ -268,11 +268,11 @@ app.post("/registro_temperatura", async (req,res) => {
     
 })
 
-app.delete("/registro_temperatura", async (req,res) => {
+app.delete("/registros", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM registro_temperatura WHERE id_reg_temp = $1", reqJson.id)
+        await deleteRegister("DELETE FROM Registros WHERE id_registro = $1", reqJson.id_registro)
         result.success=true;
         }
     catch(e){
@@ -284,36 +284,11 @@ app.delete("/registro_temperatura", async (req,res) => {
     }
 })
 
-app.put("/registro_temperatura", async (req,res) => {
+app.put("/registros", async (req,res) => {
     let result = {}
     try{
         const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE registro_temperatura SET fecha_hora = $1, valor = $2, id_sensor = $3  WHERE id_reg_temp=$4",[reqJson.fecha_hora, reqJson.valor, reqJson.id_sensor, reqJson.id]);
-        result.success=true;
-        }
-    catch(e){
-        result.success = false;
-    }
-    finally{
-        res.setHeader("Content-Type", "application/json")
-        res.send(JSON.stringify(result))
-    }
-    
-})
-//fin registro_temperatura
-
-
-//inicio registro_humedad
-app.get("/registro_humedad", async (req,res) => {
-    const rows = await readRegister("SELECT * FROM registro_humedad");
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(rows));
-})
-app.post("/registro_humedad", async (req,res) => {
-    let result = {}
-    try{
-        const reqJson = JSON.parse(req.body.data);
-        const rows = await createRegister("INSERT INTO registro_humedad (fecha_hora, valor, id_sensor) VALUES ($1,$2,$3)",[reqJson.fecha_hora, reqJson.valor, reqJson.id_sensor]);
+        const rows = await updateRegister("UPDATE Registros SET fecha_hora = $1, temperatura = $2, humedad = $3, radiacion = $4, id_nodo = $5  WHERE id_registro=$6",[reqJson.fecha_hora, reqJson.temperatura, reqJson.humedad, reqJson.radiacion, reqJson.id_nodo, reqJson.id_registro]);
         result.success=true;
         }
     catch(e){
@@ -325,98 +300,7 @@ app.post("/registro_humedad", async (req,res) => {
     }
     
 })
-
-app.delete("/registro_humedad", async (req,res) => {
-    let result = {}
-    try{
-        const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM registro_humedad WHERE id_reg_humedad = $1", reqJson.id)
-        result.success=true;
-        }
-    catch(e){
-        result.success = false;
-    }
-    finally{
-        res.setHeader("Content-Type", "application/json")
-        res.send(JSON.stringify(result))
-    }
-})
-
-app.put("/registro_humedad", async (req,res) => {
-    let result = {}
-    try{
-        const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE registro_humedad SET fecha_hora = $1, valor = $2, id_sensor = $3  WHERE id_reg_humedad=$4",[reqJson.fecha_hora, reqJson.valor, reqJson.id_sensor, reqJson.id]);
-        result.success=true;
-        }
-    catch(e){
-        result.success = false;
-    }
-    finally{
-        res.setHeader("Content-Type", "application/json")
-        res.send(JSON.stringify(result))
-    }
-    
-})
-//fin registro_humedad
-
-
-//inicio registro_humedad
-app.get("/registro_radiacion", async (req,res) => {
-    const rows = await readRegister("SELECT * FROM registro_radiacion");
-    res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(rows));
-})
-app.post("/registro_radiacion", async (req,res) => {
-    let result = {}
-    try{
-        const reqJson = JSON.parse(req.body.data);
-        const rows = await createRegister("INSERT INTO registro_radiacion (fecha_hora, valor, id_sensor) VALUES ($1,$2,$3)",[reqJson.fecha_hora, reqJson.valor, reqJson.id_sensor]);
-        result.success=true;
-        }
-    catch(e){
-        result.success = false;
-    }
-    finally{
-        res.setHeader("Content-Type", "application/json")
-        res.send(JSON.stringify(result))
-    }
-    
-})
-
-app.delete("/registro_radiacion", async (req,res) => {
-    let result = {}
-    try{
-        const reqJson = JSON.parse(req.body.data);
-        await deleteRegister("DELETE FROM registro_radiacion WHERE id_reg_radiacion = $1", reqJson.id)
-        result.success=true;
-        }
-    catch(e){
-        result.success = false;
-    }
-    finally{
-        res.setHeader("Content-Type", "application/json")
-        res.send(JSON.stringify(result))
-    }
-})
-
-app.put("/registro_radiacion", async (req,res) => {
-    let result = {}
-    try{
-        const reqJson = JSON.parse(req.body.data);
-        const rows = await updateRegister("UPDATE registro_radiacion SET fecha_hora = $1, valor = $2, id_sensor = $3  WHERE id_reg_radiacion=$4",[reqJson.fecha_hora, reqJson.valor, reqJson.id_sensor, reqJson.id]);
-        result.success=true;
-        }
-    catch(e){
-        result.success = false;
-    }
-    finally{
-        res.setHeader("Content-Type", "application/json")
-        res.send(JSON.stringify(result))
-    }
-    
-})
-//fin registro_radiacion
+//fin Registros
 
 
 app.listen(8085, () => console.log("Web server is listening... on port 8085"))
