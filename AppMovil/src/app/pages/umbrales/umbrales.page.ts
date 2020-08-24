@@ -10,7 +10,7 @@ import { TmpService } from 'src/app/service/tmp.service';
 })
 export class UmbralesPage implements OnInit {
 
-  cultivo: Cultivo[] = [];
+  cultivo: Cultivo;
   umbrales: Umbrales_Cultivo[] = [];
  
   id_cultivo : string;
@@ -25,10 +25,15 @@ export class UmbralesPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.tmpService.getAllCultivo()
     .subscribe(cultivo => {
-      this.cultivo = cultivo;
-      this.id_cultivo=cultivo[this.indice].id_cultivo;
+      for(let cult of cultivo){
+        if(cult.id_cultivo==this.tmpService.cultivo_actual){
+          this.cultivo=cult;
+          this.id_cultivo=cult.id_cultivo;
+        }
+      }
     })
 
     this.tmpService.getAllUmbrales()

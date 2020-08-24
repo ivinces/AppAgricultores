@@ -4,6 +4,5 @@ export interface Registros {
     temperatura: Number;
     humedad: Number;
     radiacion: Number;
-    id_nodo: string;
-
+    id_nodo: string
 }

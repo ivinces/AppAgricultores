@@ -4,6 +4,10 @@ import { Registros } from '../../interface/registros';
 import { TmpService } from '../../service/tmp.service';
 
 import * as moment from 'moment';
+import { Nodo } from 'src/app/interface/nodo';
+import { newArray } from '@angular/compiler/src/util';
+import { getLocaleDateFormat } from '@angular/common';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-reportes',
@@ -33,11 +37,12 @@ export class ReportesPage implements OnInit {
   array: {}[] = [];
 
   registros: Registros[] = [];
-  arrayreg: {}[] = [];
-  arraytemp: {}[] = [];
-  arrayhum: {}[] = [];
-  arrayrad: {}[] = [];
+  arrayreg: {}[];
+  arraytemp: {}[];
+  arrayhum: {}[];
+  arrayrad: {}[];
   unit: String = 'day';
+  public nodosarray: Nodo[] = [];
 
   constructor(
     private tmpService: TmpService
@@ -50,54 +55,89 @@ export class ReportesPage implements OnInit {
   }
 
   getData(){
-    this.registros=this.tmpService.MatchRegistros();
-    for(let reg of this.registros){
-      var year=new Date().getFullYear();
-      var month=new Date().getMonth();
-      var day=new Date().getUTCDate();
-      var week=(new Date().getUTCDate())-(new Date().getUTCDay());
-      var reg_date=moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate();
-      if(this.unit=='day'){
-        if(new Date(reg_date)>=new Date(year,month,day)){
-          this.arraytemp.push({x:reg_date,y:reg.temperatura});
-          this.arrayhum.push({x:reg_date,y:reg.humedad});
-          this.arrayrad.push({x:reg_date,y:reg.radiacion});
-          this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+    this.array=[];
+    this.arraytemp=[];
+    this.arrayhum=[];
+    this.arrayrad=[];
+    this.tmpService.getAllNodo().subscribe( nod => {
+      for(let data of nod){
+        if(data.id_cultivo==this.tmpService.cultivo_actual){
+          this.nodosarray.push(data);
         }
       }
-      else if(this.unit=='week'){
-        if(new Date(reg_date)>=new Date(year,month,week)){
-          this.arraytemp.push({x:reg_date,y:reg.temperatura});
-          this.arrayhum.push({x:reg_date,y:reg.humedad});
-          this.arrayrad.push({x:reg_date,y:reg.radiacion});
-          this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+    })
+    //console.log(this.nodosarray);
+    
+    this.tmpService.getAllRegistros().subscribe(register => {
+      
+      for(let reg of register){
+        //console.log(reg);
+        for(let data1 of this.nodosarray){
+          if( reg.id_nodo==data1.id_nodo){
+            //console.log(this.unit);
+            var year=new Date().getFullYear();
+            var month=new Date().getMonth();
+            var day=new Date().getUTCDate();
+            var week=(new Date().getUTCDate())-(new Date().getUTCDay());
+            var reg_date=moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate();
+            //console.log(reg_date);
+            
+            //console.log(this.unit);
+            if(this.unit=='day'){
+              if(new Date(reg_date)>=new Date(year,month,day)){
+                this.arraytemp.push({x:reg_date,y:reg.temperatura});
+                this.arrayhum.push({x:reg_date,y:reg.humedad});
+                this.arrayrad.push({x:reg_date,y:reg.radiacion});
+                this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+                console.log("entro dia");
+                console.log(this.arraytemp);
+              }
+            }
+            else if(this.unit=='week'){
+              
+              if(new Date(reg_date)>=new Date(year,month,week)){
+                this.arraytemp.push({x:reg_date,y:reg.temperatura});
+                this.arrayhum.push({x:reg_date,y:reg.humedad});
+                this.arrayrad.push({x:reg_date,y:reg.radiacion});
+                this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+                console.log("entro week");
+                console.log(this.arraytemp);
+              }
+            }
+            if(this.unit=='month'){
+              
+              this.arraytemp=[];
+              if(new Date(reg_date).getMonth()==month){
+                this.arraytemp.push({x:reg_date,y:reg.temperatura});
+                this.arrayhum.push({x:reg_date,y:reg.humedad});
+                this.arrayrad.push({x:reg_date,y:reg.radiacion});
+                this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+                console.log("entro month");
+                console.log(this.arrayreg);
+              }
+            }
+            if(this.unit=='year'){
+              if(new Date(reg_date).getFullYear()==year){
+                this.arraytemp.push({x:reg_date,y:reg.temperatura});
+                this.arrayhum.push({x:reg_date,y:reg.humedad});
+                this.arrayrad.push({x:reg_date,y:reg.radiacion});
+                this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+                console.log("entro year");
+                console.log(this.arraytemp);
+              }
+            }
+            
+          }
         }
       }
-      if(this.unit=='month'){
-        if(new Date(reg_date).getMonth()==month){
-          this.arraytemp.push({x:reg_date,y:reg.temperatura});
-          this.arrayhum.push({x:reg_date,y:reg.humedad});
-          this.arrayrad.push({x:reg_date,y:reg.radiacion});
-          this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
-        }
-      }
-      if(this.unit=='year'){
-        if(new Date(reg_date).getFullYear()==year){
-          this.arraytemp.push({x:reg_date,y:reg.temperatura});
-          this.arrayhum.push({x:reg_date,y:reg.humedad});
-          this.arrayrad.push({x:reg_date,y:reg.radiacion});
-          this.arrayreg.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
-        }
-      }
-
-    }
+    })
   }
 
   ionViewDidEnter() {
     this.createLineChart();
   }
 
-  setdataset(){
+  setdataset(){  
     this.array=[];
 
     if(this.humedad){
@@ -141,6 +181,12 @@ export class ReportesPage implements OnInit {
   }
 
   clickDay(event){
+    this.array=[];
+    this.arraytemp=[];
+    this.arrayhum=[];
+    this.arrayrad=[];
+    this.arrayreg=[];
+    this.getData();
     this.unit='day';
     this.createLineChart();
     this.buttonColorday='#345465';
@@ -150,6 +196,12 @@ export class ReportesPage implements OnInit {
   }
 
   clickMonth(event){
+    this.array=[];
+    this.arraytemp=[];
+    this.arrayhum=[];
+    this.arrayrad=[];
+    this.arrayreg=[];
+    this.getData();
     this.unit='month';
     this.createLineChart();
     this.buttonColorday='#4f9a94';
@@ -159,6 +211,12 @@ export class ReportesPage implements OnInit {
   }
 
   clickWeek(event){
+    this.array=[];
+    this.arraytemp=[];
+    this.arrayhum=[];
+    this.arrayrad=[];
+    this.arrayreg=[];
+    this.getData();
     this.unit='week';
     this.createLineChart();
     this.buttonColorday='#4f9a94';
@@ -168,6 +226,12 @@ export class ReportesPage implements OnInit {
   }
 
   clickYear(event){
+    this.array=[];
+    this.arraytemp=[];
+    this.arrayhum=[];
+    this.arrayrad=[];
+    this.arrayreg=[];
+    this.getData();
     this.unit='year';
     this.createLineChart();
     this.buttonColorday='#4f9a94';

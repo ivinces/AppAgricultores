@@ -13,9 +13,8 @@ export class TmpService {
 
   private api='http://192.168.0.8:8085';
 
-  public cultivo_actual: string = '0';
+  public cultivo_actual: string = '1';
   public nodosarray: Nodo[] = [];
-  public registrosarray: Registros[] = [];
   public estadosarray: Estado_Nodo[] = [];
   public cultivo: Cultivo;
 
@@ -51,19 +50,21 @@ export class TmpService {
       for(let data of cult){
         if(data.id_cultivo==id){
           this.cultivo=data;
+          this.cultivo_actual=data.id_cultivo;
         }
       }
     })
   }
 
   getCultivoActual(){
+    console.log('hizo get')
     return this.cultivo;
   }
 
   MatchNodos(){
     this.getAllNodo().subscribe( nod => {
       for(let data of nod){
-        if(data.id_cultivo==this.getCultivoActual().id_cultivo){
+        if(data.id_cultivo==this.cultivo_actual){
           this.nodosarray.push(data);
         }
       }
@@ -82,19 +83,6 @@ export class TmpService {
       }
     })
     return this.estadosarray;
-  }
-  
-  MatchRegistros(){
-    this.getAllRegistros().subscribe(reg => {
-      for(let data of reg){
-        for(let data1 of this.MatchNodos()){
-          if( data.id_nodo==data1.id_nodo){
-            this.registrosarray.push(data);
-          }
-        }
-      }
-    })
-    return this.registrosarray;
   }
 
   postUmbrales(dataToSend){

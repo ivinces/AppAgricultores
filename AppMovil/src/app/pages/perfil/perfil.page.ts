@@ -5,6 +5,7 @@ import { TmpService } from '../../service/tmp.service'
 import { Cultivo } from 'src/app/interface/cultivo';
 import { AlertController } from '@ionic/angular';
 import { Registros } from 'src/app/interface/registros';
+import { Nodo } from 'src/app/interface/nodo';
 
 @Component({
   selector: 'app-perfil',
@@ -15,7 +16,12 @@ export class PerfilPage implements OnInit {
   cultivo : Cultivo;
   nombre_cultivo : string;
   descripcion : string;
+  nodo_central: string;
+  activo: boolean;
   array: {}[] = [];
+  ca: string;
+
+  public nodosarray: Nodo[] = [];
 
   cosechado_cultivo:boolean;
 
@@ -26,40 +32,59 @@ export class PerfilPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.cultivo=this.tmpService.getCultivoActual();
-    this.nombre_cultivo=this.cultivo.nombre
-    this.descripcion=this.cultivo.descripcion;
+    this.tmpService.setCultivoActual(this.tmpService.cultivo_actual);
 
-    for(let est of this.tmpService.MatchEstados()){
-      for(let nod of this.tmpService.MatchNodos()){
-        if(est.id_nodo==nod.id_nodo){
-          if(nod.activo){
-            console.log({x:nod.cod_nodo,y:est.bateria,z:'Activo'});
-            this.array.push({x:nod.cod_nodo,y:est.bateria,z:'Activo'});
-          }
-          else{
-            console.log({x:nod.cod_nodo,y:est.bateria,z:'Inactivo'});
-            this.array.push({x:nod.cod_nodo,y:est.bateria,z:'Inactivo'});
+    this.ca=this.tmpService.cultivo_actual;
+    this.tmpService.getAllCultivo().subscribe(cult => {
+      for(let data of cult){
+        if(data.id_cultivo==this.ca){
+          this.nombre_cultivo=data.nombre;
+          this.descripcion=data.descripcion;
+          this.nodo_central=data.nodo_central;
+          this.activo=data.activo;
+        }
+      }
+    })
+    this.tmpService.getAllNodo().subscribe( nod => {
+      for(let data of nod){
+        console.log(this.tmpService.cultivo_actual);
+        if(data.id_cultivo==this.tmpService.cultivo_actual){
+          this.nodosarray.push(data);
+        }
+      }
+    })
+    console.log(this.nodosarray);
+    this.tmpService.getAllEstados().subscribe(est => {
+      for(let data of est){
+        for(let data1 of this.nodosarray){
+          if(data.id_nodo==data1.id_nodo){
+            if(data1.activo){
+              console.log({x:data1.cod_nodo,y:data.bateria,z:'Activo'});
+              this.array.push({x:data1.cod_nodo,y:data.bateria,z:'Activo'});
+            }
+            else{
+              console.log({x:data1.cod_nodo,y:data.bateria,z:'Inactivo'});
+              this.array.push({x:data1.cod_nodo,y:data.bateria,z:'Inactivo'});
+            }
           }
         }
       }
-    }
-
+    })
   }
 
   actualizarForm(){
 
     console.log(document.getElementById("nombre_cul")['value']);
     console.log(document.getElementById("textarea")['value']);
-    console.log(Number(this.cultivo.id_cultivo))
+    console.log(Number(this.ca))
     
     
     this.tmpService.putCultivo({
       nombre:document.getElementById("nombre_cul")['value'],
       descripcion:document.getElementById("textarea")['value'],
-      nodo_central:this.cultivo.nodo_central,
-      activo:this.cultivo.activo,
-      id_cultivo:Number(this.cultivo.id_cultivo)
+      nodo_central:this.nodo_central,
+      activo:this.activo,
+      id_cultivo:Number(this.ca)
     })
     
     console.log("PUT");
