@@ -2,7 +2,12 @@ ion-menu-button {
     color: #00838f;
   }
   
-  
+  ion-toolbar ion-title{
+    color: black;
+    font-family: 'Rowdies', cursive;
+    font-size: x-large;
+  }
+
   #container {
     text-align: center;
     position: absolute;
@@ -19,7 +24,7 @@ ion-menu-button {
     padding: 15px;
     text-align: center;
     font-family: 'Rowdies', cursive;
-    font-size: medium;
+    font-size: large;
   }
   
   label#variable{
