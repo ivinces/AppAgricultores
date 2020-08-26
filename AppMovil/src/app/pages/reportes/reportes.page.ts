@@ -20,7 +20,7 @@ export class ReportesPage implements OnInit {
 
   buttonColorrad: string = '#4f9a94';
   buttonColorhum: string = '#4f9a94';
-  buttonColortemp: string = '#345465';
+  buttonColortemp: string = '#4f9a94';
   buttonColoryear: string = '#4f9a94';
   buttonColormonth: string = '#4f9a94';
   buttonColorday: string = '#345465';
@@ -48,7 +48,7 @@ export class ReportesPage implements OnInit {
   ngOnInit() {
     this.humedad=false;
     this.radiacion=false;
-    this.temperatura=true;
+    this.temperatura=false;
     this.cultivo_actual=this.tmpService.cultivo_actual;
     
     this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
