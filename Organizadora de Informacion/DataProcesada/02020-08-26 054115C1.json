@@ -1,0 +1,36 @@
+{
+"nodo_central": "N0005",
+ "data": [
+      {
+        "nodo_id":"CN00021" ,
+        "latitude": -2.148343,
+        "longitude": -79.958159,
+   	   "battery":"70",
+	   "temperature":"30",
+	   "radiation":"0.1",
+	   "humidity":"35",
+	   "datetime":"2020/08/29 15:35:55",
+      },
+      {
+        "nodo_id": "CN00022" ,
+        "latitude": -2.149954,
+        "longitude": -79.958525,
+   	   "battery":"19",
+	   "temperature":"15",
+	   "radiation":"0.2",
+	   "humidity":"38",
+	   "datetime":"2020/08/29 15:35:55",
+
+      },
+      {
+        "nodo_id": "CN00023",
+        "latitude": -2.149292,
+        "longitude": -79.957887,
+     	  "battery":"45",
+  	   "temperature":"32",
+  	   "radiation":"0.1",
+  	   "humidity":"37",
+  	   "datetime":"2020/08/29 15:35:55",
+      }
+    ]
+}

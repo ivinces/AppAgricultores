@@ -37,29 +37,21 @@ export class InicioPage implements OnInit {
     this.cultivo_actual=this.tmpService.cultivo_actual;
     this.tmpService.getAllCultivo().subscribe(cult => {
       this.cultivo=cult;
-      
       this.tmpService.getCultivoById(cult.length).subscribe(c => {
         this.cult_nombre=c[0].nombre;
         console.log(c[0]);
       });
-
+  
       this.tmpService.getCultivoxNodoxRegById(cult.length).subscribe(regis=>{
-        for (let reg of regis) {
-          this.temp=reg.temperatura;
-          this.hum=reg.humedad;
-          this.rad=reg.radiacion;
-        }
+        this.temp=regis[0].temperatura;
+          this.hum=regis[0].humedad;
+          this.rad=regis[0].radiacion;
       });
 
     });
+    
   }
 
-  getValorActual(){
-    this.tmpService.getAllCultivo().subscribe(cult => {
-      return cult.length.toString();
-    })
-  }
-  
   async selectCultivo(event){
     //const alert = await this.alertController.create({
       //cssClass: 'my-custom-class' 
@@ -67,11 +59,10 @@ export class InicioPage implements OnInit {
     
     this.tmpService.setCultivoActual(event.target.value);
     this.tmpService.getCultivoxNodoxRegById(event.target.value).subscribe(regis=>{
-      for (let reg of regis) {
-        document.getElementById("dato").innerHTML=reg.temperatura.toString();
-        document.getElementById("dato2").innerHTML=reg.humedad.toString();
-        document.getElementById("dato3").innerHTML==reg.radiacion.toString();
-      }
+        document.getElementById("dato").innerHTML=regis[0].temperatura.toString();
+        document.getElementById("dato2").innerHTML=regis[0].humedad.toString();
+        document.getElementById("dato3").innerHTML=regis[0].radiacion.toString();
+        console.log(regis[0]);
     });
     this.ngOnInit();
   }
