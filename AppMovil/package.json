@@ -82,11 +82,8 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-<<<<<<< HEAD
-      "cordova-plugin-advanced-http": {}
-=======
+      "cordova-plugin-advanced-http": {},
       "cordova-plugin-local-notification": {}
->>>>>>> 8140b711f17d5564d0bcf6b993cc01e76da6aa2a
     },
     "platforms": [
       "android"

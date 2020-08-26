@@ -22,6 +22,7 @@ export class PerfilPage implements OnInit {
   ca: string;
 
   cosechado_cultivo:boolean;
+  activo_cultivo:boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,6 +54,11 @@ export class PerfilPage implements OnInit {
         }
       }
     });
+
+    if(!this.activo){
+      this.cosechado_cultivo=true;
+    }
+    
   }
 
   cambiarEstadoNodo(event){
