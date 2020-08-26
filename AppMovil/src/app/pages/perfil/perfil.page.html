@@ -13,18 +13,18 @@
         <ion-list lines="none" class="ion-no-margin ion-no-padding">
           <ion-row>
             <ion-label id="text" position="fixed">Nombre</ion-label>
-            <ion-input id="nombre_cul" type="text" value={{nombre_cultivo}}> </ion-input>
+            <ion-input id="nombre_cul" type="text" value={{nombre_cultivo}} [disabled]="!activo"> </ion-input>
           </ion-row>
           <br>
           <ion-row>
             <ion-label id="text">Descripción</ion-label>
           </ion-row>
           <ion-row>
-            <ion-textarea rows="6" cols="20" id="textarea" value={{descripcion}}></ion-textarea>
+            <ion-textarea rows="6" cols="20" id="textarea" value={{descripcion}} [disabled]="!activo"></ion-textarea>
           </ion-row>
         </ion-list>
         <br>
-        <button ion-button type="submit" block id="btnact">Actualizar</button>
+        <button ion-button type="submit" block id="btnact" [disabled]="!activo">Actualizar</button>
       </form>
     </ion-row>
     <br>
