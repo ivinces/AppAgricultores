@@ -33,6 +33,7 @@ export class InicioPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.getValorActual(),"cultivo act");
     this.cultivo_actual=this.tmpService.cultivo_actual;
     this.tmpService.getAllCultivo().subscribe(cult => {
       this.cultivo=cult;
@@ -51,6 +52,12 @@ export class InicioPage implements OnInit {
       });
 
     });
+  }
+
+  getValorActual(){
+    this.tmpService.getAllCultivo().subscribe(cult => {
+      return cult.length.toString();
+    })
   }
   
   async selectCultivo(event){
