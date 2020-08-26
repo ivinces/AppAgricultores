@@ -70,5 +70,5 @@ myIconNodo = Leaflet.icon({
   ionViewWillLeave() {
     this.map.remove();
   }
-
+  
 }

@@ -13,10 +13,10 @@
       <ion-title size="large">Parametros Ambientales</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <ion-row>
-      <ion-col>
+  <br>
+  <br>
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-justify-content-center">
         <button id="btntiempo" ion-button (click)="clickDay($event)" [ngStyle]="{'background-color': buttonColorday}">Día</button>
       </ion-col>
       <ion-col>
@@ -54,6 +54,7 @@
     <br>
 
     <br>
+    <ion-item>
     
     <!-- Tabla inicio -->
     <table>
@@ -70,9 +71,9 @@
         <td>{{ task.z }}</td>
       </tr>
     </table>
+  </ion-item>>
 
     <!-- Tabla fin -->
     <br>
 
-  </div>
 </ion-content>
