@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Umbrales_Cultivo } from 'src/app/interface/umbrales_cultivo';
 import { Cultivo } from 'src/app/interface/cultivo';
 import { TmpService } from 'src/app/service/tmp.service';
+import { CultivoxUmbrales } from 'src/app/interface/cultivoxumbrales';
 
 @Component({
   selector: 'app-umbrales',
@@ -10,59 +11,42 @@ import { TmpService } from 'src/app/service/tmp.service';
 })
 export class UmbralesPage implements OnInit {
 
-  cultivo: Cultivo;
-  umbrales: Umbrales_Cultivo[] = [];
- 
-  id_cultivo : string;
-
-  temp_min; temp_max; humedad_min; humedad_max; radiacion_uv_min; radiacion_uv_max : Number;
-
-  indice=0;
-  array: {}[] = [];
-
+  temp_min; temp_max; humedad_min; humedad_max; radiacion_uv_min; radiacion_uv_max : number;
+  id_umbrales:string;
+  cultivo_actual:string;
+  
   constructor(
     private tmpService: TmpService
   ) { }
 
   ngOnInit() {
-
-    this.tmpService.getAllCultivo()
-    .subscribe(cultivo => {
-      for(let cult of cultivo){
-        if(cult.id_cultivo==this.tmpService.cultivo_actual){
-          this.cultivo=cult;
-          this.id_cultivo=cult.id_cultivo;
-        }
-      }
-    })
-
-    this.tmpService.getAllUmbrales()
-    .subscribe(umbral => {
-      for(let data of umbral) {
-        if(data.id_cultivo==this.id_cultivo){
-          this.umbrales.push(data);
-          this.temp_min=data.temp_min;
-          this.temp_max=data.temp_max;
-          this.humedad_min=data.humedad_min;
-          this.humedad_max=data.humedad_max;
-          this.radiacion_uv_min=data.radiacion_uv_min;
-          this.radiacion_uv_max=data.radiacion_uv_max;
-        }
-      }
-    })
+    this.cultivo_actual=this.tmpService.cultivo_actual;
+    console.log(this.cultivo_actual);
+    this.tmpService.getCultivoxUmbralesById(this.cultivo_actual).subscribe(umb => {
+      var tam=umb.length-1;
+      console.log(umb[tam].temp_min);
+      this.id_umbrales=umb[tam].id_umbrales;
+      this.temp_min=umb[tam].temp_min;
+      this.temp_max=umb[tam].temp_max;
+      this.humedad_min=umb[tam].humedad_min;
+      this.humedad_max=umb[tam].humedad_max;
+      this.radiacion_uv_min=umb[tam].radiacion_uv_min;
+      this.radiacion_uv_max=umb[tam].radiacion_uv_max;
+    });    
   }
+
+
   actualizarForm(){
     console.log(document.getElementById("temp_min")['value']);
-    
     this.tmpService.postUmbrales({
-    temp_min:document.getElementById("temp_min")['value'],
-    temp_max:document.getElementById("temp_max")['value'],
-    humedad_min:document.getElementById("humedad_min")['value'],
-    humedad_max:document.getElementById("humedad_max")['value'],
-    radiacion_uv_min:document.getElementById("radiacion_uv_min")['value'],
-    radiacion_uv_max:document.getElementById("radiacion_uv_max")['value'],
-    id_cultivo:Number(this.id_cultivo)})
-    
+      temp_min:document.getElementById("temp_min")['value'],
+      temp_max:document.getElementById("temp_max")['value'],
+      humedad_min:document.getElementById("humedad_min")['value'],
+      humedad_max:document.getElementById("humedad_max")['value'],
+      radiacion_uv_min:document.getElementById("radiacion_uv_min")['value'],
+      radiacion_uv_max:document.getElementById("radiacion_uv_max")['value'],
+      id_cultivo:this.cultivo_actual
+    });  
     console.log("POST");
   }
 }

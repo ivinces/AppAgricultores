@@ -13,15 +13,13 @@ import { Nodo } from 'src/app/interface/nodo';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  cultivo : Cultivo;
+  
   nombre_cultivo : string;
   descripcion : string;
   nodo_central: string;
   activo: boolean;
   array: {}[] = [];
   ca: string;
-
-  public nodosarray: Nodo[] = [];
 
   cosechado_cultivo:boolean;
 
@@ -32,44 +30,57 @@ export class PerfilPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.tmpService.setCultivoActual(this.tmpService.cultivo_actual);
-
+    this.array=[];
     this.ca=this.tmpService.cultivo_actual;
-    this.tmpService.getAllCultivo().subscribe(cult => {
+    this.tmpService.getCultivoById(this.ca).subscribe(cult => {
       for(let data of cult){
-        if(data.id_cultivo==this.ca){
-          this.nombre_cultivo=data.nombre;
-          this.descripcion=data.descripcion;
-          this.nodo_central=data.nodo_central;
-          this.activo=data.activo;
+        this.nombre_cultivo=data.nombre;
+        this.descripcion=data.descripcion;
+        this.nodo_central=data.nodo_central;
+        this.activo=data.activo;
+      }
+    });
+    this.tmpService.getCultivoxNodoxEstById(this.ca).subscribe(estados => {
+      for(let data of estados){
+        if(data.n_activo){
+          console.log(data.id_nodo);
+          console.log({x:data.cod_nodo,y:data.bateria,z:'Activo',id:data.id_nodo});
+          this.array.push({x:data.cod_nodo,y:data.bateria,z:'Activo',id:data.id_nodo});
+        }
+        else{
+          console.log({x:data.cod_nodo,y:data.bateria,z:'Inactivo',id:data.id_nodo});
+          this.array.push({x:data.cod_nodo,y:data.bateria,z:'Inactivo',id:data.id_nodo});
         }
       }
-    })
-    this.tmpService.getAllNodo().subscribe( nod => {
-      for(let data of nod){
-        console.log(this.tmpService.cultivo_actual);
-        if(data.id_cultivo==this.tmpService.cultivo_actual){
-          this.nodosarray.push(data);
+    });
+  }
+
+  cambiarEstadoNodo(event){
+    var est =event.target.value;
+    this.tmpService.getNodoById(est).subscribe(nodo => {
+      for(let n of nodo){
+        if(n.activo){
+          this.tmpService.putEstadoNodo({
+            latitud:n.latitud,
+            longitud:n.longitud,
+            activo:false,
+            cod_nodo:n.cod_nodo,
+            id_cultivo: n.id_cultivo
+          },est);
+        }
+        else{
+          this.tmpService.putEstadoNodo({
+            latitud:n.latitud,
+            longitud:n.longitud,
+            activo:true,
+            cod_nodo:n.cod_nodo,
+            id_cultivo: n.id_cultivo
+          },est);
         }
       }
-    })
-    console.log(this.nodosarray);
-    this.tmpService.getAllEstados().subscribe(est => {
-      for(let data of est){
-        for(let data1 of this.nodosarray){
-          if(data.id_nodo==data1.id_nodo){
-            if(data1.activo){
-              console.log({x:data1.cod_nodo,y:data.bateria,z:'Activo'});
-              this.array.push({x:data1.cod_nodo,y:data.bateria,z:'Activo'});
-            }
-            else{
-              console.log({x:data1.cod_nodo,y:data.bateria,z:'Inactivo'});
-              this.array.push({x:data1.cod_nodo,y:data.bateria,z:'Inactivo'});
-            }
-          }
-        }
-      }
-    })
+      console.log(est);
+    });
+    this.ngOnInit();
   }
 
   actualizarForm(){
@@ -77,15 +88,15 @@ export class PerfilPage implements OnInit {
     console.log(document.getElementById("nombre_cul")['value']);
     console.log(document.getElementById("textarea")['value']);
     console.log(Number(this.ca))
+
     
     
     this.tmpService.putCultivo({
       nombre:document.getElementById("nombre_cul")['value'],
       descripcion:document.getElementById("textarea")['value'],
       nodo_central:this.nodo_central,
-      activo:this.activo,
-      id_cultivo:Number(this.ca)
-    })
+      activo:this.activo
+    }, this.ca)
     
     console.log("PUT");
 
@@ -102,6 +113,8 @@ export class PerfilPage implements OnInit {
         role: 'Ok', 
         handler: () => {  
           this.cosechado_cultivo=true;
+          this.activo=false;
+          this.actualizarForm();
           //this.activo=true;
         console.log('Confirm Ok'); 
         } 

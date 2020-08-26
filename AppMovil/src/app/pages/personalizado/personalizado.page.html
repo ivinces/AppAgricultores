@@ -56,23 +56,11 @@
         <th><ion-icon name="water"></ion-icon></th>
         <th><ion-icon name="sunny"></ion-icon></th>
       </tr>
-      <tr *ngFor="let task of array2">
-        <td id="fecha">{{ task.x }}</td>
+      <tr *ngFor="let task of arrayregistros">
+        <td id="fecha">{{ task.w }}</td>
+        <td>{{ task.x }}</td>
         <td>{{ task.y }}</td>
-        <td> </td>
-        <td> </td>
-      </tr>
-      <tr *ngFor="let task of array3">
-        <td id="fecha">{{ task.x }}</td>
-        <td> </td>
-        <td>{{ task.y }}</td>
-        <td> </td>
-      </tr>
-      <tr *ngFor="let task of array4">
-        <td id="fecha">{{ task.x }}</td>
-        <td> </td>
-        <td> </td>
-        <td>{{ task.y }}</td>
+        <td>{{ task.z }}</td>
       </tr>
     </table>
 

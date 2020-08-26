@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Registros } from '../interface/registros'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Registros } from '../interface/registros';
 import { Cultivo } from '../interface/cultivo';
 import { Umbrales_Cultivo } from '../interface/umbrales_cultivo';
 import { Nodo } from '../interface/nodo';
 import { Estado_Nodo } from '../interface/estado_nodo';
+import { CultivoxNodo } from '../interface/cultivoxnodo';
+import { CultivoxUmbrales } from '../interface/cultivoxumbrales';
+import { CultivoxNodoxReg } from '../interface/cultivoxnodoxreg';
+import { CultivoxNodoxEst } from '../interface/cultivoxnodoxest'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TmpService {
 
-  private api='http://192.168.0.8:8085';
-
-  public cultivo_actual: string = '1';
-  public nodosarray: Nodo[] = [];
-  public estadosarray: Estado_Nodo[] = [];
   public cultivo: Cultivo;
+  public cultivo_actual: string='1';
+
+  private api='http://192.168.0.8:3000';
 
   constructor(private http: HttpClient) { }
 
@@ -25,8 +27,18 @@ export class TmpService {
     return this.http.get<Registros[]>(path);
   }
 
+  getRegistroById(id){
+    const path = this.api+"/registros/"+id;
+    return this.http.get<Registros[]>(path);
+  }
+
   getAllCultivo(){
     const path = `${this.api}/cultivo`;
+    return this.http.get<Cultivo[]>(path);
+  }
+
+  getCultivoById(id){
+    const path = this.api+"/cultivo/"+id;
     return this.http.get<Cultivo[]>(path);
   }
 
@@ -40,8 +52,18 @@ export class TmpService {
     return this.http.get<Nodo[]>(path);
   }
 
+  getNodoById(id){
+    const path = this.api+"/nodo/"+id;
+    return this.http.get<Nodo[]>(path);
+  }
+  
   getAllEstados(){
-    const path = `${this.api}/estado_nodo`;
+    const path = `${this.api}/estado`;
+    return this.http.get<Estado_Nodo[]>(path);
+  }
+
+  getEstadosById(id){
+    const path = this.api+"/estado/"+id;
     return this.http.get<Estado_Nodo[]>(path);
   }
 
@@ -56,45 +78,64 @@ export class TmpService {
     })
   }
 
-  getCultivoActual(){
-    console.log('hizo get')
-    return this.cultivo;
+  getAllCultivoxNodo(){
+    const path = `${this.api}/cultivoxnodo`;
+    return this.http.get<CultivoxNodo[]>(path);
+
+  }
+  getCultivoxNodoById(id){
+    const path = this.api+"/cultivoxnodo/"+id;
+    return this.http.get<CultivoxNodo[]>(path);
   }
 
-  MatchNodos(){
-    this.getAllNodo().subscribe( nod => {
-      for(let data of nod){
-        if(data.id_cultivo==this.cultivo_actual){
-          this.nodosarray.push(data);
-        }
-      }
-    })
-    return this.nodosarray;
+  getAllCultivoxUmbrales(){
+    const path = `${this.api}/cultivoxumbrales`;
+    return this.http.get<CultivoxUmbrales[]>(path);
+
+  }
+  getCultivoxUmbralesById(id){
+    const path = this.api+"/cultivoxumbrales/"+id;
+    return this.http.get<CultivoxUmbrales[]>(path);
   }
 
-  MatchEstados(){
-    this.getAllEstados().subscribe(est => {
-      for(let data of est){
-        for(let data1 of this.MatchNodos()){
-          if(data.id_nodo==data1.id_nodo){
-            this.estadosarray.push(data);
-          }
-        }
-      }
-    })
-    return this.estadosarray;
+  getAllCultivoxNodoxReg(){
+    const path = `${this.api}/cultivoxnodoxregistros`;
+    return this.http.get<CultivoxNodoxReg[]>(path);
+
+  }
+  getCultivoxNodoxRegById(id){
+    const path = this.api+"/cultivoxnodoxregistros/"+id;
+    return this.http.get<CultivoxNodoxReg[]>(path);
+  }
+
+  getAllCultivoxNodoxEst(){
+    const path = `${this.api}/cultivoxnodoxestados`;
+    return this.http.get<CultivoxNodoxEst[]>(path);
+
+  }
+  getCultivoxNodoxEstById(id){
+    const path = this.api+"/cultivoxnodoxestados/"+id;
+    return this.http.get<CultivoxNodoxEst[]>(path);
   }
 
   postUmbrales(dataToSend){
-    const path = `${this.api}/umbrales_cultivo`;
+    const path = this.api+"/umbrales";
     this.http.post(path,{data:JSON.stringify(dataToSend)},{headers: new HttpHeaders({"Content-Type":"application/json"})}).subscribe((data)=>{
       console.log(data)
     })
     console.log("se hizo post umbrales")
   }
 
-  putCultivo(dataToSend){
-    const path = `${this.api}/cultivo`;
+  putCultivo(dataToSend,id){
+    const path = this.api+"/cultivo/"+id;
+    this.http.put(path,{data:JSON.stringify(dataToSend)},{headers: new HttpHeaders({"Content-Type":"application/json"})}).subscribe((data)=>{
+      console.log(data)
+    })
+    console.log("se hizo put cultivo")
+  }
+
+  putEstadoNodo(dataToSend,id){
+    const path = this.api+"/nodo/"+id;
     this.http.put(path,{data:JSON.stringify(dataToSend)},{headers: new HttpHeaders({"Content-Type":"application/json"})}).subscribe((data)=>{
       console.log(data)
     })

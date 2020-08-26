@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ThrowStmt } from '@angular/compiler';
+import { TmpService } from 'src/app/service/tmp.service';
+import { CultivoxNodoxReg } from 'src/app/interface/cultivoxnodoxreg';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-personalizado',
@@ -23,23 +26,31 @@ export class PersonalizadoPage implements OnInit {
 
   datasets: any;
 
-  arrayhumedad=[30,29,29,31,30];
-  arraytemperatura=[20,18,19,20,21];
-  arrayradiacion=[0.4,0.2,0.3,0.4,0.3];
-
   data:{}[] = [];
+  arrayregistros:{}[];
 
   labelx:string;
   labely:string;
   labeltitulo:string;
 
-  constructor() { }
+  cultivo_actual:string;
+  m_cultivo: CultivoxNodoxReg[]=[];
+
+  constructor(
+    private tmpService:TmpService
+  ) { }
 
   ngOnInit() {
     this.humedad=true;
     this.radiacion=false;
     this.temperatura=true;
     this.labeltitulo='Humedad vs Temperatura';
+
+    this.cultivo_actual=this.tmpService.cultivo_actual;
+    
+    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
+      this.m_cultivo=reg;
+    });
   }
 
   ionViewDidEnter() {
@@ -48,34 +59,49 @@ export class PersonalizadoPage implements OnInit {
 
   getData(){
     this.data=[];
+    this.arrayregistros=[];
     this.labelx='';
     this.labely='';
     this.labeltitulo='';
-    if(this.humedad && this.radiacion){
-      for(let i = 0; i < this.arrayhumedad.length; i++){
-        this.data.push({x:this.arrayhumedad[i],y:this.arrayradiacion[i]});
+    for(let reg of this.m_cultivo){
+      var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
+      if(this.humedad && this.radiacion){
+        this.data.push({x:reg.humedad,y:reg.radiacion});
+        this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+        this.labelx='Humedad';
+        this.labely='Radiación';
+        this.labeltitulo='Humedad vs Radiación';
       }
-      this.labelx='Humedad';
-      this.labely='Radiación';
-      this.labeltitulo='Humedad vs Radiación';
-    }
-    if(this.humedad && this.temperatura){
-      for(let i = 0; i < this.arrayhumedad.length; i++){
-        this.data.push({x:this.arrayhumedad[i],y:this.arraytemperatura[i]});
+    
+      if(this.humedad && this.temperatura){
+        this.data.push({x:reg.humedad,y:reg.temperatura});
+        this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+        this.labelx='Humedad';
+        this.labely='Temperatura';
+        this.labeltitulo='Humedad vs Temperatura';
       }
-      this.labelx='Humedad';
-      this.labely='Temperatura';
-      this.labeltitulo='Humedad vs Temperatura';
-    }
-    if(this.temperatura && this.radiacion){
-      for(let i = 0; i < this.arrayhumedad.length; i++){
-        this.data.push({x:this.arraytemperatura[i],y:this.arrayradiacion[i]});
+
+      if(this.temperatura && this.radiacion){
+        this.data.push({x:reg.temperatura,y:reg.radiacion});
+        this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+        this.labelx='Temperatura';
+        this.labely='Radiación';
+        this.labeltitulo='Temperatura vs Radiación';
       }
-      this.labelx='Temperatura';
-      this.labely='Radiación';
-      this.labeltitulo='Temperatura vs Radiación';
     }
     return this.data;
+  }
+
+  compare(a, b) {
+    const paramA = a.x;
+    const paramB = b.x;
+    let comparison = 0;
+    if (paramA > paramB) {
+      comparison = 1;
+    } else if (paramA < paramB) {
+      comparison = -1;
+    }
+    return comparison;
   }
 
   clickTempHum(event){
@@ -115,7 +141,9 @@ export class PersonalizadoPage implements OnInit {
   }
 
   clearcanvas(){
-    this.sChart.width=this.sChart.width;
+    if(this.line){
+      this.line.destroy();
+    }
   }
 
   createLineChart(){
@@ -128,7 +156,7 @@ export class PersonalizadoPage implements OnInit {
       data: {
         datasets: [{
           label:this.labeltitulo,
-            data: this.getData(),
+            data: this.getData().sort(this.compare),
             fill: false,
             backgroundColor: 'red', 
             borderColor: 'red',

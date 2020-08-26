@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet';
 import { antPath } from 'leaflet-ant-path';
+import { TmpService } from 'src/app/service/tmp.service';
+import { Nodo } from 'src/app/interface/nodo';
+import { Cultivo } from 'src/app/interface/cultivo';
+import { CultivoxNodo } from 'src/app/interface/cultivoxnodo';
+import { CultivoxNodoxReg } from 'src/app/interface/cultivoxnodoxreg';
 
 @Component({
   selector: 'app-maparad',
@@ -9,107 +14,56 @@ import { antPath } from 'leaflet-ant-path';
 })
 export class MaparadPage implements OnInit {
   map: Leaflet.Map;
+  private c_actual: string;
+  regarray: CultivoxNodoxReg[]=[];
+  nods: Nodo;
 
-  data=[
-    {
-      "nodo": "N01",
-      "long": -79.958525,
-      "lat": -2.149954,
-      "sensores":[
-        {
-          "cod_sensor": "S01",
-          "variable": "radiacion",
-          "registro": "0.4"
-        },
-        {
-            "cod_sensor": "S02",
-            "variable": "temperatura",
-            "registro": "28"
-        },
-        {
-            "cod_sensor": "S03",
-            "variable": "humedad",
-            "registro": "30"
-        }
-      ]
-    },
-    {
-      "nodo": "N02",
-      "long": -79.958159,
-      "lat": -2.148343,
-      "sensores":[
-        {
-          "cod_sensor": "S01",
-          "variable": "radiacion",
-          "registro": "0.4"
-        },
-        {
-            "cod_sensor": "S02",
-            "variable": "temperatura",
-            "registro": "28"
-        },
-        {
-            "cod_sensor": "S03",
-            "variable": "humedad",
-            "registro": "30"
-        }
-      ]
-    },
-    {
-      "nodo": "N03",
-      "long": -79.957890,
-      "lat": -2.149282,
-      "sensores":[
-        {
-          "cod_sensor": "S01",
-          "variable": "radiacion",
-          "registro": "0.4"
-        },
-        {
-            "cod_sensor": "S02",
-            "variable": "temperatura",
-            "registro": "28"
-        },
-        {
-            "cod_sensor": "S03",
-            "variable": "humedad",
-            "registro": "30"
-        }
-      ]
-    }
-]
-
-  constructor() { }
+  constructor(
+    private tmpService: TmpService
+  ) { }
 
   ngOnInit() {
+    console.log(this.tmpService.getRegistroById(this.tmpService.cultivo_actual));
+    this.tmpService.getRegistroById(this.tmpService.cultivo_actual).subscribe(c=>console.log(c));
+    this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(reg=>{
+      for(let cnr of reg){
+        console.log(cnr);
+        this.regarray.push(cnr);
+      }});
+    
   }
+
   ionViewDidEnter() { this.leafletMap(); }
 
-  myIconrad = Leaflet.icon({
-    iconUrl: '../../assets/img/rad.png',
-    iconSize: [36, 40],
-    iconAnchor: [36, 40],
-    popupAnchor: [-3, -76],
-  });
+
+myIconNodo = Leaflet.icon({
+  iconUrl: '../../assets/img/rad.png',
+  iconSize: [36, 40],
+  iconAnchor: [36, 40],
+  popupAnchor: [-3, -76],
+});
 
   leafletMap() {
-    this.map = Leaflet.map('mapIdrad').setView([this.data[0].lat, this.data[0].long], 18);
-    Leaflet.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-      attribution: 'edupala.com'
-    }).addTo(this.map);
 
-    for (const property of this.data) {
-      for(const sensores of property.sensores){
-        if(sensores.variable=="radiacion"){
-          Leaflet.marker([property.lat, property.long], {icon: this.myIconrad}).addTo(this.map)
-          .bindPopup(sensores.registro)
-          .openPopup();
-  
-        }
+    this.tmpService.getCultivoxNodoById(this.tmpService.cultivo_actual).subscribe(c=>{
+      for(let ss of c){
+        console.log(ss);
+        this.map = Leaflet.map('mapIdrad').setView([ss.latitud, ss.longitud], 18);
+        Leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+          attribution: 'edupala.com'
+        }).addTo(this.map);
       }
+    });
+
+    this.tmpService.getCultivoxNodoById(this.tmpService.cultivo_actual).subscribe(c=>{
+      for(let ss of c){
+
+        Leaflet.marker([ss.latitud, ss.longitud], {icon: this.myIconNodo}).addTo(this.map)
+          .bindPopup(ss.cod_nodo)
+          .openPopup()
+      }
+    });
       
-      
-    }
   }
 
   /** Remove map when we have multiple map object */
