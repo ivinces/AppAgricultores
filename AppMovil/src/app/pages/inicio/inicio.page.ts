@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TmpService } from '../../service/tmp.service';
 import { Cultivo } from 'src/app/interface/cultivo';
 import { AlertController } from '@ionic/angular';
+import { element } from 'protractor';
 
 //import { Content } from 'ionic-angular'
 
@@ -18,6 +19,7 @@ export class InicioPage implements OnInit {
   cultivo_actual: string;
   cult_nombre: string;
   cultivo: Cultivo[];
+  cultivo_len: string;
 
   customPopoverOptions: any = {  
     header: 'Cultivos',
@@ -34,20 +36,21 @@ export class InicioPage implements OnInit {
     this.cultivo_actual=this.tmpService.cultivo_actual;
     this.tmpService.getAllCultivo().subscribe(cult => {
       this.cultivo=cult;
-    });
-    this.tmpService.getCultivoById(this.cultivo_actual).subscribe(c => {
-      this.cult_nombre=c[0].nombre;
-      console.log(c[0]);
-    })
-    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(regis=>{
-      for (let reg of regis) {
-        this.temp=reg.temperatura;
-        this.hum=reg.humedad;
-        this.rad=reg.radiacion;
-      }
-    });
-    
+      
+      this.tmpService.getCultivoById(cult.length).subscribe(c => {
+        this.cult_nombre=c[0].nombre;
+        console.log(c[0]);
+      });
 
+      this.tmpService.getCultivoxNodoxRegById(cult.length).subscribe(regis=>{
+        for (let reg of regis) {
+          this.temp=reg.temperatura;
+          this.hum=reg.humedad;
+          this.rad=reg.radiacion;
+        }
+      });
+
+    });
   }
   
   async selectCultivo(event){
