@@ -15,6 +15,7 @@ export class UmbralesPage implements OnInit {
   temp_min; temp_max; humedad_min; humedad_max; radiacion_uv_min; radiacion_uv_max : number;
   id_umbrales:string;
   cultivo_actual:string;
+  activo: boolean;
   
   constructor(
     private tmpService: TmpService,
@@ -24,6 +25,11 @@ export class UmbralesPage implements OnInit {
   ngOnInit() {
     this.cultivo_actual=this.tmpService.cultivo_actual;
     console.log(this.cultivo_actual);
+    this.tmpService.getCultivoById(this.cultivo_actual).subscribe(cult => {
+      for(let data of cult){
+        this.activo=data.activo;
+      }
+    });
     this.tmpService.getCultivoxUmbralesById(this.cultivo_actual).subscribe(umb => {
       var tam=umb.length-1;
       console.log(umb[tam].temp_min);

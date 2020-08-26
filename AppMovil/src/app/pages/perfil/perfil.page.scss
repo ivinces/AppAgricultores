@@ -83,5 +83,16 @@ th {
 
 }
 
+#btnest:disabled{
+  color: white;
+  background-color:#00838f;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Rowdies', cursive;
+  font-size: medium;
+  opacity: 0.4;
+}
+
 /* tabla fin */
 

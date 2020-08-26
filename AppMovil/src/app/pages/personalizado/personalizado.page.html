@@ -3,35 +3,27 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Cultivo</ion-title>
+    <ion-title>Reporte Personalizado</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="false">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Cultivo</ion-title>
+      <ion-title size="large">Reporte Personalizado</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
     <ion-row>
-      <ion-col class="ion-justify-content-center">
-        <ion-row class="ion-justify-content-center">
-          <label id="variable">Reporte Personalizado</label>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-    <br>
-    <ion-row>
       <ion-col>
-        <button id="btntiempo" ion-button (click)="clickTempHum($event)" [ngStyle]="{'background-color': buttonColortemp}">Humedad y Temperatura</button>
+        <button id="btntiempo" ion-button (click)="clickTempHum($event)" [ngStyle]="{'background-color': buttonColortemp}"><ion-icon name="water"></ion-icon>  vs  <ion-icon name="thermometer"></ion-icon></button>
       </ion-col>
       <ion-col>
-        <button id="btntiempo" ion-button (click)="clickTempRad($event)" [ngStyle]="{'background-color': buttonColorhum}">Temperatura y Radiación</button>
+        <button id="btntiempo" ion-button (click)="clickTempRad($event)" [ngStyle]="{'background-color': buttonColorhum}"><ion-icon name="thermometer"></ion-icon>  vs  <ion-icon name="sunny"></ion-icon></button>
       </ion-col>
       <ion-col>
-        <button id="btntiempo" ion-button (click)="clickHumRad($event)" [ngStyle]="{'background-color': buttonColorrad}">Humedad y Radiación</button>
+        <button id="btntiempo" ion-button (click)="clickHumRad($event)" [ngStyle]="{'background-color': buttonColorrad}"><ion-icon name="water"></ion-icon>  vs  <ion-icon name="sunny"></ion-icon></button>
       </ion-col>
     </ion-row>
 

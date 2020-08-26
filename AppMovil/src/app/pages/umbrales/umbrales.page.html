@@ -21,11 +21,11 @@
                 <ion-row>
                   <ion-col>
                     <ion-label id="minimos" position="fixed">Min.</ion-label>
-                    <ion-input id="temp_min" type="text" value={{temp_min}}></ion-input>
+                    <ion-input id="temp_min" type="text" value={{temp_min}} [disabled]="!activo"></ion-input>
                   </ion-col>
                   <ion-col>
                     <ion-label id="minimos" position="fixed">Max.</ion-label>
-                    <ion-input id="temp_max" type="text" value={{temp_max}}></ion-input>
+                    <ion-input id="temp_max" type="text" value={{temp_max}} [disabled]="!activo"></ion-input>
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -43,7 +43,7 @@
                   </ion-col>
                   <ion-col>
                     <ion-label id="minimos" position="fixed">Max.</ion-label>
-                    <ion-input id="humedad_max" type="text" value={{humedad_max}}></ion-input>
+                    <ion-input id="humedad_max" type="text" value={{humedad_max}} [disabled]="!activo"></ion-input>
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -57,18 +57,18 @@
                 <ion-row>
                   <ion-col>
                     <ion-label id="minimos" position="fixed">Min.</ion-label>
-                    <ion-input id="radiacion_uv_min" type="text" value={{radiacion_uv_min}}></ion-input>
+                    <ion-input id="radiacion_uv_min" type="text" value={{radiacion_uv_min}} [disabled]="!activo"> </ion-input>
                   </ion-col>
                   <ion-col>
                     <ion-label id="minimos" position="fixed">Max.</ion-label>
-                    <ion-input id="radiacion_uv_max" type="text" value={{radiacion_uv_max}}></ion-input>
+                    <ion-input id="radiacion_uv_max" type="text" value={{radiacion_uv_max}} [disabled]="!activo"></ion-input>
                   </ion-col>
                 </ion-row>
               </ion-col>
             </ion-row>
           </ion-list>
           <br>
-          <button ion-button type="submit" block id="btnact">Nuevos Umbrales</button>
+          <button ion-button type="submit" block id="btnact" [disabled]="!activo">Nuevos Umbrales</button>
         </form>
       </ion-row>
       <br>
