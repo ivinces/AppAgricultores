@@ -11,7 +11,7 @@ const pool = new Pool({
 
 //CULTIVO
 const getCultivo = async (req, res) => {
-    const response = await pool.query('SELECT * FROM Cultivo ORDER BY id_cultivo ASC');
+    const response = await pool.query('SELECT * FROM Cultivo ORDER BY id_cultivo DESC');
     res.status(200).json(response.rows);
 };
 
