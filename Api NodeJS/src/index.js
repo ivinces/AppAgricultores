@@ -1,5 +1,4 @@
 const express = require('express');
-
 var cors = require('cors')
 const app = express();
 
@@ -13,6 +12,7 @@ callback(null, originIsWhitelisted);
 
 // middlewares
 app.use(express.json(),cors(corsOptions));
+
 app.use(express.urlencoded({extended: false}));
 
 // Routes
