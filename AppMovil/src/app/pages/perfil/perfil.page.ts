@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { TmpService } from '../../service/tmp.service'
 import { Cultivo } from 'src/app/interface/cultivo';
-import { Sensor } from 'src/app/interface/sensor';
 import { AlertController } from '@ionic/angular';
+import { Registros } from 'src/app/interface/registros';
+import { Nodo } from 'src/app/interface/nodo';
 
 @Component({
   selector: 'app-perfil',
@@ -12,19 +13,13 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-
-  cultivo: Cultivo[] = [];
-  sensor: Sensor[] = [];
-  id_sensor : string;
+  
   nombre_cultivo : string;
-  id_cultivo : string;
-  nodo : string;
-  activo : boolean;
   descripcion : string;
-  indice=0;
+  nodo_central: string;
+  activo: boolean;
   array: {}[] = [];
-
-  nomcultivo:"CULTIVO MAIZ";
+  ca: string;
 
   cosechado_cultivo:boolean;
 
@@ -35,53 +30,73 @@ export class PerfilPage implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.tmpService.getAllCultivo()
-    .subscribe(cultivo => {
-      this.cultivo = cultivo;
-      this.nombre_cultivo=cultivo[this.indice].nombre;
-      this.descripcion=cultivo[this.indice].descripcion;
-      this.id_cultivo=cultivo[this.indice].id_cultivo;
-      this.nodo=cultivo[this.indice].nodo;
-      this.activo=cultivo[this.indice].activo;
-    })
-
-    this.tmpService.getAllSensor()
-    .subscribe(sensor => {
-      for(let data of sensor) {
-        if(data.id_cultivo==this.id_cultivo){
-          this.sensor.push(data);
-          if(data.temperatura){
-            console.log({x:data.id_sensor,y:"temperatura",z:data.activo});
-            this.array.push({x:data.id_sensor,y:"temperatura",z:data.activo});
-          }
-          else if(data.humedad){
-            console.log({x:data.id_sensor,y:"humedad",z:data.activo});
-            this.array.push({x:data.id_sensor,y:"humedad",z:data.activo});
-          }
-          else if(data.radiacion){
-            console.log({x:data.id_sensor,y:"radiacion",z:data.activo});
-            this.array.push({x:data.id_sensor,y:"radiacion",z:data.activo});
-          }
+    this.array=[];
+    this.ca=this.tmpService.cultivo_actual;
+    this.tmpService.getCultivoById(this.ca).subscribe(cult => {
+      for(let data of cult){
+        this.nombre_cultivo=data.nombre;
+        this.descripcion=data.descripcion;
+        this.nodo_central=data.nodo_central;
+        this.activo=data.activo;
+      }
+    });
+    this.tmpService.getCultivoxNodoxEstById(this.ca).subscribe(estados => {
+      for(let data of estados){
+        if(data.n_activo){
+          console.log(data.id_nodo);
+          console.log({x:data.cod_nodo,y:data.bateria,z:'Activo',id:data.id_nodo});
+          this.array.push({x:data.cod_nodo,y:data.bateria,z:'Activo',id:data.id_nodo});
+        }
+        else{
+          console.log({x:data.cod_nodo,y:data.bateria,z:'Inactivo',id:data.id_nodo});
+          this.array.push({x:data.cod_nodo,y:data.bateria,z:'Inactivo',id:data.id_nodo});
         }
       }
-    })
-    
+    });
+  }
+
+  cambiarEstadoNodo(event){
+    var est =event.target.value;
+    this.tmpService.getNodoById(est).subscribe(nodo => {
+      for(let n of nodo){
+        if(n.activo){
+          this.tmpService.putEstadoNodo({
+            latitud:n.latitud,
+            longitud:n.longitud,
+            activo:false,
+            cod_nodo:n.cod_nodo,
+            id_cultivo: n.id_cultivo
+          },est);
+        }
+        else{
+          this.tmpService.putEstadoNodo({
+            latitud:n.latitud,
+            longitud:n.longitud,
+            activo:true,
+            cod_nodo:n.cod_nodo,
+            id_cultivo: n.id_cultivo
+          },est);
+        }
+      }
+      console.log(est);
+    });
+    this.ngOnInit();
   }
 
   actualizarForm(){
 
     console.log(document.getElementById("nombre_cul")['value']);
     console.log(document.getElementById("textarea")['value']);
-    console.log(Number(this.id_cultivo))
+    console.log(Number(this.ca))
+
     
     
     this.tmpService.putCultivo({
-    nombre:document.getElementById("nombre_cul")['value'],
-    descripcion:document.getElementById("textarea")['value'],
-    nodo:this.nodo,
-    activo:this.activo,
-    id:Number(this.id_cultivo)
-  })
+      nombre:document.getElementById("nombre_cul")['value'],
+      descripcion:document.getElementById("textarea")['value'],
+      nodo_central:this.nodo_central,
+      activo:this.activo
+    }, this.ca)
     
     console.log("PUT");
 
@@ -98,6 +113,8 @@ export class PerfilPage implements OnInit {
         role: 'Ok', 
         handler: () => {  
           this.cosechado_cultivo=true;
+          this.activo=false;
+          this.actualizarForm();
           //this.activo=true;
         console.log('Confirm Ok'); 
         } 

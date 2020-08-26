@@ -36,7 +36,7 @@ ion-content.bg-image{
 }
 
 
-label#dato{
+label#dato, label#dato2, label#dato3{
     font-family: 'Rowdies', cursive;
     font-size: xxx-large;
 }
@@ -44,3 +44,32 @@ label#variable{
     font-family: 'Open Sans', sans-serif;
     font-size: x-large;
 }
+
+
+
+//select
+
+#select2 {
+    background-color: white;
+}
+
+#select,ion-item ion-select {
+    /* Applies to the value and placeholder color */
+    color: white;
+    font-family: 'Rowdies', cursive;
+    font-size: large;
+  
+    /* Set a different placeholder color */
+    --placeholder-color: white;
+  
+    /* Set full opacity on the placeholder */
+    --placeholder-opacity: 1;
+
+  }
+
+  .my-custom-interface .popover {
+    background-color: white;
+    --color: #971e49;
+    --color-hover: #79193b;
+  }
+  

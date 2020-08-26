@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Temperatura } from '../../interface/temperatura'
-import { TmpService } from '../../service/tmp.service'
-import { Humedad } from 'src/app/interface/humedad';
-import { Radiacion } from 'src/app/interface/radiacion';
+import { TmpService } from '../../service/tmp.service';
 import { Cultivo } from 'src/app/interface/cultivo';
-import { Sensor } from 'src/app/interface/sensor';
+import { AlertController } from '@ionic/angular';
+
+//import { Content } from 'ionic-angular'
 
 @Component({
   selector: 'app-inicio',
@@ -14,79 +12,58 @@ import { Sensor } from 'src/app/interface/sensor';
 })
 export class InicioPage implements OnInit {
 
-  temp: Temperatura[] = [];
-  humd: Humedad[] = [];
-  rad: Radiacion[] = [];
-  cultivo: Cultivo[] = [];
-  sensor: Sensor[] = [];
-  id_sensor : string;
-  nombre_cultivo : string;
-  id_cultivo : string;
-  temperatura_valor : string;
-  humedad_valor : string;
-  radiacion_valor : string;
-  indice = 0;
+  temp: Number;
+  hum: Number;
+  rad: Number;
+  cultivo_actual: string;
+  cult_nombre: string;
+  cultivo: Cultivo[];
+
+  customPopoverOptions: any = {  
+    header: 'Cultivos',
+    message: 'Seleccione el cultivo a visualizar',
+    cssClass: 'my-custom-interface'
+  };  
 
   constructor(
-    private tmpService: TmpService
+    private tmpService: TmpService,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
-    this.tmpService.getAllCultivo()
-    .subscribe(cultivo => {
-      this.cultivo = cultivo;
-      this.nombre_cultivo=cultivo[this.indice].nombre;
-      this.id_cultivo=cultivo[this.indice].id_cultivo;
+    this.cultivo_actual=this.tmpService.cultivo_actual;
+    this.tmpService.getAllCultivo().subscribe(cult => {
+      this.cultivo=cult;
+    });
+    this.tmpService.getCultivoById(this.cultivo_actual).subscribe(c => {
+      this.cult_nombre=c[0].nombre;
+      console.log(c[0]);
     })
-
-    this.tmpService.getAllSensor()
-    .subscribe(sensor => {
-      for(let data of sensor) {
-        if(data.id_cultivo==this.id_cultivo){
-          this.sensor.push(data);
-        }
+    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(regis=>{
+      for (let reg of regis) {
+        this.temp=reg.temperatura;
+        this.hum=reg.humedad;
+        this.rad=reg.radiacion;
       }
-    })
-
-    this.tmpService.getAllTemperatura()
-    .subscribe(temp => {
-      for(let data of temp) {
-        for(let data1 of this.sensor) {
-          if(data.id_sensor==data1.id_sensor){
-            this.temp.push(data);
-          }
-        }
-      }
-      temp=this.temp;
-      this.temperatura_valor=temp.pop().valor;
-    })
-
-    this.tmpService.getAllRadiacion()
-    .subscribe(rad => {
-      for(let data of rad) {
-        for(let data1 of this.sensor) {
-          if(data.id_sensor==data1.id_sensor){
-            this.rad.push(data);
-          }
-        }
-      }
-      rad=this.rad;
-      this.radiacion_valor=rad.pop().valor;
-    })
+    });
     
-    this.tmpService.getAllHumedad()
-    .subscribe(humd => {
-      for(let data of humd) {
-        for(let data1 of this.sensor) {
-          if(data.id_sensor==data1.id_sensor){
-            this.humd.push(data);
-          }
-        }
-      }
-      humd=this.humd;
-      this.humedad_valor=humd.pop().valor;
-    })
 
+  }
+  
+  async selectCultivo(event){
+    //const alert = await this.alertController.create({
+      //cssClass: 'my-custom-class' 
+    //}); 
+    
+    this.tmpService.setCultivoActual(event.target.value);
+    this.tmpService.getCultivoxNodoxRegById(event.target.value).subscribe(regis=>{
+      for (let reg of regis) {
+        document.getElementById("dato").innerHTML=reg.temperatura.toString();
+        document.getElementById("dato2").innerHTML=reg.humedad.toString();
+        document.getElementById("dato3").innerHTML==reg.radiacion.toString();
+      }
+    });
+    this.ngOnInit();
   }
 
 }

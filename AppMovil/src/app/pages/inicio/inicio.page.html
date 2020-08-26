@@ -3,7 +3,20 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Inicio</ion-title>
+    <ion-row><br></ion-row>
+    <ion-row>
+      <ion-title>Inicio</ion-title>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" sm-sm>
+        <ion-item id="select">
+          <ion-select [interfaceOptions]="customPopoverOptions" placeholder={{cult_nombre}} (ionChange)="selectCultivo($event)" interface="popover">
+              <ion-select-option *ngFor="let task of cultivo" value={{task.id_cultivo}}>{{task.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
   </ion-toolbar>
 </ion-header>
 
@@ -26,7 +39,7 @@
             <br>
           </ion-row>
           <ion-row class="ion-justify-content-center">
-            <label id="dato"> {{temperatura_valor}} </label>
+            <label id="dato"> {{temp}} </label>
           </ion-row>
           <ion-row>
             <br>
@@ -59,7 +72,7 @@
             <br>
           </ion-row>
           <ion-row class="ion-justify-content-center">
-            <label id="dato">{{humedad_valor}}</label>
+            <label id="dato2">{{hum}}</label>
           </ion-row>
           <ion-row>
             <br>
@@ -92,7 +105,7 @@
             <br>
           </ion-row>
           <ion-row class="ion-justify-content-center">
-            <label id="dato">{{radiacion_valor}}</label>
+            <label id="dato3">{{rad}}</label>
           </ion-row>
           <ion-row>
             <br>

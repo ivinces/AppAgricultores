@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
-import { Temperatura } from '../../interface/temperatura';
-import { Humedad } from '../../interface/humedad';
-import { Radiacion } from '../../interface/radiacion';
+import { Registros } from '../../interface/registros';
 import { TmpService } from '../../service/tmp.service';
 
 import * as moment from 'moment';
+import { CultivoxNodoxReg } from 'src/app/interface/cultivoxnodoxreg';
 
 @Component({
   selector: 'app-reportes',
@@ -32,16 +31,15 @@ export class ReportesPage implements OnInit {
   temperatura:boolean;
 
   datasets: any;
-  array: {}[] = [];
-  time: {}[] = [];
-
-  temp: Temperatura[] = [];
-  array2: {}[] = [];
-  hum: Humedad[] = [];
-  array3: {}[] = [];
-  rad: Radiacion[] = [];
-  array4: {}[] = [];
+  array: {}[];
+  
+  arraytemp: {}[]=[];
+  arrayhum: {}[]=[];
+  arrayrad: {}[]=[];
+  arrayregistros: {}[];
   unit: String = 'day';
+  cultivo_actual: string;
+  m_cultivo: CultivoxNodoxReg[] = [];
 
   constructor(
     private tmpService: TmpService
@@ -51,46 +49,82 @@ export class ReportesPage implements OnInit {
     this.humedad=false;
     this.radiacion=false;
     this.temperatura=true;
-
-    this.tmpService.getAllTemperatura()
-    .subscribe(temp => {
-      this.temp = temp;
-      
-    })
-    this.tmpService.getAllHumedad()
-    .subscribe(hum => {
-      this.hum = hum;
-      
-    })
-    this.tmpService.getAllRadiacion()
-    .subscribe(rad => {
-      this.rad = rad;
-      
+    this.cultivo_actual=this.tmpService.cultivo_actual;
+    
+    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
+      this.m_cultivo=reg;
     })
   }
 
-  getDataTemp(){
-    for(let data of this.temp) {
-      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
-      this.array2.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
+  getData(){
+    this.array = [];
+    this.arraytemp = [];
+    this.arrayhum = [];
+    this.arrayrad = [];
+    this.arrayregistros = [];
+
+    for(let reg of this.m_cultivo){
+      var year=new Date().getFullYear();
+      var month=new Date().getMonth();
+      var day=new Date().getUTCDate();
+      var week=(new Date().getUTCDate())-(new Date().getUTCDay());
+      var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
+      
+      //console.log(reg_date);
+      
+      //console.log(this.unit);
+
+      if(this.unit=='day'){
+        if(new Date(reg_date)>=new Date(year,month,day)){
+          this.arrayhum.push({x:reg_date,y:reg.humedad});
+          this.arrayrad.push({x:reg_date,y:reg.radiacion});
+          this.arraytemp.push({x:reg_date,y:reg.temperatura});
+          this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+          console.log("entro dia");
+        }
+      }
+      else if(this.unit=='week'){
+        
+        if(new Date(reg_date)>=new Date(year,month,week)){
+          this.arraytemp.push({x:reg_date,y:reg.temperatura});
+          this.arrayhum.push({x:reg_date,y:reg.humedad});
+          this.arrayrad.push({x:reg_date,y:reg.radiacion});
+          this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+          console.log("entro week");
+        }
+      }
+      if(this.unit=='month'){
+        if(new Date(reg_date).getMonth()==month){
+          console.log(reg_date);
+          this.arrayhum.push({x:reg_date,y:reg.humedad});
+          this.arrayrad.push({x:reg_date,y:reg.radiacion});
+          this.arraytemp.push({x:reg_date,y:reg.temperatura});
+          this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+          //console.log("entro month");
+        }
+      }
+      if(this.unit=='year'){
+        if(new Date(reg_date).getFullYear()==year){
+          this.arraytemp.push({x:reg_date,y:reg.temperatura});
+          this.arrayhum.push({x:reg_date,y:reg.humedad});
+          this.arrayrad.push({x:reg_date,y:reg.radiacion});
+          this.arrayregistros.push({w:reg_date,x:reg.temperatura,y:reg.humedad,z:reg.radiacion});
+          //console.log("entro year");
+        }
+      }   
     }
-    return this.array2;
   }
 
-  getDataHum(){
-    for(let data of this.hum) {
-      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
-      this.array3.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
+  compare(a, b) {
+    const fechaA = a.x;
+    const fechaB = b.x;
+    let comparison = 0;
+    if (fechaA > fechaB) {
+      comparison = 1;
+    } else if (fechaA < fechaB) {
+      comparison = -1;
     }
-    return this.array3;
-  }
-
-  getDataRad(){
-    for(let data of this.rad) {
-      console.log({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:parseFloat(data.valor)});
-      this.array4.push({x:moment(data.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate(),y:(parseFloat(data.valor))});
-    }
-    return this.array4;
+    return comparison;
   }
 
   ionViewDidEnter() {
@@ -104,7 +138,7 @@ export class ReportesPage implements OnInit {
       this.array.push({
         label: 'Humedad',
         yAxesID: 'y0',
-        data: this.getDataHum(),
+        data: this.arrayhum.sort(this.compare),
         backgroundColor: '#0000FF',
         borderColor: '#0000FF',
         borderWidth: 1,
@@ -115,7 +149,7 @@ export class ReportesPage implements OnInit {
     if(this.radiacion){
       this.array.push({
         label: 'Radiacion',
-        data: this.getDataRad(),
+        data: this.arrayrad.sort(this.compare),
         backgroundColor: '#ddee44', 
         borderColor: '#ddee44',
         borderWidth: 1,
@@ -129,7 +163,7 @@ export class ReportesPage implements OnInit {
       this.array.push({
         label: 'Temperatura',
         yAxesID: 'y0',
-        data: this.getDataTemp(),
+        data: this.arraytemp.sort(this.compare),
         backgroundColor: '#FF0000',
         borderColor: '#FF0000',
         borderWidth: 1,
@@ -142,6 +176,7 @@ export class ReportesPage implements OnInit {
 
   clickDay(event){
     this.unit='day';
+    this.getData();
     this.createLineChart();
     this.buttonColorday='#345465';
     this.buttonColormonth='#4f9a94';
@@ -151,6 +186,7 @@ export class ReportesPage implements OnInit {
 
   clickMonth(event){
     this.unit='month';
+    this.getData();
     this.createLineChart();
     this.buttonColorday='#4f9a94';
     this.buttonColormonth='#345465';
@@ -160,6 +196,7 @@ export class ReportesPage implements OnInit {
 
   clickWeek(event){
     this.unit='week';
+    this.getData();
     this.createLineChart();
     this.buttonColorday='#4f9a94';
     this.buttonColormonth='#4f9a94';
@@ -169,6 +206,7 @@ export class ReportesPage implements OnInit {
 
   clickYear(event){
     this.unit='year';
+    this.getData();
     this.createLineChart();
     this.buttonColorday='#4f9a94';
     this.buttonColormonth='#4f9a94';
@@ -179,6 +217,7 @@ export class ReportesPage implements OnInit {
 
   clickTemp(event){
     this.temperatura=!this.temperatura;
+    this.getData();
     this.createLineChart();
     if(this.temperatura){
       this.buttonColortemp = '#345465'
@@ -190,6 +229,7 @@ export class ReportesPage implements OnInit {
 
   clickRad(event){
     this.radiacion=!this.radiacion;
+    this.getData();
     this.createLineChart();
     if(this.radiacion){
       this.buttonColorrad = '#345465'
@@ -201,6 +241,7 @@ export class ReportesPage implements OnInit {
 
   clickHumidity(event){
     this.humedad=!this.humedad;
+    this.getData();
     this.createLineChart();
     if(this.humedad){
       this.buttonColorhum = '#345465'
@@ -211,7 +252,9 @@ export class ReportesPage implements OnInit {
   }
 
   clearcanvas(){
-    this.barChart.width=this.barChart.width;
+    if(this.line){
+      this.line.destroy();
+    }
   }
 
   createLineChart(){
@@ -226,10 +269,7 @@ export class ReportesPage implements OnInit {
       options: {
         scales: {
           xAxes: [{
-            type: 'time',
-            time: {
-                unit: this.unit
-            }
+            type: 'time'
           }],
           yAxes: [
             {
