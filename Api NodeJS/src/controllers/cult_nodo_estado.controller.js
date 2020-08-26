@@ -23,10 +23,21 @@ const getCultivoxNodoxEstadoById = async (req, res) => {
 
 //CULTIVO NODO ESTADO MATCH
 
+const getCultivoxNodoxEstadoxPersonalizado = async (req, res) => {
+    const response = await pool.query('SELECT DISTINCT id_nodo, cod_nodo, bateria_ultima, activo FROM (SELECT nodo.id_nodo, fecha_hora, cod_nodo, bateria, activo, FIRST_VALUE(bateria) OVER(PARTITION BY nodo.id_nodo ORDER BY fecha_hora DESC RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) bateria_ultima FROM nodo, estado_nodo WHERE nodo.id_nodo=estado_nodo.id_nodo) as nuevo');
+    res.status(200).json(response.rows);
+};
 
+const getCultivoxNodoxEstadoxPersonalizadoById = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const response = await pool.query('SELECT DISTINCT id_nodo, cod_nodo, bateria_ultima, activo FROM (SELECT nodo.id_nodo, fecha_hora, cod_nodo, bateria, activo, FIRST_VALUE(bateria) OVER(PARTITION BY nodo.id_nodo ORDER BY fecha_hora DESC RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) bateria_ultima FROM nodo, estado_nodo WHERE nodo.id_nodo=estado_nodo.id_nodo AND nodo.id_cultivo=$1) as nuevo', [id]);
+    res.json(response.rows);
+};
 
 
 module.exports = {
     getCultivoxNodoxEstado,
     getCultivoxNodoxEstadoById,
+    getCultivoxNodoxEstadoxPersonalizado,
+    getCultivoxNodoxEstadoxPersonalizadoById
 };

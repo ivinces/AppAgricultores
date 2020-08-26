@@ -9,6 +9,7 @@ import { CultivoxNodo } from '../interface/cultivoxnodo';
 import { CultivoxUmbrales } from '../interface/cultivoxumbrales';
 import { CultivoxNodoxReg } from '../interface/cultivoxnodoxreg';
 import { CultivoxNodoxEst } from '../interface/cultivoxnodoxest'
+import { CultivoxNodoxEstxPer } from '../interface/cultivoxnodoxestxper';
 
 
 
@@ -120,6 +121,11 @@ export class TmpService {
   getCultivoxNodoxEstById(id){
     const path = this.api+"/cultivoxnodoxestados/"+id;
     return this.http.get<CultivoxNodoxEst[]>(path);
+  }
+
+  getCultivoxNodoxEstxPerById(id){
+    const path = this.api+"/cultivoxnodoxestadosxper/"+id;
+    return this.http.get<CultivoxNodoxEstxPer[]>(path);
   }
 
   postUmbrales(dataToSend){

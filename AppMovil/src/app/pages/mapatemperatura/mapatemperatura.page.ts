@@ -45,7 +45,7 @@ myIconNodo = Leaflet.icon({
 
   leafletMap() {
 
-    this.tmpService.getCultivoxNodoById(this.tmpService.cultivo_actual).subscribe(c=>{
+    this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(c=>{
       for(let ss of c){
         console.log(ss);
         this.map = Leaflet.map('mapIdtemp').setView([ss.latitud, ss.longitud], 18);
@@ -55,11 +55,11 @@ myIconNodo = Leaflet.icon({
       }
     });
 
-    this.tmpService.getCultivoxNodoById(this.tmpService.cultivo_actual).subscribe(c=>{
+    this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(c=>{
       for(let ss of c){
 
         Leaflet.marker([ss.latitud, ss.longitud], {icon: this.myIconNodo}).addTo(this.map)
-          .bindPopup(ss.cod_nodo)
+          .bindPopup("Temperatura: "+ss.temperatura.toString())
           .openPopup()
       }
     });

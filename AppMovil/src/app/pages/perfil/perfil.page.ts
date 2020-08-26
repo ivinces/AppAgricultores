@@ -41,16 +41,16 @@ export class PerfilPage implements OnInit {
         this.activo=data.activo;
       }
     });
-    this.tmpService.getCultivoxNodoxEstById(this.ca).subscribe(estados => {
+    this.tmpService.getCultivoxNodoxEstxPerById(this.ca).subscribe(estados => {
       for(let data of estados){
-        if(data.n_activo){
+        if(data.activo){
           console.log(data.id_nodo);
-          console.log({x:data.cod_nodo,y:data.bateria,z:'Activo',id:data.id_nodo});
-          this.array.push({x:data.cod_nodo,y:data.bateria,z:'Activo',id:data.id_nodo});
+          console.log({x:data.cod_nodo,y:data.bateria_ultima,z:'Activo',id:data.id_nodo});
+          this.array.push({x:data.cod_nodo,y:data.bateria_ultima,z:'Activo',id:data.id_nodo});
         }
         else{
-          console.log({x:data.cod_nodo,y:data.bateria,z:'Inactivo',id:data.id_nodo});
-          this.array.push({x:data.cod_nodo,y:data.bateria,z:'Inactivo',id:data.id_nodo});
+          console.log({x:data.cod_nodo,y:data.bateria_ultima,z:'Inactivo',id:data.id_nodo});
+          this.array.push({x:data.cod_nodo,y:data.bateria_ultima,z:'Inactivo',id:data.id_nodo});
         }
       }
     });
