@@ -20,7 +20,7 @@ export class TmpService {
 
   //private api='http://192.168.0.8:3000';
 
-  private api='http://192.168.1.179:3000';
+  private api='http://192.168.1.179:8000';
 
   constructor(private http: HttpClient) { }
 
