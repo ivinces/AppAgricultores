@@ -58,7 +58,7 @@ const routes: Routes = [
   {
     path: 'mapatemperatura',
     loadChildren: () => import('./pages/mapatemperatura/mapatemperatura.module').then( m => m.MapatemperaturaPageModule)
-  }
+  },
 
 ];
 

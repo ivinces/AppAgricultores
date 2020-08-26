@@ -28,14 +28,11 @@ export class PerfilPage implements OnInit {
 
   cosechado_cultivo:boolean;
 
-  
-  
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private tmpService: TmpService,
     public alertController: AlertController
-  ) {}
+    ) {}
 
   ngOnInit() {
     this.tmpService.getAllCultivo()
