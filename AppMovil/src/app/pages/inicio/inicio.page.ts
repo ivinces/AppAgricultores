@@ -22,7 +22,7 @@ export class InicioPage implements OnInit {
   customPopoverOptions: any = {  
     header: 'Cultivos',
     message: 'Seleccione el cultivo a visualizar',
-    cssClass: 'my-custom-interface'
+    cssClass: 'my-custom-class'
   };  
 
   constructor(

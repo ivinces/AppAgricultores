@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Umbrales_Cultivo } from 'src/app/interface/umbrales_cultivo';
 import { Cultivo } from 'src/app/interface/cultivo';
 import { TmpService } from 'src/app/service/tmp.service';
+import { AlertController } from '@ionic/angular';
 import { CultivoxUmbrales } from 'src/app/interface/cultivoxumbrales';
 
 @Component({
@@ -16,7 +17,8 @@ export class UmbralesPage implements OnInit {
   cultivo_actual:string;
   
   constructor(
-    private tmpService: TmpService
+    private tmpService: TmpService,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,23 @@ export class UmbralesPage implements OnInit {
       radiacion_uv_max:document.getElementById("radiacion_uv_max")['value'],
       id_cultivo:this.cultivo_actual
     });  
-    console.log("POST");
+    this.actualizado();
+
+  }
+
+  async actualizado(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: 'Su cultivo ha sido actualizado',
+      buttons: [
+        { 
+        text: 'Aceptar',
+        role: 'Ok' 
+        } 
+        ] 
+        }); 
+    
+    await alert.present();
+
   }
 }

@@ -100,6 +100,24 @@ export class PerfilPage implements OnInit {
     
     console.log("PUT");
 
+    this.actualizado();
+
+  }
+
+  async actualizado(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      message: 'Su cultivo ha sido actualizado',
+      buttons: [
+        { 
+        text: 'Aceptar',
+        role: 'Ok' 
+        } 
+        ] 
+        }); 
+    
+    await alert.present();
+
   }
 
  async cosechado(){
