@@ -10,6 +10,8 @@ import { CultivoxUmbrales } from '../interface/cultivoxumbrales';
 import { CultivoxNodoxReg } from '../interface/cultivoxnodoxreg';
 import { CultivoxNodoxEst } from '../interface/cultivoxnodoxest'
 
+
+
 @Injectable({
   providedIn: 'root'
 })

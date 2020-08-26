@@ -1,9 +1,9 @@
 const express = require('express');
-
+var cors = require('cors')
 const app = express();
 
 // middlewares
-app.use(express.json());
+app.use(express.json(),cors());
 app.use(express.urlencoded({extended: false}));
 
 // Routes
