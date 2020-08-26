@@ -27,7 +27,7 @@ export class PerfilPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private tmpService: TmpService,
     public alertController: AlertController
-  ) {}
+    ) {}
 
   ngOnInit() {
     this.array=[];
