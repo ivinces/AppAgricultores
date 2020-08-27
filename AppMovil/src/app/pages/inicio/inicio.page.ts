@@ -41,7 +41,7 @@ export class InicioPage implements OnInit {
         this.cult_nombre=c[0].nombre;
         console.log(c[0]);
       });
-  
+      this.tmpService.setCultivoActual(cult.length);
       this.tmpService.getCultivoxNodoxRegById(cult.length).subscribe(regis=>{
         this.temp=regis[0].temperatura;
           this.hum=regis[0].humedad;
@@ -64,7 +64,21 @@ export class InicioPage implements OnInit {
         document.getElementById("dato3").innerHTML=regis[0].radiacion.toString();
         console.log(regis[0]);
     });
-    this.ngOnInit();
+  }
+
+  doRefresh(event) {
+    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(regis=>{
+      document.getElementById("dato").innerHTML=regis[0].temperatura.toString();
+      document.getElementById("dato2").innerHTML=regis[0].humedad.toString();
+      document.getElementById("dato3").innerHTML=regis[0].radiacion.toString();
+      console.log(regis[0]);
+  });
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
   }
 
 }

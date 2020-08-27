@@ -64,85 +64,88 @@ export class ReportesPage implements OnInit {
   }
 
   getAnotations(){
-    this.annotations=[];
-    if(this.temperatura){
-      this.annotations.push({
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y0',
-        value: 20,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: true,
-          content: 'Temperatura Min'
-        },
-      });
-      this.annotations.push({
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y0',
-        value: 10,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: true,
-          content: 'Temperatura Min'
-        },
-      });
-    }
-    if(this.radiacion){
-      this.annotations.push({
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y1',
-        value: 0.1,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: true,
-          content: 'Radiación Min'
-        },
-      });
-      this.annotations.push({
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y1',
-        value: 0.5,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: true,
-          content: 'Radiación Min'
-        },
-      });
-    }
-    if(this.humedad){
-      this.annotations.push({
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y0',
-        value: 30,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: true,
-          content: 'Humedad Min'
-        },
-      });
-      this.annotations.push({
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y0',
-        value: 10,
-        borderColor: 'rgb(75, 192, 192)',
-        borderWidth: 4,
-        label: {
-          enabled: true,
-          content: 'Humedad Min'
-        },
-      });
-    }
+    this.tmpService.getCultivoxUmbralesById(this.cultivo_actual).subscribe( umbr => {
+      var tam=umbr.length-1;
+      this.annotations=[];
+      if(this.temperatura){
+        this.annotations.push({
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y0',
+          value: umbr[tam].temp_min,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
+          label: {
+            enabled: true,
+            content: 'Temperatura Min'
+          },
+        });
+        this.annotations.push({
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y0',
+          value: umbr[tam].temp_max,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
+          label: {
+            enabled: true,
+            content: 'Temperatura Min'
+          },
+        });
+      }
+      if(this.radiacion){
+        this.annotations.push({
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y1',
+          value: umbr[tam].radiacion_uv_min,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
+          label: {
+            enabled: true,
+            content: 'Radiación Min'
+          },
+        });
+        this.annotations.push({
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y1',
+          value: umbr[tam].radiacion_uv_max,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
+          label: {
+            enabled: true,
+            content: 'Radiación Min'
+          },
+        });
+      }
+      if(this.humedad){
+        this.annotations.push({
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y0',
+          value: umbr[tam].humedad_min,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
+          label: {
+            enabled: true,
+            content: 'Humedad Min'
+          },
+        });
+        this.annotations.push({
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y0',
+          value: umbr[tam].humedad_max,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
+          label: {
+            enabled: true,
+            content: 'Humedad Min'
+          },
+        });
+      }
+    });
   }
 
   getData(){
@@ -155,7 +158,7 @@ export class ReportesPage implements OnInit {
     for(let reg of this.m_cultivo){
       var year=new Date().getFullYear();
       var month=new Date().getMonth();
-      var day=new Date().getUTCDate();
+      var day=new Date().getUTCDate()-1;
       var week=(new Date().getUTCDate())-(new Date().getUTCDay());
       var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
       
@@ -164,7 +167,10 @@ export class ReportesPage implements OnInit {
       //console.log(this.unit);
 
       if(this.unit=='day'){
+        console.log(new Date(year,month,day));
+        console.log(day,"entro dia");
         if(new Date(reg_date)>=new Date(year,month,day)){
+          console.log(new Date(year,month,day));
           this.arrayhum.push({x:reg_date,y:reg.humedad});
           this.arrayrad.push({x:reg_date,y:reg.radiacion});
           this.arraytemp.push({x:reg_date,y:reg.temperatura});
