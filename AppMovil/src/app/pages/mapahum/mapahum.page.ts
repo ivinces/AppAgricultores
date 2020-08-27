@@ -26,10 +26,8 @@ export class MapahumPage implements OnInit {
     console.log(this.tmpService.getRegistroById(this.tmpService.cultivo_actual));
     this.tmpService.getRegistroById(this.tmpService.cultivo_actual).subscribe(c=>console.log(c));
     this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(reg=>{
-      for(let cnr of reg){
-        console.log(cnr);
-        this.regarray.push(cnr);
-      }});
+      this.regarray=reg;
+    });
     
   }
 
