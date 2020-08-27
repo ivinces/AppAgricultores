@@ -103,11 +103,9 @@ public class PostgreSQLJDBC {
     
     public static void insertregistro(Connection c, Registros registro){
         Date fecha=registro.getFecha_hora();
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dt = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String fechastring=dt.format(fecha);
-        
         int id_nodo=getidnodo(c,registro.getNodo());
-        
         PreparedStatement st;
         try {
             st = c.prepareStatement("INSERT INTO registros(fecha_hora, temperatura, humedad, radiacion, id_nodo) VALUES ('"+fechastring+"', "+registro.getTemperatura()+", "+registro.getHumedad()+", "+registro.getRadiacion()+","+id_nodo+")");

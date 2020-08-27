@@ -10,6 +10,6 @@ package Constants;
  * @author isabe
  */
 public class ConstantsArchivo {
-    public final static String path_nuevo="C:\\Isabela\\Espol\\Integradora\\AppAgricultores\\Organizadora de Informacion\\DataNueva";
-    public final static String path_procesado="C:\\Isabela\\Espol\\Integradora\\AppAgricultores\\Organizadora de Informacion\\DataProcesada";
+    public final static String path_nuevo="C:\\Isabela\\Espol\\Integradora\\Nuevo\\AppAgricultores\\Organizadora de Informacion\\DataNueva";
+    public final static String path_procesado="C:\\Isabela\\Espol\\Integradora\\Nuevo\\AppAgricultores\\Organizadora de Informacion\\DataProcesada";
 }

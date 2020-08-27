@@ -42,11 +42,11 @@ public class OrganizarInfo {
         int cod=1;
         for(File arch:archivos){
             String data=ConstantsArchivo.path_nuevo+"\\"+arch.getName();
-            JsonData.getJsonData(data);
+            JsonData.getJsonData(data,cod);
             Date fecha=new Date();
             SimpleDateFormat dt = new SimpleDateFormat("yyyyy-MM-dd hhmmss");
             String nuevo=ConstantsArchivo.path_procesado+"\\"+dt.format(fecha)+"C"+cod+".json";
-            cod++;
+            cod=cod+1;
             try { 
                 Files.move(Paths.get(data),Paths.get(nuevo));
             } catch (IOException ex) {
@@ -55,7 +55,7 @@ public class OrganizarInfo {
         }  
     }
     
-    public static void parseSensorObject(JSONObject sensor, String nodo_central) 
+    public static void parseSensorObject(JSONObject sensor, String nodo_central, int cod) 
     {
         String nodo_id = (String) sensor.get("nodo_id");  
         String datetime = (String) sensor.get("datetime");    
@@ -68,13 +68,13 @@ public class OrganizarInfo {
         
         Date date1=null;
         try {
-            date1=(Date) new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").parse(datetime);
+            date1=(Date) new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(datetime);
         } catch (java.text.ParseException ex) {
             Logger.getLogger(JsonData.class.getName()).log(Level.SEVERE, null, ex);
         }
        
         
-        Cultivo cultivo=new Cultivo(nodo_central);
+        Cultivo cultivo=new Cultivo(nodo_central, cod);
         Nodo nodoobj=new Nodo(nodo_id, true, latitud, longitude, cultivo);
         //Sensor sensorobj= new Sensor(latitud,longitude,sensor_id, cultivo);
         float humedad=Float.parseFloat(humidity);
@@ -84,7 +84,6 @@ public class OrganizarInfo {
         EstadoNodo estado=new EstadoNodo(date1, Integer.parseInt(battery), nodoobj);
         
         Registros registro= new Registros(date1, temperatura, radiacion, humedad, nodoobj);
-        
         
         insertarbase(cultivo, nodoobj,registro,estado);
     }
