@@ -74,7 +74,8 @@ export class ReportesPage implements OnInit {
           scaleID: 'y0',
           value: umbr[tam].temp_min,
           borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 4,
+          borderWidth: 2,
+          borderDash:[5, 15],
           label: {
             enabled: true,
             content: 'Temperatura Min'
@@ -86,7 +87,8 @@ export class ReportesPage implements OnInit {
           scaleID: 'y0',
           value: umbr[tam].temp_max,
           borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 4,
+          borderWidth: 2,
+          borderDash:[5, 15],
           label: {
             enabled: true,
             content: 'Temperatura Max'
@@ -100,7 +102,8 @@ export class ReportesPage implements OnInit {
           scaleID: 'y1',
           value: umbr[tam].radiacion_uv_min,
           borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 4,
+          borderWidth: 2,
+          borderDash:[5, 15],
           label: {
             enabled: true,
             content: 'Radiación Min'
@@ -112,7 +115,8 @@ export class ReportesPage implements OnInit {
           scaleID: 'y1',
           value: umbr[tam].radiacion_uv_max,
           borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 4,
+          borderWidth: 2,
+          borderDash:[5, 15],
           label: {
             enabled: true,
             content: 'Radiación Max'
@@ -126,7 +130,8 @@ export class ReportesPage implements OnInit {
           scaleID: 'y0',
           value: umbr[tam].humedad_min,
           borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 4,
+          borderWidth: 2,
+          borderDash:[5, 15],
           label: {
             enabled: true,
             content: 'Humedad Min'
@@ -138,7 +143,8 @@ export class ReportesPage implements OnInit {
           scaleID: 'y0',
           value: umbr[tam].humedad_max,
           borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 4,
+          borderWidth: 2,
+          borderDash:[5, 15],
           label: {
             enabled: true,
             content: 'Humedad Max'
