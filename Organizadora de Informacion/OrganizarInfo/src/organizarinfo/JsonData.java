@@ -19,7 +19,7 @@ import org.json.simple.parser.ParseException;
  */
 public class JsonData {
     
-    public static void getJsonData(String archivo){
+    public static void getJsonData(String archivo, int cod){
         
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
@@ -34,7 +34,7 @@ public class JsonData {
             
             JSONArray data = (JSONArray) jo.get("data");
             
-            data.forEach(sensor->OrganizarInfo.parseSensorObject( (JSONObject) sensor, nodo) );  
+            data.forEach(sensor->OrganizarInfo.parseSensorObject( (JSONObject) sensor, nodo, cod) );  
 
        
            

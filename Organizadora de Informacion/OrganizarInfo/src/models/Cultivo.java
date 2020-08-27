@@ -16,9 +16,9 @@ public class Cultivo {
     Umbrales umbrales;
     boolean activo;
 
-    public Cultivo(String nodo) {
+    public Cultivo(String nodo, int cod) {
         this.nombre = "Cultivo";
-        this.descripcion = "Nuevo Cultivo";
+        this.descripcion = "Nuevo Cultivo "+cod;
         this.nodo = nodo;
         this.umbrales = null;
         this.activo=true;
