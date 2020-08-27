@@ -15,11 +15,13 @@
         <th>Fecha</th>
         <th>Nodo</th>
         <th><ion-icon name="water"></ion-icon></th>
+        <!--th>Dentro del umbral</th-->
       </tr>
-      <tr *ngFor="let task of regarray">
+      <tr *ngFor="let task of regarray2">
         <td id="fecha">{{ task.fecha_hora }}</td>
         <td>{{ task.cod_nodo }}</td>
         <td>{{ task.humedad }}</td>
+        <!--td style="text-align:center;vertical-align:middle"><ion-icon name={{task.icon}}></ion-icon></td-->
       </tr>
     </table>
 

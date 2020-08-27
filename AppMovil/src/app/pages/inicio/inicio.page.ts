@@ -33,7 +33,7 @@ export class InicioPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.getValorActual(),"cultivo act");
+    
     this.cultivo_actual=this.tmpService.cultivo_actual;
     this.tmpService.getAllCultivo().subscribe(cult => {
       this.cultivo=cult;
