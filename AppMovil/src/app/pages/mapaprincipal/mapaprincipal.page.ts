@@ -56,7 +56,7 @@ myIconNodo = Leaflet.icon({
       }
     });
 
-    this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(c=>{
+    this.tmpService.getCultivoxNodoxRegByIdASC(this.tmpService.cultivo_actual).subscribe(c=>{
       for(let ss of c){
 
         Leaflet.marker([ss.latitud, ss.longitud], {icon: this.myIconNodo}).addTo(this.map)

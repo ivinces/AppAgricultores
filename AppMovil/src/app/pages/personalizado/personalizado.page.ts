@@ -18,7 +18,7 @@ export class PersonalizadoPage implements OnInit {
 
   buttonColorrad: string = '#4f9a94';
   buttonColorhum: string = '#4f9a94';
-  buttonColortemp: string = '#345465';
+  buttonColortemp: string = '#4f9a94';
 
   humedad:boolean;
   radiacion:boolean;

@@ -21,9 +21,9 @@ export class TmpService {
   public cultivo: Cultivo;
   public cultivo_actual: string='1';
 
-  private api='http://192.168.0.8:8000';
+  //private api='http://192.168.0.8:8000';
 
-  //private api='http://192.168.1.179:8000';
+  private api='http://192.168.1.179:8000';
 
   constructor(private http: HttpClient) { }
 
@@ -110,6 +110,11 @@ export class TmpService {
   }
   getCultivoxNodoxRegById(id){
     const path = this.api+"/cultivoxnodoxregistros/"+id;
+    return this.http.get<CultivoxNodoxReg[]>(path);
+  }
+
+  getCultivoxNodoxRegByIdASC(id){
+    const path = this.api+"/cultivoxnodoxregistrosASC/"+id;
     return this.http.get<CultivoxNodoxReg[]>(path);
   }
 

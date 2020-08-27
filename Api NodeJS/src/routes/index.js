@@ -8,7 +8,7 @@ const { getEstado_Nodo, getEstado_NodoById, createEstado_Nodo, updateEstado_Nodo
 const { getRegistros, getRegistrosById, createRegistros, updateRegistros, deleteRegistros } = require('../controllers/registros.controller');
 const { getCultivoxNodo, getCultivoxNodoById } = require('../controllers/cult_nodo.controller');
 const { getCultivoxUmbrales, getCultivoxUmbralesById } = require('../controllers/cult_umbrales.controller');
-const { getCultivoxNodoxRegistros, getCultivoxNodoxRegistrosById } = require('../controllers/cult_nodo_reg.controller');
+const { getCultivoxNodoxRegistros, getCultivoxNodoxRegistrosById, getCultivoxNodoxRegistrosByIdASC } = require('../controllers/cult_nodo_reg.controller');
 const { getCultivoxNodoxEstado, getCultivoxNodoxEstadoById, getCultivoxNodoxEstadoxPersonalizado, getCultivoxNodoxEstadoxPersonalizadoById } = require('../controllers/cult_nodo_estado.controller');
 
 router.get('/cultivo', getCultivo);
@@ -49,6 +49,7 @@ router.get('/cultivoxumbrales/:id', getCultivoxUmbralesById);
 
 router.get('/cultivoxnodoxregistros', getCultivoxNodoxRegistros);
 router.get('/cultivoxnodoxregistros/:id', getCultivoxNodoxRegistrosById);
+router.get('/cultivoxnodoxregistrosASC/:id', getCultivoxNodoxRegistrosByIdASC);
 
 router.get('/cultivoxnodoxestados', getCultivoxNodoxEstado);
 router.get('/cultivoxnodoxestados/:id', getCultivoxNodoxEstadoById);

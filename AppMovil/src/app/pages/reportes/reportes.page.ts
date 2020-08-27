@@ -89,7 +89,7 @@ export class ReportesPage implements OnInit {
           borderWidth: 4,
           label: {
             enabled: true,
-            content: 'Temperatura Min'
+            content: 'Temperatura Max'
           },
         });
       }
@@ -115,7 +115,7 @@ export class ReportesPage implements OnInit {
           borderWidth: 4,
           label: {
             enabled: true,
-            content: 'Radiación Min'
+            content: 'Radiación Max'
           },
         });
       }
@@ -141,7 +141,7 @@ export class ReportesPage implements OnInit {
           borderWidth: 4,
           label: {
             enabled: true,
-            content: 'Humedad Min'
+            content: 'Humedad Max'
           },
         });
       }
@@ -351,8 +351,6 @@ export class ReportesPage implements OnInit {
       this.line.destroy();
     }
   }
-
-  
 
   createLineChart(){
     this.clearcanvas();
