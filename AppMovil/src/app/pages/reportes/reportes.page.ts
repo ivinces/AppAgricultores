@@ -5,6 +5,7 @@ import { TmpService } from '../../service/tmp.service';
 
 import * as moment from 'moment';
 import { CultivoxNodoxReg } from 'src/app/interface/cultivoxnodoxreg';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-reportes',
@@ -30,6 +31,8 @@ export class ReportesPage implements OnInit {
   radiacion:boolean;
   temperatura:boolean;
 
+  annotations: {}[]=[];
+
   datasets: any;
   array: {}[];
   
@@ -50,10 +53,96 @@ export class ReportesPage implements OnInit {
     this.radiacion=false;
     this.temperatura=false;
     this.cultivo_actual=this.tmpService.cultivo_actual;
+
+    let namedChartAnnotation = ChartAnnotation;
+    namedChartAnnotation["id"]="annotation";
+    Chart.pluginService.register( namedChartAnnotation);
     
     this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
       this.m_cultivo=reg;
     })
+  }
+
+  getAnotations(){
+    this.annotations=[];
+    if(this.temperatura){
+      this.annotations.push({
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y0',
+        value: 20,
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 4,
+        label: {
+          enabled: true,
+          content: 'Temperatura Min'
+        },
+      });
+      this.annotations.push({
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y0',
+        value: 10,
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 4,
+        label: {
+          enabled: true,
+          content: 'Temperatura Min'
+        },
+      });
+    }
+    if(this.radiacion){
+      this.annotations.push({
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y1',
+        value: 0.1,
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 4,
+        label: {
+          enabled: true,
+          content: 'Radiación Min'
+        },
+      });
+      this.annotations.push({
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y1',
+        value: 0.5,
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 4,
+        label: {
+          enabled: true,
+          content: 'Radiación Min'
+        },
+      });
+    }
+    if(this.humedad){
+      this.annotations.push({
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y0',
+        value: 30,
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 4,
+        label: {
+          enabled: true,
+          content: 'Humedad Min'
+        },
+      });
+      this.annotations.push({
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y0',
+        value: 10,
+        borderColor: 'rgb(75, 192, 192)',
+        borderWidth: 4,
+        label: {
+          enabled: true,
+          content: 'Humedad Min'
+        },
+      });
+    }
   }
 
   getData(){
@@ -257,9 +346,12 @@ export class ReportesPage implements OnInit {
     }
   }
 
+  
+
   createLineChart(){
     this.clearcanvas();
     this.setdataset();
+    this.getAnotations();
 
     this.line = new Chart(this.barChart.nativeElement, {
       type: 'line',
@@ -298,6 +390,9 @@ export class ReportesPage implements OnInit {
               }
             }
           ]
+        },
+        annotation: {
+          annotations: this.annotations
         }
       }
     });
