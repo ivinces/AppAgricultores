@@ -45,7 +45,7 @@
       <ion-label position="fixed" id="text">Nodo:</ion-label>
     </ion-row>
     <br>
-    <ion-row>
+    <ion-row class="ion-align-center">
       <table>
         <tr>
           <th>Código</th>
@@ -54,7 +54,7 @@
         </tr>
         <tr *ngFor="let task of array">
           <td >{{ task.x }}</td>
-          <td>{{ task.y }}</td>
+          <td>{{ task.y }}%</td>
           <td>
             <button ion-button (click)="irCultivo($event)" id="btnest" >{{ task.z }} </button>
           </td>
