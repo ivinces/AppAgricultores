@@ -31,7 +31,9 @@ export class InicioPage implements OnInit {
     private tmpService: TmpService,
     public alertController: AlertController,
     public router: Router
-  ) {}
+  ) {
+    this.inicial();
+  }
 
   ngOnInit() {
     this.cultivo_actual=this.tmpService.cultivo_actual;
@@ -75,6 +77,13 @@ export class InicioPage implements OnInit {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+  }
+
+
+  inicial(){
+    this.tmpService.getAllCultivo().subscribe(cult => {
+      this.tmpService.setCultivoActual(cult.length.toString());
+    })
   }
 
   cambiarCultivo(){
