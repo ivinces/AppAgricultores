@@ -38,7 +38,6 @@ export class CultInactivoPage implements OnInit {
     const val = ev.target.value;
     if (val && val.trim() != '') {
       this.cultivo2 = this.cultivo2.filter((item) => {
-        console.log(item['nombre']);
         return (item['nombre'].toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
@@ -54,7 +53,6 @@ export class CultInactivoPage implements OnInit {
     var id =event.target.value;
     this.tmpService.cultivo_actual=id;
     this.tmpService.setCultivoActual(id);
-    console.log(this.tmpService.cultivo_actual);
-    this.router.navigateByUrl("/");
+    this.router.navigate(['/inicio']);
   }
 }

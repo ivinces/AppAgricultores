@@ -31,13 +31,10 @@ export class InicioPage implements OnInit {
     private tmpService: TmpService,
     public alertController: AlertController,
     public router: Router
-  ) {
-    this.cultivo_actual=this.tmpService.cultivo_actual;
-    this.actualizar();
-  }
+  ) {}
 
   ngOnInit() {
-    
+    this.cultivo_actual=this.tmpService.cultivo_actual;
     console.log(this.cultivo_actual);
 
     this.tmpService.getCultivoById(this.cultivo_actual).subscribe(c => {
@@ -80,18 +77,12 @@ export class InicioPage implements OnInit {
     }, 2000);
   }
 
-  actualizar(){
-    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(regis=>{
-      document.getElementById("dato").innerHTML=regis[0].temperatura.toString();
-      document.getElementById("dato2").innerHTML=regis[0].humedad.toString();
-      document.getElementById("dato3").innerHTML=regis[0].radiacion.toString();
-      console.log(regis[0]);
-    });
-  }
-
   cambiarCultivo(){
     console.log("Aaaa");
     this.router.navigateByUrl('/tabbedcultivos');
   }
 
+  ionViewWillEnter(){
+    this.ngOnInit();
+  }
 }

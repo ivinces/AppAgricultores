@@ -34,7 +34,7 @@ export class MapaprincipalPage implements OnInit {
     
   }
 
-  ionViewDidEnter() { this.leafletMap(); }
+  ionViewDidEnter() { this.leafletMap();}
 
 
 myIconNodo = Leaflet.icon({
