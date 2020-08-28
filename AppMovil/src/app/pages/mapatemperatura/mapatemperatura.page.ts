@@ -15,21 +15,15 @@ import { CultivoxNodoxReg } from 'src/app/interface/cultivoxnodoxreg';
 export class MapatemperaturaPage implements OnInit {
   map: Leaflet.Map;
   private c_actual: string;
-  regarray: CultivoxNodoxReg[]=[];
   nods: Nodo;
+  
 
   constructor(
     private tmpService: TmpService
-  ) { }
+  ) { 
+  }
 
   ngOnInit() {
-    console.log(this.tmpService.getRegistroById(this.tmpService.cultivo_actual));
-    this.tmpService.getRegistroById(this.tmpService.cultivo_actual).subscribe(c=>console.log(c));
-    this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(reg=>{
-      for(let cnr of reg){
-        console.log(cnr);
-        this.regarray.push(cnr);
-      }});
     
   }
 
@@ -44,13 +38,26 @@ myIconNodo = Leaflet.icon({
 });
 
   leafletMap() {
+    var umbrales_min;
+    var umbrales_max;
+
+
+    this.tmpService.getCultivoxUmbralesById(this.tmpService.cultivo_actual).subscribe(c=>{
+
+      for(let um of c){
+        umbrales_max=um.temp_max;
+        umbrales_min=um.temp_min;
+      }
+      
+    });
+
 
     this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(c=>{
       for(let ss of c){
         console.log(ss);
-        this.map = Leaflet.map('mapIdtemp').setView([ss.latitud, ss.longitud], 18);
-        Leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-          attribution: 'edupala.com'
+        this.map = Leaflet.map('mapIdtemp').setView([ss.latitud, ss.longitud], 16);
+        Leaflet.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
         }).addTo(this.map);
       }
     });
@@ -61,6 +68,19 @@ myIconNodo = Leaflet.icon({
         Leaflet.marker([ss.latitud, ss.longitud], {icon: this.myIconNodo}).addTo(this.map)
           .bindPopup("Temperatura: "+ss.temperatura.toString())
           .openPopup()
+
+          if(ss.temperatura>=umbrales_max){
+
+            Leaflet.circle([ss.latitud, ss.longitud], {radius: 100, color:"red"}).addTo(this.map);
+          }  
+          if(ss.temperatura<umbrales_max && ss.temperatura>umbrales_min ){
+  
+            Leaflet.circle([ss.latitud, ss.longitud], {radius: 100, color:"green"}).addTo(this.map);
+          }
+          if(ss.temperatura<=umbrales_min){
+  
+            Leaflet.circle([ss.latitud, ss.longitud], {radius: 100, color:"blue"}).addTo(this.map);
+          }
       }
     });
       

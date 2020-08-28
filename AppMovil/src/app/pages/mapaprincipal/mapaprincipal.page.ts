@@ -49,9 +49,9 @@ myIconNodo = Leaflet.icon({
     this.tmpService.getCultivoxNodoxRegById(this.tmpService.cultivo_actual).subscribe(c=>{
       for(let ss of c){
         console.log(ss);
-        this.map = Leaflet.map('mapId').setView([ss.latitud, ss.longitud], 18);
-        Leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-          attribution: 'edupala.com'
+        this.map = Leaflet.map('mapId').setView([ss.latitud, ss.longitud], 16);
+        Leaflet.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
         }).addTo(this.map);
       }
     });

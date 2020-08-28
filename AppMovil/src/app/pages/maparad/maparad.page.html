@@ -5,26 +5,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="mapIdrad" style="width: 100%; height: 50%"></div>
+  <div id="mapIdrad" style="width: 100%; height: 100%"></div>
 
-  <br>
-    
-    <!-- Tabla inicio -->
-    <table>
-      <tr>
-        <th>Fecha</th>
-        <th>Nodo</th>
-        <th><ion-icon name="sunny"></ion-icon></th>
-      </tr>
-      <tr *ngFor="let task of regarray">
-        <td id="fecha">{{ task.fecha_hora }}</td>
-        <td>{{ task.cod_nodo }}</td>
-        <td>{{ task.radiacion }}</td>
-      </tr>
-    </table>
-
-    <!-- Tabla fin -->
-    <br>
 
 </ion-content>
 
