@@ -5,6 +5,31 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="mapIdhum" style="width: 100%; height: 100%"></div>
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="mapIdhum" style="width: 100%; height: 100%"></div>
+      <ion-fab bottom id="menuButtons" class="menu-buttons">
+        <ion-list>
+          <ion-item lines="none">
+            <img src="../../../assets/img/rojo.png" height="30" width="30"/> 
+            <ion-label>    Superior al Umbral</ion-label>
+          </ion-item>
+        
+          <ion-item lines="none">
+            <img src="../../../assets/img/verde.png" height="30" width="30"/> 
+            <ion-label>    Dentro de los Umbrales</ion-label>
+          </ion-item>
+        
+          <ion-item lines="none">
+            <img src="../../../assets/img/azul.png" height="30" width="30"/> 
+            <ion-label>    Inferior al Umbral</ion-label>
+          </ion-item>
+        </ion-list>
+        <br>
+        <br>
+        <br>
+      </ion-fab>
+    </div>
+  </div>
 
 </ion-content>

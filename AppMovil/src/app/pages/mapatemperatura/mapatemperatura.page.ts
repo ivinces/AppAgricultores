@@ -30,12 +30,13 @@ export class MapatemperaturaPage implements OnInit {
   ionViewDidEnter() { this.leafletMap(); }
 
 
-myIconNodo = Leaflet.icon({
-  iconUrl: '../../assets/img/temp.png',
-  iconSize: [36, 40],
-  iconAnchor: [36, 40],
-  popupAnchor: [-3, -76],
-});
+  myIconNodo = Leaflet.icon({
+    iconUrl: '../../assets/img/temp.png',
+    iconSize: [36, 40],
+    iconAnchor: [36, 40],
+    popupAnchor: [-3, -76],
+  });
+
 
   leafletMap() {
     var umbrales_min;

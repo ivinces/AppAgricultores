@@ -2,7 +2,7 @@ const express = require('express');
 var cors = require('cors')
 const app = express();
 
-var whitelist = ['http://localhost:8100', 'http://localhost:9000', 'http://localhost:8080', 'http://192.168.1.179:8000'];
+var whitelist = ['http://localhost:8100', 'http://localhost:9000', 'http://localhost:8080', 'http://192.168.1.179:8000', 'http://192.168.1.179:8085'];
 var corsOptions = {
 origin: function(origin, callback){
 var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
