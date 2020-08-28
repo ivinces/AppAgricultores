@@ -59,6 +59,19 @@ const routes: Routes = [
     path: 'mapatemperatura',
     loadChildren: () => import('./pages/mapatemperatura/mapatemperatura.module').then( m => m.MapatemperaturaPageModule)
   },
+  {
+    path: 'tabbedcultivos',
+    loadChildren: () => import('./pages/tabbedcultivos/tabbedcultivos.module').then( m => m.TabbedcultivosPageModule)
+  },
+  {
+    path: 'cult-activo',
+    loadChildren: () => import('./pages/cult-activo/cult-activo.module').then( m => m.CultActivoPageModule)
+  },
+  {
+    path: 'cult-inactivo',
+    loadChildren: () => import('./pages/cult-inactivo/cult-inactivo.module').then( m => m.CultInactivoPageModule)
+  },
+
 
 ];
 

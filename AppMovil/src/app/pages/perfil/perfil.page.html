@@ -56,7 +56,7 @@
           <td >{{ task.x }}</td>
           <td>{{ task.y }}</td>
           <td>
-            <button ion-button (click)="cambiarEstadoNodo($event)" id="btnest" value={{task.id}} [disabled]="!activo">{{ task.z }} </button>
+            <button ion-button (click)="irCultivo($event)" id="btnest" >{{ task.z }} </button>
           </td>
         </tr>
       </table>

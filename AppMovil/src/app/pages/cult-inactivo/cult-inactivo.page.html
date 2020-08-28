@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Activos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-searchbar showCancelButton (ionChange)="getItems($event)"></ion-searchbar>
+  </ion-toolbar>
+  
+  <ion-list>
+    <ion-item *ngFor="let cult of cultivo2">
+      <ion-label>{{cult.nombre}}</ion-label>
+      <button ion-button (click)="cambiarCultivo($event)" id="btnest" value={{cult.id}}>Seleccionar</button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+

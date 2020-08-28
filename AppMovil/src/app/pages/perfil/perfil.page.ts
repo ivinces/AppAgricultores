@@ -33,6 +33,7 @@ export class PerfilPage implements OnInit {
   ngOnInit() {
     this.array=[];
     this.ca=this.tmpService.cultivo_actual;
+    console.log(this.ca);
     this.tmpService.getCultivoById(this.ca).subscribe(cult => {
       for(let data of cult){
         this.nombre_cultivo=data.nombre;

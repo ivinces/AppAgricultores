@@ -4,12 +4,16 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-row>
-      <ion-col size="12" sm-sm>
-        <ion-item id="select">
+      <ion-col size="6" sm-sm>
+        <!--ion-item id="select">
           <ion-select [interfaceOptions]="customPopoverOptions" placeholder={{cult_nombre}} (ionChange)="selectCultivo($event)" interface="popover">
               <ion-select-option *ngFor="let task of cultivo" value={{task.id_cultivo}}>{{task.nombre}}</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item-->
+        <ion-title>Inicio</ion-title>
+      </ion-col>
+      <ion-col size="2" sm-sm>
+        <button ion-button (click)="cambiarCultivo()" id="btnest">Seleccionar</button>
       </ion-col>
     </ion-row>
     
