@@ -34,6 +34,7 @@ export class PersonalizadoPage implements OnInit {
   labeltitulo:string;
 
   cultivo_actual:string;
+  cult_nombre:string;
   m_cultivo: CultivoxNodoxReg[]=[];
 
   constructor(
@@ -47,6 +48,11 @@ export class PersonalizadoPage implements OnInit {
     this.labeltitulo='Humedad vs Temperatura';
 
     this.cultivo_actual=this.tmpService.cultivo_actual;
+
+    this.tmpService.getCultivoById(this.cultivo_actual).subscribe(c => {
+      this.cult_nombre=c[0].nombre;
+      console.log(c[0]);
+    });
     
     this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
       this.m_cultivo=reg;

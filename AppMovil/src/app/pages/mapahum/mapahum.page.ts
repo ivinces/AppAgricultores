@@ -22,7 +22,6 @@ export class MapahumPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
   }
 
   ionViewDidEnter() { this.leafletMap(); }

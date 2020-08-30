@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tabbedcultivos.page.scss'],
 })
 export class TabbedcultivosPage implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit() {

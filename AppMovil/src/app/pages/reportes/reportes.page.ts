@@ -42,6 +42,7 @@ export class ReportesPage implements OnInit {
   arrayregistros: {}[];
   unit: String = 'day';
   cultivo_actual: string;
+  cult_nombre:string;
   m_cultivo: CultivoxNodoxReg[] = [];
 
   constructor(
@@ -53,6 +54,11 @@ export class ReportesPage implements OnInit {
     this.radiacion=false;
     this.temperatura=false;
     this.cultivo_actual=this.tmpService.cultivo_actual;
+
+    this.tmpService.getCultivoById(this.cultivo_actual).subscribe(c => {
+      this.cult_nombre=c[0].nombre;
+      console.log(c[0]);
+    });
 
     let namedChartAnnotation = ChartAnnotation;
     namedChartAnnotation["id"]="annotation";

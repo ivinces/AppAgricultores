@@ -20,10 +20,11 @@ export class TmpService {
 
   public cultivo: Cultivo;
   public cultivo_actual: string='1';
+  
 
-  //private api='http://192.168.0.8:8000';
+  private api='http://localhost:8000';
 
-  private api='http://192.168.1.179:8000';
+  //private api='http://192.168.1.179:8000';
 
   constructor(private http: HttpClient) { }
 
