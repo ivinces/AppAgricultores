@@ -18,7 +18,8 @@
 <ion-row >
   <ion-col>
     <ion-item>
-      <ion-select id="text-sel" [interfaceOptions]="customPopoverOptions" (ionChange)="setX($event)" interface="popover" placeholder="Elegir Eje X">
+      <ion-label>Eje X: </ion-label>
+      <ion-select id="text-sel" [interfaceOptions]="customPopoverOptions" (ionChange)="setX($event)" value="temperaturaX" interface="popover" placeholder="Elegir Eje X">
         <ion-select-option value="temperaturaX">Temperatura</ion-select-option>
         <ion-select-option value="humedadX">Humedad</ion-select-option>
         <ion-select-option value="radiacionX">Radiación</ion-select-option>
@@ -29,7 +30,8 @@
 <ion-row>
   <ion-col>
     <ion-item>
-      <ion-select id="text-sel" [interfaceOptions]="customPopoverOptions" (ionChange)="setY($event)" interface="popover" placeholder="Elegir Eje Y">
+      <ion-label>Eje Y: </ion-label>
+      <ion-select id="text-sel" [interfaceOptions]="customPopoverOptions" value="humedadY" (ionChange)="setY($event)" interface="popover" placeholder="Elegir Eje Y">
         <ion-select-option value="temperaturaY">Temperatura</ion-select-option>
         <ion-select-option value="humedadY">Humedad</ion-select-option>
         <ion-select-option value="radiacionY">Radiación</ion-select-option>

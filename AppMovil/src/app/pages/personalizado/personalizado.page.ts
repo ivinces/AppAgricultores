@@ -42,7 +42,10 @@ export class PersonalizadoPage implements OnInit {
   cult_nombre:string;
   m_cultivo: CultivoxNodoxReg[]=[];
 
-  customPopoverOptions: any = {  
+  customPopoverOptions: any = { 
+    
+    //header: 'Cultivos',
+    message: 'Seleccione el parametro ambiental a visualizar',
     cssClass: 'my-custom-class'
   }; 
 
@@ -53,13 +56,13 @@ export class PersonalizadoPage implements OnInit {
   ngOnInit() {
     this.humedadX=false;
     this.radiacionX=false;
-    this.temperaturaX=false;
-    this.humedadY=false;
+    this.temperaturaX=true;
+    this.humedadY=true;
     this.radiacionY=false;
     this.temperaturaY=false;
     this.labeltitulo='';
-    this.labelx="eje x";
-    this.labely="eje y";
+    this.labelx="Temperatura";
+    this.labely="Humedad";
 
     this.cultivo_actual=this.tmpService.cultivo_actual;
 
