@@ -149,7 +149,7 @@ export class TmpService {
 
   putEstadoNodo(dataToSend,id){
     const path = this.api+"/nodo/"+id;
-    this.http.put(path,{data:JSON.stringify(dataToSend)},{headers: new HttpHeaders({"Content-Type":"application/json"})}).subscribe((data)=>{
+    this.http.put(path,{data:JSON.stringify(dataToSend)}).subscribe((data)=>{
       console.log(data)
     })
     console.log("se hizo put cultivo")

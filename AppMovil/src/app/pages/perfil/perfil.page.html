@@ -55,8 +55,8 @@
         <tr *ngFor="let task of array">
           <td >{{ task.x }}</td>
           <td>{{ task.y }}%</td>
-          <td>
-            <button ion-button (click)="irCultivo($event)" id="btnest" >{{ task.z }} </button>
+          <td> {{ task.z }}
+            <!--button ion-button (click)="cambiarEstadoNodo($event)" id="btnest" value={{task.id}}>{{ task.z }} </button-->
           </td>
         </tr>
       </table>

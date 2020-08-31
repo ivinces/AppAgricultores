@@ -5,8 +5,9 @@
   
   <ion-list>
     <ion-item *ngFor="let cult of cultivo2">
-      <ion-label>{{cult.nombre}}</ion-label>
-      <button ion-button (click)="cambiarCultivo($event)" id="btnest" value={{cult.id}}>Seleccionar</button>
+      <button ion-button (click)="cambiarCultivo($event)" id="btn" value={{cult.id}}>{{cult.nombre}}
+    </button>
+    <button ion-button (click)="cambiarCultivo($event)" id="btnest" value={{cult.id}}>Seleccionar</button>
     </ion-item>
   </ion-list>
 

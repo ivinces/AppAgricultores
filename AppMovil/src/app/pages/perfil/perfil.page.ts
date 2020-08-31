@@ -62,34 +62,6 @@ export class PerfilPage implements OnInit {
     
   }
 
-  cambiarEstadoNodo(event){
-    var est =event.target.value;
-    this.tmpService.getNodoById(est).subscribe(nodo => {
-      for(let n of nodo){
-        if(n.activo){
-          this.tmpService.putEstadoNodo({
-            latitud:n.latitud,
-            longitud:n.longitud,
-            activo:false,
-            cod_nodo:n.cod_nodo,
-            id_cultivo: n.id_cultivo
-          },est);
-        }
-        else{
-          this.tmpService.putEstadoNodo({
-            latitud:n.latitud,
-            longitud:n.longitud,
-            activo:true,
-            cod_nodo:n.cod_nodo,
-            id_cultivo: n.id_cultivo
-          },est);
-        }
-      }
-      console.log(est);
-    });
-    this.ngOnInit();
-  }
-
   actualizarForm(){
 
     console.log(document.getElementById("nombre_cul")['value']);
@@ -131,7 +103,7 @@ export class PerfilPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: '¿El cultivo  fue cosechado?',
-      message: 'Si usted coloca Aceptar el asume que el cultivo a sido cosechado y NO se mostrará nueva información del mismo',
+      message: 'Si usted coloca Aceptar el asume que el cultivo ha sido cosechado y NO se mostrará nueva información del mismo',
       buttons: [
         { 
         text: 'Aceptar',
@@ -157,6 +129,10 @@ export class PerfilPage implements OnInit {
         }); 
     
     await alert.present();
+  }
+
+  ionViewWillEnter(){
+    this.ngOnInit();
   }
 
 }
