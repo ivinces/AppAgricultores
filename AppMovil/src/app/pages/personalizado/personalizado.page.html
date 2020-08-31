@@ -15,7 +15,34 @@
   </ion-header>
 <br>
 <br>
-    <ion-row class="ion-justify-content-center">
+<ion-row >
+  <ion-col>
+    <ion-item>
+      <ion-select id="text-sel" [interfaceOptions]="customPopoverOptions" (ionChange)="setX($event)" interface="popover" placeholder="Elegir Eje X">
+        <ion-select-option value="temperaturaX">Temperatura</ion-select-option>
+        <ion-select-option value="humedadX">Humedad</ion-select-option>
+        <ion-select-option value="radiacionX">Radiación</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <ion-item>
+      <ion-select id="text-sel" [interfaceOptions]="customPopoverOptions" (ionChange)="setY($event)" interface="popover" placeholder="Elegir Eje Y">
+        <ion-select-option value="temperaturaY">Temperatura</ion-select-option>
+        <ion-select-option value="humedadY">Humedad</ion-select-option>
+        <ion-select-option value="radiacionY">Radiación</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+  </ion-col>
+  
+</ion-row>
+<ion-row class="ion-justify-content-center">
+  <button id="btntiempo" ion-button (click)="mostrar()" [ngStyle]="{'background-color': buttonColortemp}">Mostrar</button>
+</ion-row>
+    <!-- <ion-row class="ion-justify-content-center">
       <ion-col>
         <button id="btntiempo" ion-button (click)="clickTempHum($event)" [ngStyle]="{'background-color': buttonColortemp}"><ion-icon name="water"></ion-icon>  vs  <ion-icon name="thermometer"></ion-icon></button>
       </ion-col>
@@ -25,7 +52,7 @@
       <ion-col>
         <button id="btntiempo" ion-button (click)="clickHumRad($event)" [ngStyle]="{'background-color': buttonColorrad}"><ion-icon name="water"></ion-icon>  vs  <ion-icon name="sunny"></ion-icon></button>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <ion-card class="welcome-card">
       <ion-card-header>

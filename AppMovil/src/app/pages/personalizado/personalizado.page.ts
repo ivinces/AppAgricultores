@@ -20,15 +20,20 @@ export class PersonalizadoPage implements OnInit {
   buttonColorhum: string = '#4f9a94';
   buttonColortemp: string = '#4f9a94';
 
-  humedad:boolean;
-  radiacion:boolean;
-  temperatura:boolean;
+  humedadX:boolean;
+  radiacionX:boolean;
+  temperaturaX:boolean;
+
+  humedadY:boolean;
+  radiacionY:boolean;
+  temperaturaY:boolean;
 
   datasets: any;
 
   data:{}[] = [];
   arrayregistros:{}[];
-
+  dataX: number[]=[];
+  dataY: number[]=[];
   labelx:string;
   labely:string;
   labeltitulo:string;
@@ -37,21 +42,30 @@ export class PersonalizadoPage implements OnInit {
   cult_nombre:string;
   m_cultivo: CultivoxNodoxReg[]=[];
 
+  customPopoverOptions: any = {  
+    cssClass: 'my-custom-class'
+  }; 
+
   constructor(
     private tmpService:TmpService
   ) { }
 
   ngOnInit() {
-    this.humedad=true;
-    this.radiacion=false;
-    this.temperatura=true;
-    this.labeltitulo='Humedad vs Temperatura';
+    this.humedadX=false;
+    this.radiacionX=false;
+    this.temperaturaX=false;
+    this.humedadY=false;
+    this.radiacionY=false;
+    this.temperaturaY=false;
+    this.labeltitulo='';
+    this.labelx="eje x";
+    this.labely="eje y";
 
     this.cultivo_actual=this.tmpService.cultivo_actual;
 
     this.tmpService.getCultivoById(this.cultivo_actual).subscribe(c => {
       this.cult_nombre=c[0].nombre;
-      console.log(c[0]);
+      //console.log(c[0]);
     });
     
     this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
@@ -63,7 +77,102 @@ export class PersonalizadoPage implements OnInit {
     this.createLineChart();
   }
 
-  getData(){
+  getDataX(){
+    this.dataX=[]
+    for(let reg of this.m_cultivo){
+      var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
+      if(this.humedadX){
+        this.dataX.push(reg.humedad);
+      }
+      if(this.radiacionX){
+        this.dataX.push(reg.radiacion);
+      }
+      if(this.temperaturaX){
+        this.dataX.push(reg.temperatura);
+      }
+    }
+    //console.log(this.dataX);
+  }
+
+  getDataY(){
+    this.dataY=[]
+    for(let reg of this.m_cultivo){
+      var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
+      if(this.humedadY){
+        this.dataY.push(reg.humedad);
+      }
+      if(this.radiacionY){
+        this.dataY.push(reg.radiacion);
+      }
+      if(this.temperaturaY){
+        this.dataY.push(reg.temperatura);
+      }
+    }
+    //console.log(this.dataY);
+  }
+
+  mostrar(){
+    this.setTitulo();
+    this.createLineChart();
+  }
+
+  setTitulo(){
+    this.labeltitulo=this.labelx+" vs "+this.labely;
+  }
+
+  setX(event){
+    var valor=event.target.value;
+    if(valor=="temperaturaX"){
+      this.labelx="Temperatura";
+      this.temperaturaX=true;
+      this.humedadX=false;
+      this.radiacionX=false;
+    }
+    if(valor=="humedadX"){
+      this.labelx="Humedad";
+      this.temperaturaX=false;
+      this.humedadX=true;
+      this.radiacionX=false;
+    }
+    if(valor=="radiacionX"){
+      this.labelx="Radiación";
+      this.temperaturaX=false;
+      this.humedadX=false;
+      this.radiacionX=true;
+    }
+  }
+
+  setY(event){
+    var valor=event.target.value;
+    if(valor=="temperaturaY"){
+      this.labely="Temperatura";
+      this.temperaturaY=true;
+      this.humedadY=false;
+      this.radiacionY=false;
+    }
+    if(valor=="humedadY"){
+      this.labely="Humedad";
+      this.temperaturaY=false;
+      this.humedadY=true;
+      this.radiacionY=false;
+    }
+    if(valor=="radiacionY"){
+      this.labely="Radiación";
+      this.temperaturaY=false;
+      this.humedadY=false;
+      this.radiacionY=true;
+    }
+  }
+
+  listaXY(){
+    this.getDataX();
+    this.getDataY();
+    for(var i=0; i<this.dataX.length;i++){
+      this.data.push({x:this.dataX[i],y:this.dataY[i]})
+    }
+    return this.data;
+  }
+/*   getData(){
     this.data=[];
     this.arrayregistros=[];
     this.labelx='';
@@ -96,7 +205,7 @@ export class PersonalizadoPage implements OnInit {
       }
     }
     return this.data;
-  }
+  } */
 
   compare(a, b) {
     const paramA = a.x;
@@ -110,7 +219,7 @@ export class PersonalizadoPage implements OnInit {
     return comparison;
   }
 
-  clickTempHum(event){
+/*   clickTempHum(event){
     this.temperatura=true;
     this.humedad=true;
     this.radiacion=false;
@@ -144,7 +253,7 @@ export class PersonalizadoPage implements OnInit {
       this.buttonColorrad = '#4f9a94'
       this.buttonColortemp = '#4f9a94'
     }
-  }
+  } */
 
   clearcanvas(){
     if(this.line){
@@ -160,9 +269,10 @@ export class PersonalizadoPage implements OnInit {
     this.line = new Chart(this.sChart.nativeElement, {
       type: 'scatter',
       data: {
+        //labels: this.getDataY(),
         datasets: [{
           label:this.labeltitulo,
-            data: this.getData().sort(this.compare),
+            data: this.listaXY(),
             fill: false,
             backgroundColor: 'red', 
             borderColor: 'red',
