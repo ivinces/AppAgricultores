@@ -3,9 +3,18 @@ ion-menu-button {
 }
 
 ion-icon{
-    color: #4f9a94;
     font-size: 100px;
     
+}
+
+ion-icon#temp{
+    color:red;
+}
+ion-icon#hum{
+    color:blue;
+}
+ion-icon#rad{
+    color:yellow;
 }
 
 ion-col#box-variable{
