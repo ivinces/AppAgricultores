@@ -51,7 +51,9 @@ export class PersonalizadoPage implements OnInit {
 
   constructor(
     private tmpService:TmpService
-  ) { }
+  ) {
+    this.inicial();
+  }  
 
   ngOnInit() {
     this.humedadX=false;
@@ -74,15 +76,32 @@ export class PersonalizadoPage implements OnInit {
     this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
       this.m_cultivo=reg;
     });
+    console.log(this.m_cultivo, "this cultivo");
+
   }
 
-  ionViewDidEnter() {
+  inicial(){
+    this.tmpService.getCultivoxNodoxRegById(this.cultivo_actual).subscribe(reg => {
+      this.m_cultivo=reg;
+    });
+  }
+
+  ngOnDestroy(){
+    this.clearcanvas();
+  }
+
+  ionViewWillLeave(){
+    this.ngOnDestroy();
+  }
+  ionViewWillEnter() {
+    this.ngOnInit();
     this.createLineChart();
   }
 
   getDataX(){
     this.dataX=[]
-    for(let reg of this.m_cultivo){
+    var cult=this.m_cultivo;
+    for(let reg of cult){
       var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
       if(this.humedadX){
         this.dataX.push(reg.humedad);
@@ -94,12 +113,13 @@ export class PersonalizadoPage implements OnInit {
         this.dataX.push(reg.temperatura);
       }
     }
-    //console.log(this.dataX);
+    console.log(this.dataX, "datos X");
   }
 
   getDataY(){
     this.dataY=[]
-    for(let reg of this.m_cultivo){
+    var cult=this.m_cultivo;
+    for(let reg of cult){
       var reg_date=new Date(moment(reg.fecha_hora, "YYYY-MM-DD hh:mm:ss").toDate());
       if(this.humedadY){
         this.dataY.push(reg.humedad);
@@ -111,7 +131,7 @@ export class PersonalizadoPage implements OnInit {
         this.dataY.push(reg.temperatura);
       }
     }
-    //console.log(this.dataY);
+    console.log(this.dataY, "datos Y");
   }
 
   mostrar(){
@@ -170,6 +190,7 @@ export class PersonalizadoPage implements OnInit {
   listaXY(){
     this.getDataX();
     this.getDataY();
+    this.data=[];
     for(var i=0; i<this.dataX.length;i++){
       this.data.push({x:this.dataX[i],y:this.dataY[i]})
     }
@@ -266,7 +287,6 @@ export class PersonalizadoPage implements OnInit {
 
   createLineChart(){
     this.clearcanvas();
-    
     //this.setdataset();
 
     this.line = new Chart(this.sChart.nativeElement, {
